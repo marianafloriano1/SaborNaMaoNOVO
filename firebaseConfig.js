@@ -3,7 +3,7 @@ export const firebaseConfig = {
   authDomain: "sabornamao-1905b.firebaseapp.com",
   databaseURL: "https://sabornamao-1905b-default-rtdb.firebaseio.com",
   projectId: "sabornamao-1905b",
-  storageBucket: "sabornamao-1905b.firebasestorage.app",
+  storageBucket: "sabornamao-1905b.appspot.com",
   messagingSenderId: "125087798420",
   appId: "1:125087798420:web:f42132899e352ee778d081",
 };

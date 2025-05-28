@@ -173,16 +173,36 @@ export default function OvoDePascoa() {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botaoSalvar} onPress={salvarListaDeCompras}>
-          <Text style={styles.textoBotao}>Baixar Lista de Compras</Text>
-        </TouchableOpacity>
+        <View style={styles.botoesContainer}>
+          <TouchableOpacity style={styles.botaoVerde}>
+            <Feather
+              name="refresh-cw"
+              size={20}
+              color="#fff"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.botaoCinza}
+            onPress={salvarListaDeCompras}
+          >
+            <Feather
+              name="download"
+              size={20}
+              color="#FFCC00"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+          </TouchableOpacity>
+        </View>
       </ImageBackground>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-   container: {
+  container: {
     flex: 1,
     width: '100%',
     height: '90%',
@@ -195,12 +215,12 @@ const styles = StyleSheet.create({
 
   },
   paragraph: {
-        fontSize: 22,
-        color: '#242424',
-        textTransform: 'uppercase',
-        top: 40,
-        left: 40,
-        marginBottom: 90
+    fontSize: 22,
+    color: '#242424',
+    textTransform: 'uppercase',
+    top: 40,
+    left: 40,
+    marginBottom: 90
   },
 
   ingredientes: {
@@ -209,7 +229,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingVertical: 5,
     left: 44,
-    
+
 
   },
   ingredientesContainer: {
@@ -236,20 +256,36 @@ const styles = StyleSheet.create({
     top: 70
   },
 
-   botaoSalvar: {
-    backgroundColor: '#2F4B54',
-    padding: 10,
-    alignItems: 'center',
-    marginHorizontal: 20,
-    width: 200,
-    resizeMode: 'contain',
-    marginLeft: 'auto',
-    height: 60
+  botoesContainer: {
+    flexDirection: "row",
+    width: "100%",
+    height: 50,
+    marginTop: 40,
+  },
+
+  botaoVerde: {
+    flex: 1,
+    backgroundColor: "#009B4D", // verde da imagem
+    padding: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  botaoCinza: {
+    flex: 1,
+    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    padding: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  iconeBotao: {
+    marginRight: 10,
   },
   textoBotao: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
-    top: 7
   },
 });

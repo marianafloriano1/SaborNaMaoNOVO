@@ -255,6 +255,8 @@ export default function App() {
                             onPress={() => nav.navigate('snack')}
                         >
                             <Text style={styles.texto_snack}>Noite de Snacks</Text>
+                            <Image style={styles.img_snacks} source={require('../assets/images/snacks.jpg')} />
+
 
                         </Pressable>
                     </View>
@@ -310,6 +312,8 @@ export default function App() {
                             onPress={() => nav.navigate('aperitivos')}
                         >
                             <Text style={styles.texto_aperitivos}>Aperitivos para festas</Text>
+                            <Image style={styles.img_aperitivos} source={require('../assets/images/aperitivos.jpg')} />
+
 
                         </Pressable>
                     </View>
@@ -332,6 +336,8 @@ export default function App() {
                             }}
                             onPress={() => nav.navigate('almoco_domingo')}>
                             <Text style={styles.texto_almoco}>Almoços em família</Text>
+                            <Image style={styles.img_almoco} source={require('../assets/images/almoco_domingo.jpg')} />
+
 
                         </Pressable>
                     </View>
@@ -471,19 +477,7 @@ const styles = StyleSheet.create({
         color: '#565656',
         fontFamily: 'monospace'
     },
-    img_sozinho: {
-        width: 100,
-        height: 140,
-        left: 60,
-        bottom: 30
-
-    },
-    img_snacks: {
-        width: 100,
-        height: 100,
-
-    },
-
+   
     //tooltip
 
     tooltip: {
@@ -640,4 +634,33 @@ const styles = StyleSheet.create({
         left: 10,
         top: 10
     },
+     img_sozinho: {
+        width: 100,
+        height: 140,
+        left: 60,
+        bottom: 30
+
+    },
+    img_snacks: {
+        width: 140,
+        height: 90,
+        left: 10,
+        top: 8   
+
+    },
+    img_almoco: {
+        width: 120,
+        height: 90,
+        left: 15,
+        top: 8
+
+    },
+    img_aperitivos: {
+        width: 150,
+        height: 90,
+        top: 8,
+        left: 5
+
+    },
+
 });

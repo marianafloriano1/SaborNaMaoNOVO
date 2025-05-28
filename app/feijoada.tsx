@@ -4,56 +4,58 @@ import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
-  Alert,
-  ImageBackground,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    ImageBackground,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 
-type CheckedItems = {
-  [key: string]: boolean;
-};
+type CheckedItems = { [key: string]: boolean };
 
-export default function FarofaDeOvo() {
+export default function Feijoada() {
   const nav = useNavigation<NavigationProp<any>>();
 
   const [checkedItems, setCheckedItems] = useState<CheckedItems>({
-    item1: false,
-    item2: false,
-    item3: false,
-    item4: false,
-    item5: false,
-    step1: false,
-    step2: false,
-    step3: false,
-    step4: false,
-    step5: false,
+    item1: false, item2: false, item3: false, item4: false, item5: false, item6: false,
+    item7: false, item8: false, item9: false, item10: false, item11: false, item12: false,
+    item13: false, item14: false,
+    step1: false, step2: false, step3: false, step4: false, step5: false, step6: false,
+    step7: false, step8: false,
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: '300 g de farinha de \nmandioca',
-    item2: '4 colheres de manteiga',
-    item3: '5 ovos',
-    item4: '1 colher de sal',
-    item5: '1 cebola',
+    item1: '1 kg de feijão preto',
+    item2: '2 línguas defumadas \nou salgadas',
+    item3: '1/2 kg de costelinha de porco \nsalgada',
+    item4: '1/2 kg de linguiça calabresa defumada',
+    item5: '1/4 kg de toucinho defumado',
+    item6: '1 rabo de porco salgado',
+    item7: '1/2 xícara de óleo ou banha de porco',
+    item8: 'Água o quanto baste',
+    item9: '1/2 kg de lombo de porco salgado',
+    item10: '2 paios',
+    item11: '2 pés de porco salgados',
+    item12: '2 orelhas de porco salgadas',
+    item13: '3 dentes de alho picados',
+    item14: 'Pimenta malagueta amassada (opcional)',
   };
 
   const stepsMap: { [key: string]: string } = {
-    step1: 'Corte em pedacinhos a cebola.',
-    step2: 'Coloque em uma frigideira junto com a manteiga.',
-    step3: 'Deixe dourar.',
-    step4: 'Adicione o sal e o ovo e mexa até fritar.',
-    step5: 'Acrescente aos poucos a farinha.',
+    step1: 'Coloque o feijão para cozinhar com água em panela de pressão.',
+    step2: 'Dessalgue as carnes salgadas com antecedência.',
+    step3: 'Ferva as carnes separadamente para tirar o excesso de sal.',
+    step4: 'Refogue o alho e a cebola em uma panela grande.',
+    step5: 'Adicione as carnes ao refogado e misture bem.',
+    step6: 'Junte o feijão cozido às carnes e deixe ferver.',
+    step7: 'Cozinhe tudo junto até que as carnes fiquem bem macias.',
+    step8: 'Sirva com arroz, couve e farofa.',
   };
 
   const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+    setCheckedItems((prev) => ({ ...prev, [item]: !prev[item] }));
   };
 
   const salvarListaDeCompras = async () => {
@@ -67,7 +69,7 @@ export default function FarofaDeOvo() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + 'lista_de_compras_farofa_de_ovo.txt';
+    const fileUri = FileSystem.documentDirectory + 'lista_de_compras_feijoada.txt';
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -90,36 +92,36 @@ export default function FarofaDeOvo() {
     <ScrollView showsVerticalScrollIndicator={false}>
       <ImageBackground
         style={styles.container}
-        source={require('../assets/images/fundo_farofa.png')} // Substitua pela imagem correta
+        source={require('../assets/images/fundo_feijoada.png')} // Altere para sua imagem
       >
-        <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('natal')}>
+        <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('almoco_domingo')}>
           <Feather name="chevron-left" size={28} color="#000" />
         </TouchableOpacity>
 
         <View style={styles.row}>
-          <Text style={styles.paragraph}>Farofa de Ovo</Text>
+          <Text style={styles.paragraph}>Feijoada</Text>
         </View>
 
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          <View>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
+         <Text style={styles.ingredientes}>INGREDIENTES</Text>
+                      <View style={styles.ingredientesContainer}>
+                        <View>
+                          {Object.entries(itemsMap).map(([key, label]) => (
+                            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                              <Text style={styles.topicos}>
+                                {checkedItems[key] ? (
+                                  <Text style={styles.check}>✓ </Text>
+                                ) : (
+                                  <Text style={styles.bolinha}>⚪ </Text>
+                                )}
+                                {label}
+                              </Text>
+                            </TouchableOpacity>
+                          ))}
+                        </View>
+                      </View>
 
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        {Object.entries(stepsMap).map(([key, step], index) => (
+        {Object.entries(stepsMap).map(([key, label], index) => (
           <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
             <Text style={styles.topicos}>
               {checkedItems[key] ? (
@@ -127,31 +129,18 @@ export default function FarofaDeOvo() {
               ) : (
                 <Text style={styles.bolinha}>⚪ </Text>
               )}
-              {step}
+              {index + 1}. {label}
             </Text>
           </TouchableOpacity>
         ))}
 
         <View style={styles.botoesContainer}>
           <TouchableOpacity style={styles.botaoVerde}>
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
+            <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
             <Text style={styles.textoBotao}>Forma correta descarte</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={salvarListaDeCompras}
-          >
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
+          <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
+            <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
             <Text style={styles.textoBotao}>Baixar lista de compra</Text>
           </TouchableOpacity>
         </View>
@@ -160,11 +149,13 @@ export default function FarofaDeOvo() {
   );
 }
 
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    height: '90%',
+    height: '60%',
     backgroundColor: '#ececec',
   },
   row: {
@@ -176,22 +167,24 @@ const styles = StyleSheet.create({
     color: '#242424',
     textTransform: 'uppercase',
     top: 40,
-    left: 60,
-    marginBottom: 90
+    left: 40,
+    marginBottom: 80
+    
   },
   ingredientes: {
-    marginTop: 60,
+    marginTop: 40,
     fontSize: 18,
     marginBottom: 20,
     paddingVertical: 5,
     left: 44,
+   
   },
   ingredientesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   topicos: {
-    marginBottom: 10,
+    marginBottom: 20,
     lineHeight: 24,
     left: 44,
     width: 290,
@@ -207,9 +200,9 @@ const styles = StyleSheet.create({
   },
   seta: {
     top: 70,
-    left: 20,
+    left: 10,
   },
-  botoesContainer: {
+   botoesContainer: {
     flexDirection: "row",
     width: "100%",
     height: 50,
@@ -237,7 +230,7 @@ const styles = StyleSheet.create({
   iconeBotao: {
     marginRight: 10,
   },
-  textoBotao: {
+   textoBotao: {
     color: "#fff",
     fontSize: 16,
   },

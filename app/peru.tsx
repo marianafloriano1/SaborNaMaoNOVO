@@ -84,40 +84,40 @@ export default function App() {
     }));
   };
 
- const salvarListaDeCompras = async () => {
-  const naoSelecionados = Object.keys(itemsMap)
-    .filter((key) => !checkedItems[key])
-    .map((key) => `- ${itemsMap[key]}`)
-    .join('\n');
+  const salvarListaDeCompras = async () => {
+    const naoSelecionados = Object.keys(itemsMap)
+      .filter((key) => !checkedItems[key])
+      .map((key) => `- ${itemsMap[key]}`)
+      .join('\n');
 
-  if (!naoSelecionados) {
-    Alert.alert('Tudo certo!', 'Todos os ingredientes foram marcados.');
-    return;
-  }
-
-  const fileUri = FileSystem.documentDirectory + 'lista_de_compras.txt';
-
-  try {
-    await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
-      encoding: FileSystem.EncodingType.UTF8,
-    });
-
-    const canShare = await Sharing.isAvailableAsync();
-    if (canShare) {
-      await Sharing.shareAsync(fileUri);
-    } else {
-      Alert.alert('Arquivo salvo', `Lista salva em:\n${fileUri}`);
+    if (!naoSelecionados) {
+      Alert.alert('Tudo certo!', 'Todos os ingredientes foram marcados.');
+      return;
     }
-  } catch (err) {
-    Alert.alert('Erro ao salvar', 'Não foi possível criar o arquivo.');
-    console.error(err);
-  }
-};
+
+    const fileUri = FileSystem.documentDirectory + 'lista_de_compras.txt';
+
+    try {
+      await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
+        encoding: FileSystem.EncodingType.UTF8,
+      });
+
+      const canShare = await Sharing.isAvailableAsync();
+      if (canShare) {
+        await Sharing.shareAsync(fileUri);
+      } else {
+        Alert.alert('Arquivo salvo', `Lista salva em:\n${fileUri}`);
+      }
+    } catch (err) {
+      Alert.alert('Erro ao salvar', 'Não foi possível criar o arquivo.');
+      console.error(err);
+    }
+  };
 
 
   return (
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <ImageBackground  style={styles.container} source={require('../assets/images/fundo_peru.png')}>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <ImageBackground style={styles.container} source={require('../assets/images/fundo_peru.png')}>
 
         <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('natal')}>
           <Feather style={styles.seta} name="chevron-left" size={28} color="#000" />
@@ -126,8 +126,8 @@ export default function App() {
         <View style={styles.row}>
           <Text style={styles.paragraph}>Peru à Brasileira</Text>
         </View>
- <Text style={styles.ingredientes}>INGREDIENTES</Text>
-    <View style={styles.ingredientesContainer}>
+        <Text style={styles.ingredientes}>INGREDIENTES</Text>
+        <View style={styles.ingredientesContainer}>
           <View>
             {Object.entries(itemsMap).map(([key, label]) => (
               <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
@@ -144,61 +144,81 @@ export default function App() {
           </View>
         </View>
 
-    <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-    <TouchableOpacity onPress={() => toggleCheck('step1')}>
-        <Text style={styles.topicos}>
-          {checkedItems.step1 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>} Bata no liquidificador: 1 xícara de vinho, 1 xícara de caldo de galinha, a cebola em pedaços, alho, mostarda, molho de pimenta, a margarina ou manteiga e o sal.
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => toggleCheck('step2')}>
-        <Text style={styles.topicos}>
-          {checkedItems.step2 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>} Coloque em um refratário e acrescente o restante do vinho e do caldo de galinha, misture bem e reserve.
-        </Text>
-      </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck('step3')}>
-        <Text style={styles.topicos}>
-          {checkedItems.step3 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>}  Em fogo baixo refogue os miúdos cortados em pedaços menores da mistura de óleo e azeite, até mudarem de cor.
-        </Text>
-      </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step4')}>
-        <Text style={styles.topicos}>
-          {checkedItems.step4 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>}  Adicione o milho, o caldo de galinha, as bananas, as farinha peneiradas e a pimenta, sem parar de mexer, até formar uma farofa solta e úmida.
-        </Text>
-      </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step5')}>
-        <Text style={styles.topicos}>
-          {checkedItems.step5 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>}  Retire do fogo, acrescente o tempero verde e recheie o peru.
-        </Text>
-      </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step6')}>
-        <Text style={styles.topicos}>
-          {checkedItems.step6 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>} Coloque o peru na assadeira sem untar.
-        </Text>
-      </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step7')}>
-        <Text style={styles.topicos}>
-          {checkedItems.step7 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>}  Cubra com papel alumínio e leve ao forno por volta de 1 hora e meia, regando constantemente com o molho da assadeira.
-        </Text>
-      </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step8')}>
-        <Text style={styles.topicos}>
-          {checkedItems.step8 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>} Retire o papel alumínio para dourar por mais 1 hora e meia aproximadamente, continue regando com o molho.
-        </Text>
-      </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step9')}>
-        <Text style={styles.topicos}>
-          {checkedItems.step9 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>} Coloque no refratário de servir e decore com farofa e tempero verde.
-        </Text>
-      </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step10')}>
-        <Text style={styles.topicos}>
-          {checkedItems.step10 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>} Coloque em um refratário e acrescente o restante do vinho e do caldo de galinha, misture bem e reserve.
-        </Text>
-      </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step11')}>
-        <Text style={styles.topicos}>
-          {checkedItems.step11 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>}  Coloque em um refratário e acrescente o restante do vinho e do caldo de galinha, misture bem e reserve.
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.botaoSalvar} onPress={salvarListaDeCompras}>
-          <Text style={styles.textoBotao}>Baixar Lista de Compras</Text>
+        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+        <TouchableOpacity onPress={() => toggleCheck('step1')}>
+          <Text style={styles.topicos}>
+            {checkedItems.step1 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>} Bata no liquidificador: 1 xícara de vinho, 1 xícara de caldo de galinha, a cebola em pedaços, alho, mostarda, molho de pimenta, a margarina ou manteiga e o sal.
+          </Text>
         </TouchableOpacity>
-              </ImageBackground>
-        
-      </ScrollView>
+        <TouchableOpacity onPress={() => toggleCheck('step2')}>
+          <Text style={styles.topicos}>
+            {checkedItems.step2 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>} Coloque em um refratário e acrescente o restante do vinho e do caldo de galinha, misture bem e reserve.
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => toggleCheck('step3')}>
+          <Text style={styles.topicos}>
+            {checkedItems.step3 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>}  Em fogo baixo refogue os miúdos cortados em pedaços menores da mistura de óleo e azeite, até mudarem de cor.
+          </Text>
+        </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step4')}>
+          <Text style={styles.topicos}>
+            {checkedItems.step4 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>}  Adicione o milho, o caldo de galinha, as bananas, as farinha peneiradas e a pimenta, sem parar de mexer, até formar uma farofa solta e úmida.
+          </Text>
+        </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step5')}>
+          <Text style={styles.topicos}>
+            {checkedItems.step5 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>}  Retire do fogo, acrescente o tempero verde e recheie o peru.
+          </Text>
+        </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step6')}>
+          <Text style={styles.topicos}>
+            {checkedItems.step6 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>} Coloque o peru na assadeira sem untar.
+          </Text>
+        </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step7')}>
+          <Text style={styles.topicos}>
+            {checkedItems.step7 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>}  Cubra com papel alumínio e leve ao forno por volta de 1 hora e meia, regando constantemente com o molho da assadeira.
+          </Text>
+        </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step8')}>
+          <Text style={styles.topicos}>
+            {checkedItems.step8 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>} Retire o papel alumínio para dourar por mais 1 hora e meia aproximadamente, continue regando com o molho.
+          </Text>
+        </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step9')}>
+          <Text style={styles.topicos}>
+            {checkedItems.step9 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>} Coloque no refratário de servir e decore com farofa e tempero verde.
+          </Text>
+        </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step10')}>
+          <Text style={styles.topicos}>
+            {checkedItems.step10 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>} Coloque em um refratário e acrescente o restante do vinho e do caldo de galinha, misture bem e reserve.
+          </Text>
+        </TouchableOpacity>  <TouchableOpacity onPress={() => toggleCheck('step11')}>
+          <Text style={styles.topicos}>
+            {checkedItems.step11 ? <Text style={styles.check}>✓</Text> : <Text style={styles.bolinha}>⚪ </Text>}  Coloque em um refratário e acrescente o restante do vinho e do caldo de galinha, misture bem e reserve.
+          </Text>
+        </TouchableOpacity>
+
+        <View style={styles.botoesContainer}>
+          <TouchableOpacity style={styles.botaoVerde}>
+            <Feather
+              name="refresh-cw"
+              size={20}
+              color="#fff"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.botaoCinza}
+            onPress={salvarListaDeCompras}
+          >
+            <Feather
+              name="download"
+              size={20}
+              color="#FFCC00"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+
+    </ScrollView>
   );
 }
 
@@ -215,11 +235,11 @@ const styles = StyleSheet.create({
 
   },
   paragraph: {
-        fontSize: 22,
-        color: '#242424',
-        textTransform: 'uppercase',
-        top: 80,
-        left: 50
+    fontSize: 22,
+    color: '#242424',
+    textTransform: 'uppercase',
+    top: 80,
+    left: 50
   },
 
   ingredientes: {
@@ -228,7 +248,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingVertical: 5,
     left: 44,
-    
+
 
   },
   ingredientesContainer: {
@@ -254,20 +274,36 @@ const styles = StyleSheet.create({
     top: 55
   },
 
-   botaoSalvar: {
-    backgroundColor: '#2F4B54',
-    padding: 10,
-    alignItems: 'center',
-    marginHorizontal: 20,
-    width: 200,
-    resizeMode: 'contain',
-    marginLeft: 'auto',
-    height: 60
+  botoesContainer: {
+    flexDirection: "row",
+    width: "100%",
+    height: 50,
+    marginTop: 40,
+  },
+
+  botaoVerde: {
+    flex: 1,
+    backgroundColor: "#009B4D", // verde da imagem
+    padding: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  botaoCinza: {
+    flex: 1,
+    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    padding: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  iconeBotao: {
+    marginRight: 10,
   },
   textoBotao: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
-    top: 7
   },
 });

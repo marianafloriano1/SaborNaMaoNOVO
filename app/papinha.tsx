@@ -4,13 +4,13 @@ import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
-    Alert,
-    ImageBackground,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 type CheckedItems = {
@@ -118,7 +118,7 @@ export default function PapinhaDeCarne() {
         <TouchableOpacity onPress={() => toggleCheck('step1')}>
           <Text style={styles.topicos}>
             {checkedItems.step1 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-           
+
             Em uma panela, aqueça o óleo e refogue a cebola, o alho e a carne moída.
           </Text>
         </TouchableOpacity>
@@ -126,7 +126,7 @@ export default function PapinhaDeCarne() {
         <TouchableOpacity onPress={() => toggleCheck('step2')}>
           <Text style={styles.topicos}>
             {checkedItems.step2 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-           
+
             Em seguida, acrescente a batata, o inhame e a abóbora.
           </Text>
         </TouchableOpacity>
@@ -134,7 +134,7 @@ export default function PapinhaDeCarne() {
         <TouchableOpacity onPress={() => toggleCheck('step3')}>
           <Text style={styles.topicos}>
             {checkedItems.step3 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-           
+
             Cubra com água, tampe a panela e cozinhe até que todos os ingredientes estejam bem macios e com um pouco de caldo.
           </Text>
         </TouchableOpacity>
@@ -142,7 +142,7 @@ export default function PapinhaDeCarne() {
         <TouchableOpacity onPress={() => toggleCheck('step4')}>
           <Text style={styles.topicos}>
             {checkedItems.step4 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            
+
             Amasse todos os ingredientes com um garfo e sirva.
           </Text>
         </TouchableOpacity>
@@ -153,9 +153,29 @@ export default function PapinhaDeCarne() {
         </Text>
         <Text style={styles.topicos}>Adequado a partir de 6 meses.</Text>
 
-        <TouchableOpacity style={styles.botaoSalvar} onPress={salvarListaDeCompras}>
-          <Text style={styles.textoBotao}>Baixar Lista de Compras</Text>
-        </TouchableOpacity>
+        <View style={styles.botoesContainer}>
+          <TouchableOpacity style={styles.botaoVerde}>
+            <Feather
+              name="refresh-cw"
+              size={20}
+              color="#fff"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.botaoCinza}
+            onPress={salvarListaDeCompras}
+          >
+            <Feather
+              name="download"
+              size={20}
+              color="#FFCC00"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+          </TouchableOpacity>
+        </View>
       </ImageBackground>
     </ScrollView>
   );
@@ -209,24 +229,36 @@ const styles = StyleSheet.create({
   seta: {
     top: 120,
   },
-  botaoSalvar: {
-    backgroundColor: '#2F4B54',
-    padding: 10,
-    alignItems: 'center',
-    marginHorizontal: 20,
-    width: 200,
-    resizeMode: 'contain',
-    marginLeft: 'auto',
-    height: 60,
+  botoesContainer: {
+    flexDirection: "row",
+    width: "100%",
+    height: 50,
     marginTop: 40,
   },
-  textoBotao: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    top: 7,
+
+  botaoVerde: {
+    flex: 1,
+    backgroundColor: "#009B4D", // verde da imagem
+    padding: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  numero: {
-    fontWeight: 'bold',
+
+  botaoCinza: {
+    flex: 1,
+    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    padding: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  iconeBotao: {
+    marginRight: 10,
+  },
+  textoBotao: {
+    color: "#fff",
+    fontSize: 16,
   },
 });
