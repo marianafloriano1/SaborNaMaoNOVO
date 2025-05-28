@@ -1,4 +1,4 @@
-import { FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -7,17 +7,18 @@ import type { ImagePickerResult } from 'expo-image-picker';
 import * as ImagePicker from 'expo-image-picker';
 import React, { JSX, useEffect, useState } from 'react';
 import {
-    Alert,
-    Image,
-    ImageBackground,
-    Modal,
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Alert,
+  GestureResponderEvent,
+  Image,
+  ImageBackground,
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 type Recipe = {
@@ -137,472 +138,402 @@ export default function App(): JSX.Element {
     setRecipeDetailsModalVisible(true);
   };
 
+  function heranca(event: GestureResponderEvent): void {
+    throw new Error('Function not implemented.');
+  }
+  
+
   return (
-<ImageBackground source={require('../assets/images/fundo_heranca.png')} style={styles.container}>
-  <View style={styles.seta}>
-    <TouchableOpacity onPress={() => nav.navigate('Perfil')}>
-      <Image source={profilePic} style={styles.perfil} />
-    </TouchableOpacity>
-    <Text style={styles.texto_dois}>Minhas Receitas</Text>
-        <Text style={styles.texto_tres}>As receitas de família são heranças cheias de memórias e carinho, conectando gerações pelo sabor.</Text>
+    <ImageBackground source={require('../assets/images/fundo_heranca.png')} style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scroll}>
+        <View style={styles.headerContainer}>
+          <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('home')}>
+            <Feather name="chevron-left" size={28} color="#000" />
+            <Text style={styles.texto_seta}>Voltar</Text>
+          </TouchableOpacity>
 
-  </View>
+          <Image source={profilePic} style={styles.perfil} />
 
-  <ScrollView contentContainerStyle={styles.scroll}>
-    {savedRecipes.map((recipe, index) => (
-      <TouchableOpacity
-        key={index}
-        style={styles.retangulo}
-        onPress={() => openRecipeDetailsModal(recipe)}
-      >
-        <Image source={{ uri: recipe.photo }} style={styles.img} />
-        <View>
-          <Text style={styles.recipeName}>{recipe.recipeName}</Text>
-          <Text style={styles.authorName}>por {recipe.authorName}</Text>
+          <Text style={styles.texto_dois}>Minhas Receitas</Text>
+          <Text style={styles.texto_tres}>
+            As receitas de família são heranças cheias de memórias e carinho, conectando gerações pelo sabor.
+          </Text>
         </View>
-      </TouchableOpacity>
-    ))}
-  </ScrollView>
 
-  <TouchableOpacity
-    style={styles.mais}
-    onPress={() => setAddRecipeModalVisible(true)}
-  >
-    <FontAwesome name="plus" size={24} color="white" />
-    <Text style={styles.texto_mais}>Adicionar Receita</Text>
-  </TouchableOpacity>
+        {savedRecipes.map((recipe, index) => (
+          <TouchableOpacity key={index} style={styles.retangulo}>
+            <Image source={{ uri: recipe.photo }} style={styles.img} />
 
-  {/* Modal de Adicionar Receita */}
-  <Modal
-    visible={addRecipeModalVisible}
-    animationType="slide"
-    transparent={true}
-    onRequestClose={() => setAddRecipeModalVisible(false)}
-  >
-    <View style={styles.modalContainer}>
-      <View style={styles.modalContent}>
-        <Text style={styles.modalTitle}>Adicionar Receita</Text>
-        <TextInput
-          placeholder="Nome da Receita"
-          value={recipeName}
-          onChangeText={setRecipeName}
-          style={styles.input4}
-        />
-        <TextInput
-          placeholder="Seu Nome"
-          value={authorName}
-          onChangeText={setAuthorName}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Ingredientes"
-          value={ingredients}
-          onChangeText={setIngredients}
-          style={styles.input2}
-          multiline
-        />
-        <TextInput
-          placeholder="Modo de Preparo"
-          value={instructions}
-          onChangeText={setInstructions}
-          style={styles.input3}
-          multiline
-        />
-        <TouchableOpacity style={styles.botao_salvar} onPress={handleTakePhoto}>
-          <Text style={styles.texto_botao}>Tirar Foto</Text>
+            <View>
+              <Text style={styles.recipeName}>{recipe.recipeName}</Text>
+              <Text style={styles.authorName}>por {recipe.authorName}</Text>
+            </View>
+
+            <TouchableOpacity style={styles.botao} onPress={() => openRecipeDetailsModal(recipe)}>
+              <Text style={styles.botaoTexto}>Ver receita</Text>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        ))}
+
+        <TouchableOpacity
+          style={styles.mais}
+          onPress={() => {
+            setPhoto(null); // limpa a foto ao abrir o modal
+            setAddRecipeModalVisible(true);
+          }}
+        >
+          <Feather name="plus" size={20} color="white" />
+          <Text style={styles.texto_mais}>Adicionar Receita</Text>
         </TouchableOpacity>
-        {photo && <Image source={{ uri: photo }} style={styles.photo} />}
-        <Pressable style={styles.botao_salvar} onPress={handleSaveData}>
-          <Text style={styles.texto_botao}>Salvar</Text>
-        </Pressable>
-      </View>
-    </View>
-  </Modal>
+      </ScrollView>
 
-  {/* Modal Detalhes da Receita */}
-  <Modal
-    visible={recipeDetailsModalVisible}
-    animationType="slide"
-    transparent={true}
-    onRequestClose={() => setRecipeDetailsModalVisible(false)}
-  >
-    <View style={styles.modalContainer2}>
-      <View style={styles.modalContent2}>
-        {selectedRecipe && (
-          <>
-            <Text style={styles.modalTitle}>{selectedRecipe.recipeName}</Text>
-            <Text style={styles.authorName}>por {selectedRecipe.authorName}</Text>
-            <Image source={{ uri: selectedRecipe.photo }} style={styles.modalImage} />
-            <Text style={styles.modalText}>Ingredientes:</Text>
-            <Text style={styles.recipeDescription}>{selectedRecipe.ingredients}</Text>
-            <Text style={styles.modalText}>Modo de Preparo:</Text>
-            <Text style={styles.recipeDescription}>{selectedRecipe.instructions}</Text>
-          </>
-        )}
-        <Pressable style={styles.botao_salvar} onPress={() => setRecipeDetailsModalVisible(false)}>
-          <Text style={styles.texto_botao}>Fechar</Text>
-        </Pressable>
-      </View>
-    </View>
-  </Modal>
-</ImageBackground>
+      {/* Modal de Adicionar Receita */}
+      <Modal
+        visible={addRecipeModalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setAddRecipeModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <TouchableOpacity style={styles.x} onPress={() => setAddRecipeModalVisible(false)}>
+              <Feather name="x" size={22} color="red" />
+            </TouchableOpacity>
 
+            <TouchableOpacity onPress={handleTakePhoto}>
+              {photo ? (
+                <Image source={{ uri: photo }} style={styles.photo} />
+              ) : (
+                <Image style={styles.img_heranca} source={require('../assets/images/image 9.png')} />
+              )}
+            </TouchableOpacity>
+
+            <Text style={styles.label}>Nome da receita</Text>
+            <TextInput value={recipeName} onChangeText={setRecipeName} style={styles.input4} />
+            <Text style={styles.label}>Autor da receita</Text>
+            <TextInput value={authorName} onChangeText={setAuthorName} style={styles.input} />
+            <Text style={styles.label}>Digite os ingredientes</Text>
+            <TextInput value={ingredients} onChangeText={setIngredients} style={styles.input2} multiline />
+            <Text style={styles.label}>Digite o modo de preparo</Text>
+            <TextInput value={instructions} onChangeText={setInstructions} style={styles.input3} multiline />
+
+            <Pressable style={styles.botao_salvar} onPress={handleSaveData}>
+              <Text style={styles.texto_botao}>Salvar</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Modal Detalhes da Receita */}
+      <Modal
+        visible={recipeDetailsModalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setRecipeDetailsModalVisible(false)}
+      >
+        <View style={styles.modalContainer2}>
+          <View style={styles.modalContent2}>
+            {selectedRecipe && (
+              <>
+                <TouchableOpacity style={styles.x} onPress={() => setRecipeDetailsModalVisible(false)}>
+                  <Feather name="x" size={24} color="red" />
+                </TouchableOpacity>
+                <Image source={{ uri: selectedRecipe.photo }} style={styles.modalImage} />
+                <Text style={styles.modalTitle}>{selectedRecipe.recipeName}</Text>
+                <Text style={styles.modal_authorName}>por {selectedRecipe.authorName}</Text>
+                <Text style={styles.modalText}>Ingredientes:</Text>
+                <Text style={styles.recipeDescription}>{selectedRecipe.ingredients}</Text>
+                <Text style={styles.modal_preparo}>Modo de Preparo:</Text>
+                <Text style={styles.recipeDescription}>{selectedRecipe.instructions}</Text>
+              </>
+            )}
+
+          </View>
+        </View>
+      </Modal>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    scroll: {
-        flexGrow: 1,
-        justifyContent: 'center',
-    },
-    seta: {
-        position: 'absolute',
-        top: 30,
-        left: 20,
-        zIndex: 1,
-    },
-    fundo: {
-        width: '100%',
-        height: '100%',
-        marginTop: 80,
-    },
-    texto_seta: {
-        top: -26,
-        left: 23,
-        fontSize: 17,
-        fontFamily: 'monospace',
-    },
-    perfil: {
-        width: 100,
-        height: 100,
-        left: 150,
-        top: 70,
-    },
-    texto_dois: {
-        fontSize: 16,
-        fontFamily: 'monospace',
-        top: 80,
-        left: 130,
-    },
-    texto_tres: {
-        fontSize: 12,
-        fontFamily: 'monospace',
-        top: 90,
-        left: 80,
-        width: 290,
-    },
-    retangulo: {
-        backgroundColor: 'rgba(255, 255, 255, 0.8)',
-        width: 350,
-        height: 200,
-        alignItems: 'center',
-        justifyContent: 'center',
-        left: 29,
-        top: 90,
-        borderRadius: 9,
-        borderStyle: 'dotted',
-        borderColor: '#565656',
-        borderWidth: 1,
-    },
-    mais: {
-        position: 'absolute',
-        zIndex: 1,
-        left: 239,
-        top: 10,
-        backgroundColor: '#385A64',
-        width: 170,
-        height: 30,
-        borderRadius: 20,
-        padding: 5
-        
-    },
-    texto_mais: {
-        fontSize: 12,
-        fontFamily: 'monospace',
-        top: -19,
-        left: 30,
-        color: 'white'
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    },
-    modalContent: {
-        backgroundColor: 'rgba(255, 255, 255, 1)',
-        padding: 20,
-        borderRadius: 10,
-        width: 369,
-        alignItems: 'center',
-        height: 800,
-    },
-    seta2: {
-        position: 'absolute',
-        top: 10,
-        left: 20,
-        zIndex: 1,
-    },
-    texto_seta2: {
-        top: -26,
-        left: 23,
-        fontSize: 17,
-        fontFamily: 'monospace',
-    },
-    input: {
-        height: 40,
-        width: 270,
-        fontSize: 16,
-        padding: 10,
-        borderRadius: 8,
-        color: '#565656',
-        margin: 20,
-        top: 45,
-        backgroundColor: 'rgba(0, 0, 0, 0.09)',
-    },
-    texto_receita: {
-        top: 56,
-        left: -60,
-        fontFamily: 'monospace',
-        fontSize: 15,
-    },
-    input2: {
-        height: 130,
-        width: 270,
-        fontSize: 16,
-        padding: 10,
-        borderRadius: 8,
-        color: '#565656',
-        margin: 20,
-        top: 15,
-        backgroundColor: 'rgba(0, 0, 0, 0.09)',
-        paddingTop: 10, // Mantém o texto no topo
-        textAlignVertical: 'top',
-    },
-    texto_receita2: {
-        top: 24,
-        left: -25,
-        fontFamily: 'monospace',
-        fontSize: 15,
-    },
-    texto_receita3: {
-        top: 10,
-        left: -18,
-        fontFamily: 'monospace',
-        fontSize: 15,
-    },
-    input3: {
-        height: 130,
-        width: 270,
-        fontSize: 16,
-        padding: 10,
-        borderRadius: 8,
-        color: '#565656',
-        margin: 20,
-        backgroundColor: 'rgba(0, 0, 0, 0.09)',
-        paddingTop: 10, // Mantém o texto no topo
-        textAlignVertical: 'top',
-    },
-    input4: {
-        height: 40,
-        width: 270,
-        fontSize: 16,
-        padding: 10,
-        borderRadius: 8,
-        color: '#565656',
-        margin: 20,
-        top: 30,
-        backgroundColor: 'rgba(0, 0, 0, 0.09)',
-    },
-    texto_receita4: {
-        top: 40,
-        left: -50,
-        fontFamily: 'monospace',
-        fontSize: 15,
-    },
-    img: {
-        width: 150,
-        height: 180,
-        borderRadius: 9,
-        borderStyle: 'dotted',
-        borderColor: '#565656',
-        borderWidth: 1,
-        top: 25,
-        right: 90
-    },
-    photo: {
-        width: 290,
-        height: 170,
-        borderRadius: 9,
-        marginTop: 10,
-    },
-    savedRecipesTitle: {
-        fontSize: 18,
-        fontFamily: 'monospace',
-        marginBottom: 10,
+  container: {
+    flex: 1,
+  },
+  scroll: {
+    flexGrow: 1,
+    paddingTop: 35, // manteve o deslocamento do que era top:35 antes absoluto
+    paddingHorizontal: 10,
+    paddingBottom: 20,
+  },
+  headerContainer: {
+    // removido 'position: absolute' para fazer parte do fluxo e permitir rolagem
+    marginBottom: 40,
+    alignItems: 'center',
+  },
+  seta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    marginTop: 40
+  },
+  texto_seta: {
+    marginLeft: 5,
+    fontSize: 17,
+    fontFamily: 'monospace',
+  },
+  perfil: {
+    width: 100,
+    height: 100,
+    marginTop: 70,
+    marginBottom: 10,
+  },
+  texto_dois: {
+    fontSize: 16,
+    fontFamily: 'monospace',
+    marginBottom: 6,
+  },
+  texto_tres: {
+    fontSize: 12,
+    fontFamily: 'monospace',
+    width: 300,
+    textAlign: 'center',
+    lineHeight: 18,
+  },
+  retangulo: {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    width: 350,
+    height: 160,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 9,
+    borderStyle: 'dotted',
+    borderColor: '#565656',
+    borderWidth: 1,
+    marginVertical: 10,
+  },
+  mais: {
+    position: 'absolute',
+    zIndex: 1,
+    left: 229,
+    top: 70,
+    backgroundColor: '#385A64',
+    width: 180,
+    height: 40,
+    borderRadius: 20,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  texto_mais: {
+    fontSize: 12,
+    fontFamily: 'monospace',
+    marginLeft: 8,
+    color: 'white',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  modalContent: {
+    backgroundColor: 'rgba(255, 255, 255, 1)',
+    padding: 20,
+    borderRadius: 10,
+    width: 369,
+    alignItems: 'center',
+    height: 800,
+  },
+  img_heranca: {
+    width: 265,
+    height: 150,
+    marginTop: -20,
+  },
+  label: {
+    fontFamily: 'monospace',
+    fontSize: 14,
+    alignSelf: 'flex-start',
+    marginLeft: 40,
+    marginTop: 15,
+    color: '#333',
+  },
+  input: {
+    height: 40,
+    width: 270,
+    fontSize: 16,
+    padding: 10,
+    borderRadius: 8,
+    color: '#565656',
+    margin: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.09)',
+  },
+  input2: {
+    height: 130,
+    width: 270,
+    fontSize: 16,
+    padding: 10,
+    borderRadius: 8,
+    color: '#565656',
+    margin: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.09)',
+    paddingTop: 10,
+    textAlignVertical: 'top',
+  },
+  input3: {
+    height: 130,
+    width: 270,
+    fontSize: 16,
+    padding: 10,
+    borderRadius: 8,
+    color: '#565656',
+    margin: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.09)',
+    paddingTop: 10,
+    textAlignVertical: 'top',
+  },
+  input4: {
+    height: 40,
+    width: 270,
+    fontSize: 16,
+    padding: 10,
+    borderRadius: 8,
+    color: '#565656',
+    margin: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.09)',
+  },
+  x: {
+    resizeMode: 'contain',
+    marginLeft: 'auto',
+  },
+  img: {
+    width: 130,
+    height: 140,
+    borderRadius: 9,
+    marginRight: 190,
+  },
+  botao_salvar: {
+    borderRadius: 5,
+    backgroundColor: '#6CC696',
+    height: 31,
+    width: 70,
+    bottom: 25,
+    left: 140,
+  },
+  texto_botao: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+    fontFamily: 'monospace',
+    top: 4
+  },
+  photo: {
+    width: 290,
+    height: 155,
+    borderRadius: 9,
+  },
+  recipeName: {
+    fontSize: 20,
+    fontFamily: 'monospace',
+    marginLeft: 50,
+    marginTop: -130,
+    height: 90
+  },
+  authorName: {
+    fontSize: 14,
+    color: 'gray',
+    fontFamily: 'monospace',
+    marginTop: -60,
+    marginLeft: 50,
+  },
+  botao: {
+    backgroundColor: '#009E60',
+    height: 25,
+    width: 140,
+    borderRadius: 6,
+    padding: 3,
+    marginTop: -25,
+    marginLeft: 185,
+  },
+  botaoTexto: {
+    fontSize: 14,
+    color: 'white',
+    fontFamily: 'monospace',
+    marginLeft: 18,
+  },
+  recipeDescription: {
+    fontSize: 12,
+    fontFamily: 'monospace',
+    left: -90
+  },
+  modalContainer2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  modalContent2: {
+    backgroundColor: 'rgba(255, 255, 255, 1)',
+    padding: 20,
+    borderRadius: 10,
+    width: 369,
+    alignItems: 'center',
+    height: 800,
+  },
+  modalImage: {
+    width: 230,
+    height: 170,
+    borderRadius: 3,
+    marginTop: 20,
+  },
+  modalText: {
+    fontSize: 18,
+    marginVertical: 5,
+    fontFamily: 'monospace',
+    marginTop: 50,
+    textAlign: 'justify',
+    marginLeft: -80,
 
-    },
-    savedRecipe: {
-        marginBottom: 20,
-        borderWidth: 1,
-        borderColor: '#ddd',
-        padding: 10,
-        borderRadius: 5,
-    },
-    savedRecipeTitle: {
-        fontSize: 16,
-        fontFamily: 'monospace',
-    },
-    savedRecipeImage: {
-        width: 120,
-        height: 120,
-        borderRadius: 10,
-        marginRight: 10,
-    },
-    recipeTextContainer: {
-        flex: 1,
-        justifyContent: 'space-between',
-    },
-    recipeName: {
-        fontSize: 20,
-        fontFamily: 'monospace',
-        left: 50,
-        top: -150
-    },
-    authorName: {
-        fontSize: 14,
-        color: 'gray',
-        fontFamily: 'monospace',
-        top: -140,
-        left: 50,
+  },
+  modal_preparo: {
+    fontSize: 18,
+    marginVertical: 5,
+    fontFamily: 'monospace',
+    marginTop: 50,
+    textAlign: 'justify',
+    marginLeft: -40,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontFamily: 'monospace',
+    marginTop: 30,
+    marginLeft: -170,
 
+  },
+  modal_authorName: {
+    fontSize: 14,
+    color: 'gray',
+    fontFamily: 'monospace',
+    marginTop: 10,
+    marginLeft: -140,
 
-    },
-    recipeDescription: {
-        fontSize: 12,
-        fontFamily: 'monospace',
-    },
-    viewRecipeButton: {
-        backgroundColor: '#e0e0e0',
-        padding: 8,
-        borderRadius: 5,
-        alignSelf: 'flex-end',
+  },
 
-    },
-    viewRecipeButtonText: {
-        fontSize: 10,
-        fontFamily: 'monospace',
-
-    },
-    botao_salvar: {
-        borderRadius: 5,
-        backgroundColor: '#6CC696',
-        height: 25,
-        width: 70,
-        bottom: 10,
-        left: 120,
-    },
-    texto_botao:{
-        color: '#fff',
-        fontSize: 16,
-        left: 11
-    },
-
-    //modal receita
-
-    modalContainer2: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    },
-    modalContent2: {
-        backgroundColor: 'rgba(255, 255, 255, 1)',
-        padding: 20,
-        borderRadius: 10,
-        width: 369,
-        alignItems: 'center',
-        height: 800,
-    },
-    seta3: {
-        position: 'absolute',
-        top: 10,
-        left: 20,
-        zIndex: 1,
-    },
-    texto_seta3: {
-        top: -26,
-        left: 23,
-        fontSize: 17,
-        fontFamily: 'monospace',
-    },
-    modalImage: {
-        width: 270,
-        height: 170,
-        borderRadius: 3,
-        marginTop: 50,
-    },
-    modalText: {
-        fontSize: 18,
-        marginVertical: 5,
-        top: 30,
-        left: -90,
-        fontFamily: 'monospace'
-    },
-    modalTitle: {
-        fontSize: 18,
-        marginVertical: 5,
-        top: 50,
-        left: -46,
-        fontFamily: 'monospace'
-    },
-    modalListItem: {
-        fontSize: 18,
-        marginVertical: 5,
-        top: 50,
-        left: -60,
-        fontFamily: 'monospace'
-
-    },
-    modalText2: {
-        fontSize: 18,
-        marginVertical: 5,
-        top: 30,
-        left: -74,
-        fontFamily: 'monospace'
-    },
-    modalTitle2: {
-        fontSize: 18,
-        marginVertical: 5,
-        top: 60,
-        left: -30,
-        fontFamily: 'monospace'
-    },
-    modalListItem2: {
-        fontSize: 18,
-        marginVertical: 5,
-        top: 60,
-        left: -60,
-        fontFamily: 'monospace'
-
-    },
-    recipeCard: {
-        flexDirection: 'row',
-        backgroundColor: 'white',
-        borderRadius: 10,
-        marginVertical: 10,
-        padding: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        top: 110,
-        width: 350,
-        height: 150,
-        left: 25
-    },
+  recipeCard: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    marginVertical: 10,
+    padding: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    marginTop: 110,
+    width: 350,
+    height: 150,
+    marginLeft: 25,
+  },
 });
+

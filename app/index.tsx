@@ -11,13 +11,13 @@ import {
   View,
 } from 'react-native';
 
-const fakeDB = [
-  {
-    id: '1',
-    email: 'teste@gmail.com',
-    senha: '123456',
-  },
-];
+import { initializeApp } from 'firebase/app';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { firebaseConfig } from '../firebaseConfig'; // ajuste o caminho conforme seu projeto
+
+// Inicializa o Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -25,14 +25,15 @@ export default function LoginScreen() {
   const router = useRouter();
 
   const handleLogin = () => {
-    const usuario = fakeDB.find(user => user.email === email && user.senha === senha);
-
-    if (usuario) {
-      Alert.alert('Login', `Bem-vindo, ${usuario.email}!`);
-      router.replace('/home');
-    } else {
-      Alert.alert('Erro ao logar', 'Email ou senha incorretos');
-    }
+    signInWithEmailAndPassword(auth, email, senha)
+      .then(userCredential => {
+        Alert.alert('Login', `Bem-vindo, ${userCredential.user.email}!`);
+        router.replace('/home'); // redireciona para a tela home
+      })
+      .catch(error => {
+        console.log(error);
+        Alert.alert('Erro ao logar', error.message);
+      });
   };
 
   return (
@@ -58,6 +59,7 @@ export default function LoginScreen() {
             onChangeText={setEmail}
             keyboardType="email-address"
           />
+
           <TextInput
             style={styles.input}
             placeholder="Digite sua senha"
@@ -66,10 +68,6 @@ export default function LoginScreen() {
             onChangeText={setSenha}
             secureTextEntry
           />
-
-          <TouchableOpacity onPress={() => Alert.alert('Redefinir Senha', 'Funcionalidade não implementada.')}>
-            <Text style={styles.linkSenha}>Esqueci a senha</Text>
-          </TouchableOpacity>
 
           <TouchableOpacity style={styles.botao} onPress={handleLogin}>
             <Text style={styles.botaoTexto}>Entrar</Text>

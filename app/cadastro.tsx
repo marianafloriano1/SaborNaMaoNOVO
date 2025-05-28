@@ -2,34 +2,41 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
+// Firebase
+import { initializeApp } from 'firebase/app';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { firebaseConfig } from '../firebaseConfig'; // certifique-se que este arquivo existe
+
+// Inicializa o Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
 export default function RegisterScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const router = useRouter();
 
-  const fakeDB: any[] = [];
-
   const handleRegister = () => {
-    if ( !email || !senha) {
+    if (!email || !senha) {
       Alert.alert('Erro', 'Preencha todos os campos');
       return;
     }
 
-    const usuarioExistente = fakeDB.find(user => user.email === email);
-
-    if (usuarioExistente) {
-      Alert.alert('Erro', 'Email já cadastrado');
+    if (senha.length < 6) {
+      Alert.alert('Erro', 'A senha deve conter no mínimo 6 caracteres');
       return;
     }
 
-    fakeDB.push({
-      id: Date.now().toString(),
-      email,
-      senha,
-    });
-
-    Alert.alert('Sucesso', 'Conta criada com sucesso!');
-    router.replace('/');
+    createUserWithEmailAndPassword(auth, email, senha)
+      .then((userCredential) => {
+        console.log('Conta criada:', userCredential.user);
+        Alert.alert('Sucesso', 'Conta criada com sucesso!');
+        router.replace('/');
+      })
+      .catch((error) => {
+        console.error(error);
+        Alert.alert('Erro ao cadastrar', error.message);
+      });
   };
 
   return (
@@ -73,6 +80,7 @@ export default function RegisterScreen() {
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

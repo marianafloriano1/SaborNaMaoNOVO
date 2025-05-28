@@ -22,7 +22,7 @@ type RootStackParamList = {
     ano_novo: undefined;
     festa: undefined;
     bebidas: undefined;
-    kids2: undefined;
+    kids: undefined;
     dietas: undefined;
     restricao: undefined;
     noite_garotas: undefined;
@@ -31,6 +31,8 @@ type RootStackParamList = {
     vegano: undefined;
     vegetariano: undefined;
     aniversario: undefined;
+    snack: undefined;
+    aperitivos: undefined;
 };
 
 export default function App() {
@@ -64,14 +66,14 @@ export default function App() {
     const [toolTipVisible, setToolTipVisible] = useState(false);
 
     const items = [
-        { title: 'Natal', image: require('../assets/images/natal.png'), route: 'ceia_natal' },
+        { title: 'Natal', image: require('../assets/images/natal.png'), route: 'natal' },
         { title: 'Páscoa', image: require('../assets/images/pascoa.png'), route: 'pascoa' },
-        { title: 'Arraiá', image: require('../assets/images/junina.png'), route: 'festa_junina' },
-        { title: 'Halloween', image: require('../assets/images/hallowen.png'), route: 'halloween' },
+        { title: 'Arraiá', image: require('../assets/images/junina.png'), route: 'arraia' },
+        { title: 'Halloween', image: require('../assets/images/hallowen.png'), route: 'hallow' },
         { title: 'Ano Novo', image: require('../assets/images/anonovo.png'), route: 'ano_novo' },
-        { title: 'Festas', image: require('../assets/images/festas.png'), route: 'festa' },
+        { title: 'Festas', image: require('../assets/images/festas.png'), route: 'niver' },
     ];
-    const shadowColors = ['#FF8C8C', '#B78BF1', '#FFF28D', '#00FF37', '#E8B931', '#4A4458'];
+    const shadowColors = ['#852221', '#6750A4', '#633B48', '#229E0C', '#00127A', '#B02652'];
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -124,7 +126,7 @@ export default function App() {
                         </TouchableOpacity>
                     </Tooltip>
 
-                     <View style={styles.categorias2}>
+                    <View style={styles.categorias2}>
 
                         <TouchableOpacity
                             style={styles.categoria21}
@@ -138,7 +140,7 @@ export default function App() {
                         <TouchableOpacity
                             style={styles.categoria2}
                             onPress={() => {
-                                nav.navigate('kids2');
+                                nav.navigate('kids');
                             }}
                         >
                             <Text style={styles.texto2}>Soboro</Text>
@@ -172,7 +174,7 @@ export default function App() {
                                             shadowOffset: { width: 10, height: 10 },
                                             shadowOpacity: 0.8,
                                             shadowRadius: 1,
-                                            elevation: 10,
+                                            elevation: 6,
                                         },
                                     ]}
                                 >
@@ -198,7 +200,7 @@ export default function App() {
                         <TouchableOpacity
                             style={styles.categoria}
                             onPress={() => {
-                                nav.navigate('kids2');
+                                nav.navigate('kids');
                             }}
                         >
                             <Text style={styles.texto1}>Kids</Text>
@@ -242,7 +244,7 @@ export default function App() {
                                 backgroundColor: '#fff',
                                 borderRadius: 10,
                                 marginBottom: 10,
-                                shadowColor: '#FF8C8C',
+                                shadowColor: '#1D192B',
                                 shadowOffset: { width: 0, height: 10 },
                                 shadowOpacity: 0.8,
                                 shadowRadius: 0.3,
@@ -250,8 +252,10 @@ export default function App() {
                                 borderColor: '#565656',
                                 borderWidth: 0.2,
                             }}
-                            onPress={() => nav.navigate('noite_garotas')}
+                            onPress={() => nav.navigate('snack')}
                         >
+                            <Text style={styles.texto_snack}>Noite de Snacks</Text>
+
                         </Pressable>
                     </View>
 
@@ -263,7 +267,7 @@ export default function App() {
                                 backgroundColor: 'white',
                                 borderRadius: 10,
                                 marginBottom: 10,
-                                shadowColor: '#A8D0FF',
+                                shadowColor: '#14AE5C',
                                 shadowOffset: { width: 0, height: 10 },
                                 shadowOpacity: 0.8,
                                 shadowRadius: 0.3,
@@ -295,7 +299,7 @@ export default function App() {
                                 backgroundColor: '#fff',
                                 borderRadius: 10,
                                 marginBottom: 10,
-                                shadowColor: '#FF8C8C',
+                                shadowColor: '#003856',
                                 shadowOffset: { width: 0, height: 10 },
                                 shadowOpacity: 0.8,
                                 shadowRadius: 0.3,
@@ -303,8 +307,10 @@ export default function App() {
                                 borderColor: '#565656',
                                 borderWidth: 0.2,
                             }}
-                            onPress={() => nav.navigate('almoco_domingo')}
+                            onPress={() => nav.navigate('aperitivos')}
                         >
+                            <Text style={styles.texto_aperitivos}>Aperitivos para festas</Text>
+
                         </Pressable>
                     </View>
 
@@ -316,7 +322,7 @@ export default function App() {
                                 backgroundColor: 'white',
                                 borderRadius: 10,
                                 marginBottom: 10,
-                                shadowColor: '#A8D0FF',
+                                shadowColor: '#B3261E',
                                 shadowOffset: { width: 0, height: 10 },
                                 shadowOpacity: 0.8,
                                 shadowRadius: 0.3,
@@ -324,62 +330,14 @@ export default function App() {
                                 borderColor: '#565656',
                                 borderWidth: 0.2,
                             }}
-                            onPress={() => nav.navigate('vegano')}
-                        >
+                            onPress={() => nav.navigate('almoco_domingo')}>
+                            <Text style={styles.texto_almoco}>Almoços em família</Text>
+
                         </Pressable>
                     </View>
                 </View>
 
-                <View
-                    style={{
-                        flex: 1,
-                        flexDirection: 'row',
-                        justifyContent: 'space-evenly',
-                        marginLeft: -5,
-                    }}
-                >
-                    <View style={{ alignItems: 'center' }}>
-                        <Pressable
-                            style={{
-                                width: 160,
-                                height: 160,
-                                backgroundColor: '#fff',
-                                borderRadius: 10,
-                                marginBottom: 10,
-                                shadowColor: '#FF8C8C',
-                                shadowOffset: { width: 0, height: 10 },
-                                shadowOpacity: 0.8,
-                                shadowRadius: 0.3,
-                                elevation: 26,
-                                borderColor: '#565656',
-                                borderWidth: 0.2,
-                            }}
-                            onPress={() => nav.navigate('vegetariano')}
-                        >
-                        </Pressable>
-                    </View>
 
-                    <View style={{ alignItems: 'center' }}>
-                        <Pressable
-                            style={{
-                                width: 160,
-                                height: 160,
-                                backgroundColor: 'white',
-                                borderRadius: 10,
-                                marginBottom: 10,
-                                shadowColor: '#A8D0FF',
-                                shadowOffset: { width: 0, height: 10 },
-                                shadowOpacity: 0.8,
-                                shadowRadius: 0.3,
-                                elevation: 26,
-                                borderColor: '#565656',
-                                borderWidth: 0.2,
-                            }}
-                            onPress={() => nav.navigate('aniversario')}
-                        >
-                        </Pressable>
-                    </View>
-                </View>
             </ScrollView>
         </View>
     );
@@ -401,20 +359,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
     },
-    text: {
-        textAlign: 'center',
-        fontSize: 25,
-        color: '#FF8F7E',
-        justifyContent: 'center',
-        fontWeight: 'bold',
-        marginTop: -45
-
-    },
 
     img_home: {
         width: 400,
         height: 200,
-        top: 10,
+        top: 30,
         right: 20
     },
 
@@ -439,7 +388,8 @@ const styles = StyleSheet.create({
         height: 40,
         resizeMode: 'contain',
         marginLeft: 'auto',
-        left: 5
+        left: 5,
+        top: 30
 
     },
     buttonRow: {
@@ -499,7 +449,7 @@ const styles = StyleSheet.create({
         marginBottom: 25,
 
     },
-    
+
 
     textoo: {
         fontSize: 17,
@@ -528,7 +478,7 @@ const styles = StyleSheet.create({
         bottom: 30
 
     },
-     img_snacks: {
+    img_snacks: {
         width: 100,
         height: 100,
 
@@ -542,7 +492,6 @@ const styles = StyleSheet.create({
         padding: 10,
         width: 250,
         position: 'absolute',
-        top: 20,
         left: 60,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 10 },
@@ -612,7 +561,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
         fontFamily: 'monospace',
-        
+
     },
 
     categoria2: {
@@ -628,13 +577,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 25,
-        margin: 10
+        margin: 5
     },
 
     categorias2: {
         flexDirection: 'row', // Organiza os itens em linha
-        top: 10,
-        margin: 10,
+        top: 50,
+        left: 20
 
     },
 
@@ -643,9 +592,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
         fontFamily: 'monospace',
-        
+
     },
-     categoria21: {
+    categoria21: {
         backgroundColor: '#385A64',
         borderRadius: 15,
         width: 100,
@@ -658,14 +607,37 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 25,
-        margin: 10
+        margin: 5,
+        fontFamily: 'monospace'
     },
 
-    texto_sozinho:{
+    texto_sozinho: {
         color: '#6CC696',
         fontSize: 22,
-       fontWeight: 'bold',
-       left: 10
+        fontWeight: 'bold',
+        left: 10,
+        top: 10
     },
-
+    texto_aperitivos: {
+        color: '#003856',
+        fontSize: 22,
+        fontWeight: 'bold',
+        left: 10,
+        width: 140,
+        top: 10
+    },
+    texto_snack: {
+        color: '#868585',
+        fontSize: 22,
+        fontWeight: 'bold',
+        left: 10,
+        top: 10
+    },
+    texto_almoco: {
+        color: '#CA7671',
+        fontSize: 22,
+        fontWeight: 'bold',
+        left: 10,
+        top: 10
+    },
 });
