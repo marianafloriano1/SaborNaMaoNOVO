@@ -4,16 +4,18 @@ import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
-    Alert,
-    ImageBackground,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
-type CheckedItems = { [key: string]: boolean };
+type CheckedItems = {
+  [key: string]: boolean;
+};
 
 export default function Paella() {
   const nav = useNavigation<NavigationProp<any>>();
@@ -32,7 +34,7 @@ export default function Paella() {
     item2: '1 fio de azeite',
     item3: '1 cebola picada',
     item4: '500g de lula',
-    item5: '400g de camarão 7 \nbarbas descascado',
+    item5: '400g de camarão 7 barbas descascado',
     item6: '300g de camarão rosa descascado',
     item7: 'Sal à gosto',
     item8: '2 tomates sem sementes em cubos',
@@ -63,7 +65,10 @@ export default function Paella() {
   };
 
   const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({ ...prev, [item]: !prev[item] }));
+    setCheckedItems((prev) => ({
+      ...prev,
+      [item]: !prev[item],
+    }));
   };
 
   const salvarListaDeCompras = async () => {
@@ -97,43 +102,48 @@ export default function Paella() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_paella.png')} // Altere conforme sua imagem
-      >
-        <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('almoco_domingo')}>
-          <Feather name="chevron-left" size={28} color="#000" />
-        </TouchableOpacity>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/images/fundo_paella.png')} // Atualize para o caminho correto da sua imagem
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
 
-        <View style={styles.row}>
-          <Text style={styles.paragraph}>Paella</Text>
+        <View style={styles.tituloContainer}>
+          <TouchableOpacity onPress={() => nav.navigate('almoco_domingo')}>
+            <Feather name="chevron-left" size={28} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.paragraph}>PAELLA</Text>
         </View>
 
-       
-               <Text style={styles.ingredientes}>INGREDIENTES</Text>
-               <View style={styles.ingredientesContainer}>
-                 <View>
-                   {Object.entries(itemsMap).map(([key, label]) => (
-                     <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                       <Text style={styles.topicos}>
-                         {checkedItems[key] ? (
-                           <Text style={styles.check}>✓ </Text>
-                         ) : (
-                           <Text style={styles.bolinha}>⚪ </Text>
-                         )}
-                         {label}
-                       </Text>
-                     </TouchableOpacity>
-                   ))}
-                 </View>
-               </View>
+        <Text style={styles.ingredientes}>INGREDIENTES</Text>
+        <View style={styles.ingredientesContainer}>
+          <View>
+            {Object.entries(itemsMap).map(([key, label]) => (
+              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <Text style={styles.topicos}>
+                  {checkedItems[key] ? (
+                    <Text style={styles.check}>✓ </Text>
+                  ) : (
+                    <Text style={styles.bolinha}>⚪ </Text>
+                  )}
+                  {label}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
 
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
         {Object.entries(stepsMap).map(([key, label], index) => (
           <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
             <Text style={styles.topicos}>
-              {checkedItems[key] ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
+              {checkedItems[key] ? (
+                <Text style={styles.check}>✓ </Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}
               {index + 1}. {label}
             </Text>
           </TouchableOpacity>
@@ -144,55 +154,65 @@ export default function Paella() {
             <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
             <Text style={styles.textoBotao}>Forma correta descarte</Text>
           </TouchableOpacity>
+
           <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
             <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
             <Text style={styles.textoBotao}>Baixar lista de compra</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </View>
     </ScrollView>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    height: '60%',
-    backgroundColor: '#ececec',
+    backgroundColor: '#ECECEC',
+    paddingBottom: 40,
   },
-  row: {
+  decorativeImage: {
+    position: 'absolute',
+    left: 102,
+    top: 0,
+    right: 0,
+    width: 350,
+    height: 720,
+    zIndex: 0,
+  },
+  tituloContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 90,
+    marginLeft: 10,
+    zIndex: 1,
   },
   paragraph: {
     fontSize: 22,
     color: '#242424',
     textTransform: 'uppercase',
-    top: 40,
-    left: 40,
-    marginBottom: 80
-    
+    marginLeft: 5,
+    width: 240,
+    lineHeight: 26,
   },
   ingredientes: {
-    marginTop: 40,
+    marginTop: 100,
     fontSize: 18,
     marginBottom: 20,
     paddingVertical: 5,
     left: 44,
-   
+    color: '#000',
   },
   ingredientesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   topicos: {
-    marginBottom: 20,
+    marginBottom: 10,
     lineHeight: 24,
     left: 44,
     width: 290,
-    top: 10,
   },
   check: {
     color: '#32CD32',
@@ -202,40 +222,33 @@ const styles = StyleSheet.create({
   bolinha: {
     fontSize: 16,
   },
-  seta: {
-    top: 70,
-    left: 10,
-  },
-   botoesContainer: {
-    flexDirection: "row",
-    width: "100%",
+  botoesContainer: {
+    flexDirection: 'row',
+    width: '100%',
     height: 50,
     marginTop: 40,
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: '#009B4D',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: '#2F4B54',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   iconeBotao: {
     marginRight: 10,
   },
-   textoBotao: {
-    color: "#fff",
+  textoBotao: {
+    color: '#fff',
     fontSize: 16,
   },
 });

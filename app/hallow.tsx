@@ -29,7 +29,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.card}
-              onPress={() => console.log("Botão 1")}
+              onPress={() => nav.navigate("HaDedos")}
             >
               <ImageBackground
                 source={require("../assets/images/funfoHalow.jpg")} // Imagem de fundo
@@ -48,14 +48,14 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-              onPress={() => console.log("Botão 2")}
+              onPress={() => nav.navigate("HaAlmas")}
             >
               <ImageBackground
                 source={require("../assets/images/funfoHalow.jpg")} // Imagem de fundo
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>almas Assustadas de batata</Text>
+              <Text style={styles.texto}>Almas Assustadas de batata</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/5581088/pexels-photo-5581088.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -67,14 +67,14 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.card}
-              onPress={() => console.log("Botão 3")}
+              onPress={() => nav.navigate("HaCap")}
             >
               <ImageBackground
                 source={require("../assets/images/funfoHalow.jpg")} // Imagem de fundo
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>Capcake de abóbora envenenada</Text>
+              <Text style={styles.texto}>Cupcake de abóbora envenenada</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/5633822/pexels-photo-5633822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -86,14 +86,14 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-              onPress={() => console.log("Botão 4")}
+             onPress={() => nav.navigate("HaBiscoito")}
             >
               <ImageBackground
                 source={require("../assets/images/funfoHalow.jpg")} // Imagem de fundo
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>Biscoito de mosntruosos</Text>
+              <Text style={styles.texto}>Biscoitos mosntruosos</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/5634612/pexels-photo-5634612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",

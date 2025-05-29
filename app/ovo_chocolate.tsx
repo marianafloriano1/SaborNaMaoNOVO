@@ -5,7 +5,7 @@ import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
   Alert,
-  ImageBackground,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -23,8 +23,6 @@ export default function OvoDePascoa() {
   const [checkedItems, setCheckedItems] = useState<CheckedItems>({
     item1: false,
     item2: false,
-    item3: false,
-    item4: false,
     step1: false,
     step2: false,
     step3: false,
@@ -38,11 +36,18 @@ export default function OvoDePascoa() {
   const itemsMap: { [key: string]: string } = {
     item1: '240 gramas de \nchocolate ao leite ou \nmeio amargo',
     item2: '1 forma para ovo de \nPáscoa de 500 gramas',
-    item3: '', // Sem item3 na original, pode remover ou deixar vazio
-    item4: '', // Sem item4, opcional
   };
 
-  // Só peguei os ingredientes que você tinha na lista, se quiser mais, só me avisar.
+  const stepsMap: { [key: string]: string } = {
+    step1: 'Derreta dois terços do chocolate ao leite no micro-ondas. Retire a cada 30 segundos e misture até o chocolate derreter por completo.',
+    step2: 'Acrescente o restante do chocolate e misture.',
+    step3: 'Espere a temperatura do chocolate chegar a 28 graus Celsius. Use um termômetro ou sinta nos lábios a temperatura fria.',
+    step4: 'Transfira parte do chocolate para uma forma de ovo de Páscoa de 350 gramas e espalhe com a colher.',
+    step5: 'Coloque sobre o papel-manteiga e leve para gelar até endurecer.',
+    step6: 'Depois, passe mais uma camada de chocolate e espalhe com a colher.',
+    step7: 'Leve novamente para gelar até a forma ficar opaca.',
+    step8: 'Desenforme e decore do jeito que preferir.',
+  };
 
   const toggleCheck = (item: string) => {
     setCheckedItems((prev) => ({
@@ -53,7 +58,7 @@ export default function OvoDePascoa() {
 
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
-      .filter((key) => itemsMap[key].length > 0 && !checkedItems[key])
+      .filter((key) => !checkedItems[key])
       .map((key) => `- ${itemsMap[key]}`)
       .join('\n');
 
@@ -82,96 +87,52 @@ export default function OvoDePascoa() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_ovo_choco.png')} // Coloque a imagem de fundo que quiser
-      >
-        <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('pascoa')}>
-          <Feather name="chevron-left" size={28} color="#000" />
-        </TouchableOpacity>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/images/fundo_ovo_choco.png')} // Ajuste o caminho da imagem
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
 
-        <View style={styles.row}>
-          <Text style={styles.paragraph}>Ovo de Páscoa</Text>
+        <View style={styles.tituloContainer}>
+          <TouchableOpacity onPress={() => nav.navigate('pascoa')}>
+            <Feather name="chevron-left" size={28} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.paragraph}>OVO{"\n"}DE PÁSCOA</Text>
         </View>
 
         <Text style={styles.ingredientes}>INGREDIENTES</Text>
         <View style={styles.ingredientesContainer}>
           <View>
-            {Object.entries(itemsMap)
-              .filter(([key, label]) => label.length > 0)
-              .map(([key, label]) => (
-                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                  <Text style={styles.topicos}>
-                    {checkedItems[key] ? (
-                      <Text style={styles.check}>✓ </Text>
-                    ) : (
-                      <Text style={styles.bolinha}>⚪ </Text>
-                    )}
-                    {label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+            {Object.entries(itemsMap).map(([key, label]) => (
+              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <Text style={styles.topicos}>
+                  {checkedItems[key] ? (
+                    <Text style={styles.check}>✓ </Text>
+                  ) : (
+                    <Text style={styles.bolinha}>⚪ </Text>
+                  )}
+                  {label}
+                </Text>
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
 
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-
-        <TouchableOpacity onPress={() => toggleCheck('step1')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step1 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Derreta dois terços do chocolate ao leite no micro-ondas. Retire a cada 30 segundos e misture até o chocolate derreter por completo.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step2')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step2 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Acrescente o restante do chocolate e misture.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step3')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step3 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Espere a temperatura do chocolate chegar a 28 graus Celsius. Use um termômetro ou sinta nos lábios a temperatura fria.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step4')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step4 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Transfira parte do chocolate para uma forma de ovo de Páscoa de 350 gramas e espalhe com a colher.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step5')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step5 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Coloque sobre o papel-manteiga e leve para gelar até endurecer.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step6')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step6 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Depois, passe mais uma camada de chocolate e espalhe com a colher.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step7')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step7 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Leve novamente para gelar até a forma ficar opaca.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step8')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step8 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Desenforme e decore do jeito que preferir.
-          </Text>
-        </TouchableOpacity>
+        {Object.entries(stepsMap).map(([key, label], index) => (
+          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <Text style={styles.topicos}>
+              {checkedItems[key] ? (
+                <Text style={styles.check}>✓ </Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}
+              {index + 1}. {label}
+            </Text>
+          </TouchableOpacity>
+        ))}
 
         <View style={styles.botoesContainer}>
           <TouchableOpacity style={styles.botaoVerde}>
@@ -183,10 +144,8 @@ export default function OvoDePascoa() {
             />
             <Text style={styles.textoBotao}>Forma correta descarte</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={salvarListaDeCompras}
-          >
+
+          <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
             <Feather
               name="download"
               size={20}
@@ -196,7 +155,7 @@ export default function OvoDePascoa() {
             <Text style={styles.textoBotao}>Baixar lista de compra</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </View>
     </ScrollView>
   );
 }
@@ -205,44 +164,48 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    height: '90%',
-    backgroundColor: '#ececec'
-
+    backgroundColor: '#ECECEC',
   },
-  row: {
+  decorativeImage: {
+    position: 'absolute',
+    left: 102,
+    top: 0,
+    right: 0,
+    width: 350,
+    height: 720,
+    zIndex: 0,
+  },
+  tituloContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-
+    marginTop: 90,
+    marginLeft: 10,
   },
   paragraph: {
     fontSize: 22,
     color: '#242424',
     textTransform: 'uppercase',
-    top: 40,
-    left: 40,
-    marginBottom: 90
+    marginLeft: 5,
+    width: 240,
+    lineHeight: 26,
   },
-
   ingredientes: {
-    marginTop: 40,
+    marginTop: 100,
     fontSize: 18,
     marginBottom: 20,
     paddingVertical: 5,
     left: 44,
-
-
+    color: '#000',
   },
   ingredientesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-
   },
   topicos: {
     marginBottom: 10,
     lineHeight: 24,
     left: 44,
-    width: 280,
-    top: 10
+    width: 290,
   },
   check: {
     color: '#32CD32',
@@ -252,40 +215,33 @@ const styles = StyleSheet.create({
   bolinha: {
     fontSize: 16,
   },
-  seta: {
-    top: 70
-  },
-
   botoesContainer: {
-    flexDirection: "row",
-    width: "100%",
+    flexDirection: 'row',
+    width: '100%',
     height: 50,
     marginTop: 40,
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: '#009B4D',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: '#2F4B54',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   iconeBotao: {
     marginRight: 10,
   },
   textoBotao: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 16,
   },
 });

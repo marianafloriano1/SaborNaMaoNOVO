@@ -24,7 +24,7 @@ type RootStackParamList = {
     bebidas: undefined;
     kids: undefined;
     dietas: undefined;
-    restricao: undefined;
+    restricoes: undefined;
     noite_garotas: undefined;
     morando_sozinho: undefined;
     almoco_domingo: undefined;
@@ -218,7 +218,7 @@ export default function App() {
                         <TouchableOpacity
                             style={styles.categoria}
                             onPress={() => {
-                                nav.navigate('restricao');
+                                nav.navigate('restricoes');
                             }}
                         >
                             <Text style={styles.texto1}>Restrições</Text>

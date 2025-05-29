@@ -5,7 +5,7 @@ import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
   Alert,
-  ImageBackground,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -36,7 +36,7 @@ export default function BolinhoDeArroz() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: '2 xícaras de arroz \ncozido',
+    item1: '2 xícaras de arroz cozido',
     item2: '1/2 xícara (chá) de leite',
     item3: '1 colher (sopa) de fermento em pó',
     item4: '1/2 xícara (chá) de farinha de trigo',
@@ -47,11 +47,14 @@ export default function BolinhoDeArroz() {
     item9: '3 ovos',
   };
 
+  const stepsMap: { [key: string]: string } = {
+    step1: 'Em um recipiente, misture todos os ingredientes até criar uma massa firme e encorpada.',
+    step2: 'Molde os bolinhos e frite-os no óleo quente, até que fiquem dourados.',
+    step3: 'Escorra sobre papel toalha.',
+  };
+
   const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+    setCheckedItems((prev) => ({ ...prev, [item]: !prev[item] }));
   };
 
   const salvarListaDeCompras = async () => {
@@ -85,17 +88,19 @@ export default function BolinhoDeArroz() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_bolinho_arroz.png')} // Troque pela imagem desejada
-      >
-        <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('natal')}>
-          <Feather name="chevron-left" size={28} color="#000" />
-        </TouchableOpacity>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/images/fundo_bolinho_arroz.png')}
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
 
-        <View style={styles.row}>
-          <Text style={styles.paragraph}>Bolinho de Arroz</Text>
+        <View style={styles.tituloContainer}>
+          <TouchableOpacity onPress={() => nav.navigate('natal')}>
+            <Feather name="chevron-left" size={28} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.paragraph}>BOLINHO DE ARROZ</Text>
         </View>
 
         <Text style={styles.ingredientes}>INGREDIENTES</Text>
@@ -104,11 +109,7 @@ export default function BolinhoDeArroz() {
             {Object.entries(itemsMap).map(([key, label]) => (
               <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
                 <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
+                  {checkedItems[key] ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
                   {label}
                 </Text>
               </TouchableOpacity>
@@ -117,140 +118,125 @@ export default function BolinhoDeArroz() {
         </View>
 
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-
-        <TouchableOpacity onPress={() => toggleCheck('step1')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step1 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Em um recipiente, misture todos os ingredientes até criar uma massa firme e encorpada.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step2')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step2 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Molde os bolinhos e frite-os no óleo quente, até que fiquem dourados.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step3')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step3 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Escorra sobre papel toalha.
-          </Text>
-        </TouchableOpacity>
+        {Object.entries(stepsMap).map(([key, step]) => (
+          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <Text style={styles.topicos}>
+              {checkedItems[key] ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
+              {step}
+            </Text>
+          </TouchableOpacity>
+        ))}
 
         <View style={styles.botoesContainer}>
-                        <TouchableOpacity style={styles.botaoVerde}>
-                          <Feather
-                            name="refresh-cw"
-                            size={20}
-                            color="#fff"
-                            style={styles.iconeBotao}
-                          />
-                          <Text style={styles.textoBotao}>Forma correta descarte</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={styles.botaoCinza}
-                          onPress={salvarListaDeCompras}
-                        >
-                          <Feather
-                            name="download"
-                            size={20}
-                            color="#FFCC00"
-                            style={styles.iconeBotao}
-                          />
-                          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
-                        </TouchableOpacity>
-                      </View>
-      </ImageBackground>
+          <TouchableOpacity
+            style={styles.botaoVerde}
+            onPress={() => Alert.alert('Forma correta descarte')}
+          >
+            <Feather
+              name="refresh-cw"
+              size={20}
+              color="#fff"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
+            <Feather
+              name="download"
+              size={20}
+              color="#FFCC00"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
- container: {
+  container: {
     flex: 1,
-    width: '100%',
-    height: '90%',
-    backgroundColor: '#ececec'
-
+    width: "100%",
+    height: "50%",
+    backgroundColor: "#ECECEC",
   },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-
+  tituloContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 90,
+    marginLeft: 10,
   },
   paragraph: {
-        fontSize: 22,
-        color: '#242424',
-        textTransform: 'uppercase',
-        top: 40,
-        left: 40,
-        marginBottom: 50
+    fontSize: 22,
+    color: "#242424",
+    textTransform: "uppercase",
+    marginLeft: 5,
+    width: 240,
   },
-
   ingredientes: {
-    marginTop: 60,
+    marginTop: 100,
     fontSize: 18,
     marginBottom: 20,
     paddingVertical: 5,
     left: 44,
-    
-
   },
   ingredientesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   topicos: {
     marginBottom: 10,
     lineHeight: 24,
     left: 44,
     width: 290,
-    top: 10
   },
   check: {
-    color: '#32CD32',
+    color: "#32CD32",
     fontSize: 20,
     marginRight: 5,
   },
   bolinha: {
     fontSize: 16,
   },
-  seta: {
-    top: 70
-  },
- botoesContainer: {
+  botoesContainer: {
     flexDirection: "row",
     width: "100%",
     height: 50,
     marginTop: 40,
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: "#009B4D",
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: "#2F4B54",
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
-
   iconeBotao: {
     marginRight: 10,
   },
   textoBotao: {
     color: "#fff",
     fontSize: 16,
+  },
+  decorativeImage: {
+    position: "absolute",
+    left: 102,
+    top: 0,
+    right: 0,
+    width: 350,
+    height: 720,
+    zIndex: 0,
   },
 });

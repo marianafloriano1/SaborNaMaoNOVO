@@ -5,7 +5,7 @@ import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
   Alert,
-  ImageBackground,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -35,8 +35,8 @@ export default function BolinhaDeQueijoAirFryer() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: '400 g de queijo ralado\n grosso que derreta fácil',
-    item2: '4 colheres (sopa) de \namido de milho',
+    item1: '400 g de queijo ralado grosso que derreta fácil',
+    item2: '4 colheres (sopa) de amido de milho',
     item3: '1 ovo',
     item4: '1 colher (sopa) de sal',
     item5: '1 cebola picada',
@@ -45,7 +45,7 @@ export default function BolinhaDeQueijoAirFryer() {
   };
 
   const stepsMap: { [key: string]: string } = {
-    step1: 'Em um recipiente grande, adicione todos os ingredientes e misture bem, com as mãos, até formar uma massa lisinha e que não grude.',
+    step1: 'Em um recipiente grande, adicione todos os ingredientes e misture bem até formar uma massa lisinha.',
     step2: 'Pegue pequenas porções da massa e forme bolinhas.',
     step3: 'Transfira para a air fryer, preaquecida a 180 ºC, por cerca de 20 minutos ou até dourarem.',
     step4: 'Agora é só servir.',
@@ -86,17 +86,19 @@ export default function BolinhaDeQueijoAirFryer() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_bolinhaq.png')} // Substitua pelo caminho certo
-      >
-        <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('dietas')}>
-          <Feather name="chevron-left" size={28} color="#000" />
-        </TouchableOpacity>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/images/fundo_bolinhaq.png')}
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
 
-        <View style={styles.row}>
-          <Text style={styles.paragraph}>Bolinha de<br />Queijo na Air Fryer</Text>
+        <View style={styles.tituloContainer}>
+          <TouchableOpacity onPress={() => nav.navigate('dietas')}>
+            <Feather name="chevron-left" size={28} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.paragraph}>BOLINHA DE QUEIJO</Text>
         </View>
 
         <Text style={styles.ingredientes}>INGREDIENTES</Text>
@@ -124,7 +126,10 @@ export default function BolinhaDeQueijoAirFryer() {
         ))}
 
         <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoVerde}>
+          <TouchableOpacity
+            style={styles.botaoVerde}
+            onPress={() => Alert.alert('Forma correta descarte')}
+          >
             <Feather
               name="refresh-cw"
               size={20}
@@ -133,10 +138,8 @@ export default function BolinhaDeQueijoAirFryer() {
             />
             <Text style={styles.textoBotao}>Forma correta descarte</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={salvarListaDeCompras}
-          >
+
+          <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
             <Feather
               name="download"
               size={20}
@@ -146,7 +149,7 @@ export default function BolinhaDeQueijoAirFryer() {
             <Text style={styles.textoBotao}>Baixar lista de compra</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </View>
     </ScrollView>
   );
 }
@@ -154,42 +157,47 @@ export default function BolinhaDeQueijoAirFryer() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    height: '110%',
-    backgroundColor: '#ececec',
+    width: "100%",
+    height: "50%",
+    backgroundColor: "#ECECEC",
   },
   row: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  tituloContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 90,
+    marginLeft: 10,
   },
   paragraph: {
     fontSize: 22,
-    color: '#242424',
-    textTransform: 'uppercase',
-    top: 90,
-    left: 37,
-    marginBottom: 99,
+    color: "#242424",
+    textTransform: "uppercase",
+    marginLeft: 5,
+    width: 240,
   },
+
   ingredientes: {
-    marginTop: 50,
+    marginTop: 100,
     fontSize: 18,
-    marginBottom: 10,
+    marginBottom: 20,
     paddingVertical: 5,
     left: 44,
   },
   ingredientesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   topicos: {
     marginBottom: 10,
     lineHeight: 24,
     left: 44,
-    width: 280,
-    top: 10,
+    width: 290,
   },
   check: {
-    color: '#32CD32',
+    color: "#32CD32",
     fontSize: 20,
     marginRight: 5,
   },
@@ -197,8 +205,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   seta: {
-    top: 120,
+    top: 55,
   },
+
   botoesContainer: {
     flexDirection: "row",
     width: "100%",
@@ -227,8 +236,19 @@ const styles = StyleSheet.create({
   iconeBotao: {
     marginRight: 10,
   },
+
   textoBotao: {
     color: "#fff",
     fontSize: 16,
+  },
+
+  decorativeImage: {
+    position: "absolute",
+    left: 102,
+    top: 0,
+    right: 0,
+    width: 350, // ajuste conforme necessário
+    height: 720, // ajuste conforme necessário
+    zIndex: 0,
   },
 });

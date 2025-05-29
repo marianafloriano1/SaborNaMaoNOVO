@@ -5,7 +5,7 @@ import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
   Alert,
-  ImageBackground,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -13,9 +13,7 @@ import {
   View,
 } from 'react-native';
 
-type CheckedItems = {
-  [key: string]: boolean;
-};
+type CheckedItems = { [key: string]: boolean };
 
 export default function FalafelVegano() {
   const nav = useNavigation<NavigationProp<any>>();
@@ -44,8 +42,8 @@ export default function FalafelVegano() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: '1 copo de grão de \nbico seco.',
-    item2: '2 dentes de alho \npicados.',
+    item1: '1 copo de grão de bico seco.',
+    item2: '2 dentes de alho picados.',
     item3: '1/2 cebola média picada.',
     item4: '1 colher de sopa de cominho.',
     item5: '1 copo de salsinha fresca picada.',
@@ -104,105 +102,97 @@ export default function FalafelVegano() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_falafel.png')} // coloque a imagem de fundo correta
-      >
-        <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('dietas')}>
-          <Feather name="chevron-left" size={28} color="#000" />
-        </TouchableOpacity>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/images/fundo_falafel.png')}
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
 
-        <View style={styles.row}>
-          <Text style={styles.paragraph}>Falafel Vegano</Text>
+        <View style={styles.tituloContainer}>
+          <TouchableOpacity onPress={() => nav.navigate('dietas')}>
+            <Feather name="chevron-left" size={28} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.paragraph}>FALAFEL VEGANO</Text>
         </View>
 
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          <View>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-
+         <Text style={styles.ingredientes}>INGREDIENTES</Text>
+               <View style={styles.ingredientesContainer}>
+                 <View>
+                   {Object.entries(itemsMap).map(([key, label]) => (
+                     <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                       <Text style={styles.topicos}>
+                         {checkedItems[key] ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
+                         {label}
+                       </Text>
+                     </TouchableOpacity>
+                   ))}
+                 </View>
+               </View>
+       
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        <View>
-          {Object.entries(stepsMap).map(([key, step], index) => (
-            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-              <Text style={styles.topicos}>
-                {checkedItems[key] ? (
-                  <Text style={styles.check}>✓ </Text>
-                ) : (
-                  <Text style={styles.bolinha}>⚪ </Text>
-                )}
-                 {step}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        {Object.entries(stepsMap).map(([key, step]) => (
+          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <Text style={styles.topicos}>
+              {checkedItems[key] ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
+              {step}
+            </Text>
+          </TouchableOpacity>
+        ))}
 
-       <View style={styles.botoesContainer}>
-                              <TouchableOpacity style={styles.botaoVerde}>
-                                <Feather
-                                  name="refresh-cw"
-                                  size={20}
-                                  color="#fff"
-                                  style={styles.iconeBotao}
-                                />
-                                <Text style={styles.textoBotao}>Forma correta descarte</Text>
-                              </TouchableOpacity>
-                              <TouchableOpacity
-                                style={styles.botaoCinza}
-                                onPress={salvarListaDeCompras}
-                              >
-                                <Feather
-                                  name="download"
-                                  size={20}
-                                  color="#FFCC00"
-                                  style={styles.iconeBotao}
-                                />
-                                <Text style={styles.textoBotao}>Baixar lista de compra</Text>
-                              </TouchableOpacity>
-                            </View>
-      </ImageBackground>
+        <View style={styles.botoesContainer}>
+          <TouchableOpacity
+            style={styles.botaoVerde}
+            onPress={() => Alert.alert('Forma correta descarte')}
+          >
+            <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
+            <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
+            <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
+            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </ScrollView>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    height: '70%',
-    backgroundColor: '#ececec',
+    height: '50%',
+    backgroundColor: '#ECECEC',
   },
-  row: {
+  decorativeImage: {
+    position: 'absolute',
+    left: 102,
+    top: 0,
+    right: 0,
+    width: 350,
+    height: 720,
+    zIndex: 0,
+  },
+  tituloContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 90,
+    marginLeft: 10,
   },
   paragraph: {
     fontSize: 22,
     color: '#242424',
     textTransform: 'uppercase',
-    top: 90,
-    left: 57,
-    marginBottom: 99,
+    marginLeft: 5,
+    width: 240,
   },
   ingredientes: {
-    marginTop: 50,
+    marginTop: 100,
     fontSize: 18,
-    marginBottom: 10,
+    marginBottom: 20,
     paddingVertical: 5,
     left: 44,
   },
@@ -214,8 +204,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     lineHeight: 24,
     left: 44,
-    width: 280,
-    top: 10,
+    width: 290,
   },
   check: {
     color: '#32CD32',
@@ -225,41 +214,33 @@ const styles = StyleSheet.create({
   bolinha: {
     fontSize: 16,
   },
-  seta: {
-    top: 120,
-    left: 10,
-  },
-   botoesContainer: {
-    flexDirection: "row",
-    width: "100%",
+  botoesContainer: {
+    flexDirection: 'row',
+    width: '100%',
     height: 50,
     marginTop: 40,
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: '#009B4D',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: '#2F4B54',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   iconeBotao: {
     marginRight: 10,
   },
   textoBotao: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 16,
   },
 });
-

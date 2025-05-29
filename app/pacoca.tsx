@@ -5,7 +5,7 @@ import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
   Alert,
-  ImageBackground,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -37,6 +37,16 @@ export default function Pacoca() {
     item1: '500 g de amendoim \ntorrado e moído com pele',
     item2: '1 caixa de leite \ncondensado',
     item3: '1 pacote de bolacha maisena',
+  };
+
+  const stepsMap: { [key: string]: string } = {
+    step1: 'Torre o amendoim por aproximadamente 20 minutos.',
+    step2: 'Bata no liquidificador até que fique todo triturado.',
+    step3: 'Coloque em uma vasilha grande para que possa misturar todos os ingredientes bem.',
+    step4: 'Bata a bolacha também no liquidificador, misture ao amendoim.',
+    step5: 'Coloque o leite condensado aos poucos, mexendo bem, até que fique uma massa bem dura.',
+    step6: 'Espalhe em uma forma média untada com margarina, apertando bem com as mãos.',
+    step7: 'Deixe descansar por 20 minutos e corte os quadradinhos ou no formato.',
   };
 
   const toggleCheck = (item: string) => {
@@ -78,17 +88,19 @@ export default function Pacoca() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_pacoca.png')} // pode trocar pela imagem desejada
-      >
-        <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('arraia')}>
-          <Feather name="chevron-left" size={28} color="#000" />
-        </TouchableOpacity>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/images/fundo_pacoca.png')} // troque para o caminho correto
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
 
-        <View style={styles.row}>
-          <Text style={styles.paragraph}>Paçoca</Text>
+        <View style={styles.tituloContainer}>
+          <TouchableOpacity onPress={() => nav.navigate('arraia')}>
+            <Feather name="chevron-left" size={28} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.paragraph}>PAÇOCA</Text>
         </View>
 
         <Text style={styles.ingredientes}>INGREDIENTES</Text>
@@ -110,75 +122,41 @@ export default function Pacoca() {
         </View>
 
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+        {Object.entries(stepsMap).map(([key, label], index) => (
+          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <Text style={styles.topicos}>
+              {checkedItems[key] ? (
+                <Text style={styles.check}>✓ </Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}
+              {index + 1}. {label}
+            </Text>
+          </TouchableOpacity>
+        ))}
 
-        <TouchableOpacity onPress={() => toggleCheck('step1')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step1 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Torre o amendoim por aproximadamente 20 minutos.
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck('step2')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step2 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Bata no liquidificador até que fique todo triturado.
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck('step3')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step3 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Coloque em uma vasilha grande para que possa misturar todos os ingredientes bem.
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck('step4')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step4 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Bata a bolacha também no liquidificador, misture ao amendoim.
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck('step5')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step5 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Coloque o leite condensado aos poucos, mexendo bem, até que fique uma massa bem dura.
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck('step6')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step6 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Espalhe em uma forma média untada com margarina, apertando bem com as mãos.
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck('step7')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step7 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Deixe descansar por 20 minutos e corte os quadradinhos ou no formato.
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.botoesContainer}>
+          <TouchableOpacity style={styles.botaoVerde}>
+            <Feather
+              name="refresh-cw"
+              size={20}
+              color="#fff"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          </TouchableOpacity>
 
-        
-                <View style={styles.botoesContainer}>
-                  <TouchableOpacity style={styles.botaoVerde}>
-                    <Feather
-                      name="refresh-cw"
-                      size={20}
-                      color="#fff"
-                      style={styles.iconeBotao}
-                    />
-                    <Text style={styles.textoBotao}>Forma correta descarte</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.botaoCinza}
-                    onPress={salvarListaDeCompras}
-                  >
-                    <Feather
-                      name="download"
-                      size={20}
-                      color="#FFCC00"
-                      style={styles.iconeBotao}
-                    />
-                    <Text style={styles.textoBotao}>Baixar lista de compra</Text>
-                  </TouchableOpacity>
-                </View>
-      </ImageBackground>
+          <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
+            <Feather
+              name="download"
+              size={20}
+              color="#FFCC00"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </ScrollView>
   );
 }
@@ -187,27 +165,40 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    height: '90%',
-    backgroundColor: '#ececec',
+    backgroundColor: '#ECECEC',
+    paddingBottom: 40,
   },
-  row: {
+  decorativeImage: {
+    position: 'absolute',
+    left: 102,
+    top: 0,
+    right: 0,
+    width: 350,
+    height: 720,
+    zIndex: 0,
+  },
+  tituloContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 90,
+    marginLeft: 10,
+    zIndex: 1,
   },
   paragraph: {
     fontSize: 22,
     color: '#242424',
     textTransform: 'uppercase',
-    top: 60,
-    left: 57,
-    marginBottom: 90,
+    marginLeft: 5,
+    width: 240,
+    lineHeight: 26,
   },
   ingredientes: {
-    marginTop: 40,
+    marginTop: 100,
     fontSize: 18,
-    marginBottom: 10,
+    marginBottom: 20,
     paddingVertical: 5,
     left: 44,
+    color: '#000',
   },
   ingredientesContainer: {
     flexDirection: 'row',
@@ -217,8 +208,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     lineHeight: 24,
     left: 44,
-    width: 280,
-    top: 10,
+    width: 290,
   },
   check: {
     color: '#32CD32',
@@ -228,41 +218,33 @@ const styles = StyleSheet.create({
   bolinha: {
     fontSize: 16,
   },
-  seta: {
-    top: 90,
-    left: 20
-  },
-
   botoesContainer: {
-    flexDirection: "row",
-    width: "100%",
+    flexDirection: 'row',
+    width: '100%',
     height: 50,
     marginTop: 40,
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: '#009B4D',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: '#2F4B54',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   iconeBotao: {
     marginRight: 10,
   },
   textoBotao: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 16,
   },
 });

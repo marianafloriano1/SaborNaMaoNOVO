@@ -1,17 +1,17 @@
-import { Feather } from '@expo/vector-icons';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import * as FileSystem from 'expo-file-system';
-import * as Sharing from 'expo-sharing';
-import React, { useState } from 'react';
+import { Feather } from "@expo/vector-icons";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+import React, { useState } from "react";
 import {
   Alert,
-  ImageBackground,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
+} from "react-native";
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -45,18 +45,30 @@ export default function BoboDeCamarao() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: '1 kg de camarão fresco',
-    item2: '3 dentes de alho \npicados e amassados',
-    item3: '6 colheres (sopa) de \nazeite de oliva',
-    item4: '1 maço de cheiro-verde picado',
-    item5: '2 latas de molho pronto de tomate',
-    item6: '2 colheres (sopa) de azeite de dendê',
-    item7: '2 pimentões verdes bem picadinhos',
-    item8: 'Sal a gosto',
-    item9: 'Suco de 1 limão',
-    item10: '1 kg de mandioca',
-    item11: '1 folha de louro',
-    item12: '2 vidros de leite de coco',
+    item1: "1 kg de camarão fresco",
+    item2: "3 dentes de alho picados e amassados",
+    item3: "6 colheres (sopa) de azeite de oliva",
+    item4: "1 maço de cheiro-verde picado",
+    item5: "2 latas de molho pronto de tomate",
+    item6: "2 colheres (sopa) de azeite de dendê",
+    item7: "2 pimentões verdes bem picadinhos",
+    item8: "Sal a gosto",
+    item9: "Suco de 1 limão",
+    item10: "1 kg de mandioca",
+    item11: "1 folha de louro",
+    item12: "2 vidros de leite de coco",
+  };
+
+  const stepsMap: { [key: string]: string } = {
+    step1: "Lave os camarões e tempere com sal, alho, pimenta e limão, deixe marinar.",
+    step2: "Cozinhe a mandioca em pedacinhos, com louro e a cebola em rodelas.",
+    step3: "Quando estiver mole, acrescente um vidro de leite de coco.",
+    step4: "Deixe esfriar um pouco e bata no liquidificador.",
+    step5: "Esquente o azeite de oliva, junte a cebola ralada e deixe dourar.",
+    step6: "Acrescente os camarões e frite.",
+    step7: "Acrescente o molho de tomate e deixe cozinhar por 5 minutos.",
+    step8: "Junte o azeite de dendê, misture bem e cozinhe por mais 10 minutos.",
+    step9: "Sirva quente, decorado com cheiro-verde.",
   };
 
   const toggleCheck = (item: string) => {
@@ -69,15 +81,15 @@ export default function BoboDeCamarao() {
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
-      .map((key) => `- ${itemsMap[key]}`)
-      .join('\n');
+      .map((key) => `- ${itemsMap[key].replace(/\n/g, " ")}`)
+      .join("\n");
 
     if (!naoSelecionados) {
-      Alert.alert('Tudo certo!', 'Todos os ingredientes foram marcados.');
+      Alert.alert("Tudo certo!", "Todos os ingredientes foram marcados.");
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + 'lista_de_compras_bobo_de_camarao.txt';
+    const fileUri = FileSystem.documentDirectory + "lista_de_compras_bobo_de_camarao.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -88,32 +100,34 @@ export default function BoboDeCamarao() {
       if (canShare) {
         await Sharing.shareAsync(fileUri);
       } else {
-        Alert.alert('Arquivo salvo', `Lista salva em:\n${fileUri}`);
+        Alert.alert("Arquivo salvo", `Lista salva em:\n${fileUri}`);
       }
     } catch (err) {
-      Alert.alert('Erro ao salvar', 'Não foi possível criar o arquivo.');
+      Alert.alert("Erro ao salvar", "Não foi possível criar o arquivo.");
       console.error(err);
     }
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_bobo.png')} // Coloque uma imagem de fundo correspondente
-      >
-        <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('pascoa')}>
-          <Feather name="chevron-left" size={28} color="#000" />
-        </TouchableOpacity>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Image
+          source={require("../assets/images/fundo_bobo.png")}
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
 
-        <View style={styles.row}>
-          <Text style={styles.paragraph}>Bobó de Camarão</Text>
+        <View style={styles.tituloContainer}>
+          <TouchableOpacity onPress={() => nav.navigate("pascoa")}>
+            <Feather name="chevron-left" size={28} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.paragraph}>BOBÓ DE CAMARÃO</Text>
         </View>
 
         <Text style={styles.ingredientes}>INGREDIENTES</Text>
         <View style={styles.ingredientesContainer}>
           <View>
-            {Object.entries(itemsMap).map(([key, label]) => (
+            {Object.entries(itemsMap).map(([key, item]) => (
               <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
                 <Text style={styles.topicos}>
                   {checkedItems[key] ? (
@@ -121,7 +135,7 @@ export default function BoboDeCamarao() {
                   ) : (
                     <Text style={styles.bolinha}>⚪ </Text>
                   )}
-                  {label}
+                  {item}
                 </Text>
               </TouchableOpacity>
             ))}
@@ -129,143 +143,93 @@ export default function BoboDeCamarao() {
         </View>
 
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-
-        <TouchableOpacity onPress={() => toggleCheck('step1')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step1 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Lave os camarões e tempere com sal, alho, pimenta e limão, deixe marinar.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step2')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step2 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Cozinhe a mandioca em pedacinhos, com louro e a cebola em rodelas.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step3')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step3 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Quando estiver mole, acrescente um vidro de leite de coco.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step4')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step4 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Deixe esfriar um pouco e bata no liquidificador.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step5')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step5 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Esquente o azeite de oliva, junte a cebola ralada e deixe dourar.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step6')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step6 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Acrescente os camarões e frite.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step7')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step7 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Acrescente o molho de tomate e deixe cozinhar por 5 minutos.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step8')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step8 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Junte o azeite de dendê, misture bem e cozinhe por mais 10 minutos.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step9')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step9 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Sirva quente, decorado com cheiro-verde.
-          </Text>
-        </TouchableOpacity>
+        {Object.entries(stepsMap).map(([key, step]) => (
+          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <Text style={styles.topicos}>
+              {checkedItems[key] ? (
+                <Text style={styles.check}>✓ </Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}
+              {step}
+            </Text>
+          </TouchableOpacity>
+        ))}
 
         <View style={styles.botoesContainer}>
-                 <TouchableOpacity style={styles.botaoVerde}>
-                   <Feather
-                     name="refresh-cw"
-                     size={20}
-                     color="#fff"
-                     style={styles.iconeBotao}
-                   />
-                   <Text style={styles.textoBotao}>Forma correta descarte</Text>
-                 </TouchableOpacity>
-                 <TouchableOpacity
-                   style={styles.botaoCinza}
-                   onPress={salvarListaDeCompras}
-                 >
-                   <Feather
-                     name="download"
-                     size={20}
-                     color="#FFCC00"
-                     style={styles.iconeBotao}
-                   />
-                   <Text style={styles.textoBotao}>Baixar lista de compra</Text>
-                 </TouchableOpacity>
-               </View>
-      </ImageBackground>
+          <TouchableOpacity
+            style={styles.botaoVerde}
+            onPress={() => Alert.alert("Forma correta descarte")}
+          >
+            <Feather
+              name="refresh-cw"
+              size={20}
+              color="#fff"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
+            <Feather
+              name="download"
+              size={20}
+              color="#FFCC00"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-   container: {
-    flex: 1,
-    width: '100%',
-    height: '70%',
-    backgroundColor: '#ececec'
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: "100%",
+    height: "50%",
+    backgroundColor: "#ECECEC",
   },
   row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  tituloContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 90,
+    marginLeft: 10,
   },
   paragraph: {
-        fontSize: 22,
-        color: '#242424',
-        textTransform: 'uppercase',
-        top: 80,
-        left: 40,
-        marginBottom: 90,
+    fontSize: 22,
+    color: "#242424",
+    textTransform: "uppercase",
+    marginLeft: 5,
+    width: 240,
   },
 
   ingredientes: {
-    marginTop: 40,
+    marginTop: 100,
     fontSize: 18,
     marginBottom: 20,
     paddingVertical: 5,
     left: 44,
-    
-
   },
   ingredientesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   topicos: {
     marginBottom: 10,
     lineHeight: 24,
     left: 44,
-    width: 280,
-    top: 10
+    width: 290,
   },
   check: {
-    color: '#32CD32',
+    color: "#32CD32",
     fontSize: 20,
     marginRight: 5,
   },
@@ -273,10 +237,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   seta: {
-    top: 110
+    top: 55,
   },
 
-    botoesContainer: {
+  botoesContainer: {
     flexDirection: "row",
     width: "100%",
     height: 50,
@@ -304,8 +268,19 @@ const styles = StyleSheet.create({
   iconeBotao: {
     marginRight: 10,
   },
-   textoBotao: {
+
+  textoBotao: {
     color: "#fff",
     fontSize: 16,
+  },
+
+  decorativeImage: {
+    position: "absolute",
+    left: 102,
+    top: 0,
+    right: 0,
+    width: 350, // ajuste conforme necessário
+    height: 720, // ajuste conforme necessário
+    zIndex: 0,
   },
 });

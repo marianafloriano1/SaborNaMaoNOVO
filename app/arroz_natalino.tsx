@@ -1,17 +1,17 @@
-import { Feather } from '@expo/vector-icons';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import * as FileSystem from 'expo-file-system';
-import * as Sharing from 'expo-sharing';
-import React, { useState } from 'react';
+import { Feather } from "@expo/vector-icons";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+import React, { useState } from "react";
 import {
   Alert,
-  ImageBackground,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
+} from "react-native";
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -44,20 +44,29 @@ export default function ArrozNatalino() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: '3 xícaras de arroz cozido',
-    item2: '1 peito de frango cozido \ne desfiado',
-    item3: '1 cebola média picada \nem rodelas',
-    item4: '1/2 xícara de batata \npalha',
-    item5: 'Sal',
-    item6: '2 colheres (sopa) de molho de tomate',
-    item7: 'Sal a gosto',
-    item8: '1 lata de seleta de legumes (milho, ervilha, batata, cenoura etc)',
-    item9: '2 tomates picados em cubos',
-    item10: '1 copo de requeijão',
-    item11: '1/2 xícara de queijo mussarela ralado',
-    item12: '1 colher (sopa) de óleo',
-    item13: 'Pimenta-do-reino a gosto',
-    item14: 'Salsa e cebolinha a gosto',
+    item1: "3 xícaras de arroz cozido",
+    item2: "1 peito de frango cozido e desfiado",
+    item3: "1 cebola média picada em rodelas",
+    item4: "1/2 xícara de batata palha",
+    item5: "Sal",
+    item6: "2 colheres (sopa) de molho de tomate",
+    item7: "Sal a gosto",
+    item8: "1 lata de seleta de legumes (milho, ervilha, batata, cenoura etc)",
+    item9: "2 tomates picados em cubos",
+    item10: "1 copo de requeijão",
+    item11: "1/2 xícara de queijo mussarela ralado",
+    item12: "1 colher (sopa) de óleo",
+    item13: "Pimenta-do-reino a gosto",
+    item14: "Salsa e cebolinha a gosto",
+  };
+
+  const stepsMap: { [key: string]: string } = {
+    step1: "Refogue a cebola no óleo até dourar.",
+    step2: "Acrescente o frango desfiado e o molho de tomate, mexa bem.",
+    step3: "Junte os legumes e os tomates picados.",
+    step4: "Misture o arroz cozido e tempere com sal e pimenta.",
+    step5: "Acrescente o requeijão e o queijo mussarela, mexa delicadamente.",
+    step6: "Finalize com salsa e cebolinha e sirva com batata palha por cima.",
   };
 
   const toggleCheck = (item: string) => {
@@ -70,15 +79,15 @@ export default function ArrozNatalino() {
   const salvarListaDeCompras = async () => {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
-      .map((key) => `- ${itemsMap[key]}`)
-      .join('\n');
+      .map((key) => `- ${itemsMap[key].replace(/\n/g, " ")}`)
+      .join("\n");
 
     if (!naoSelecionados) {
-      Alert.alert('Tudo certo!', 'Todos os ingredientes foram marcados.');
+      Alert.alert("Tudo certo!", "Todos os ingredientes foram marcados.");
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + 'lista_de_compras_arroz_natalino.txt';
+    const fileUri = FileSystem.documentDirectory + "lista_de_compras_arroz_natalino.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -89,173 +98,150 @@ export default function ArrozNatalino() {
       if (canShare) {
         await Sharing.shareAsync(fileUri);
       } else {
-        Alert.alert('Arquivo salvo', `Lista salva em:\n${fileUri}`);
+        Alert.alert("Arquivo salvo", `Lista salva em:\n${fileUri}`);
       }
     } catch (err) {
-      Alert.alert('Erro ao salvar', 'Não foi possível criar o arquivo.');
+      Alert.alert("Erro ao salvar", "Não foi possível criar o arquivo.");
       console.error(err);
     }
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_arroz_natalino.png')} // Altere para a imagem desejada
-      >
-      <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('natal')}>
-          <Feather style={styles.seta} name="chevron-left" size={28} color="#000" />
-        </TouchableOpacity>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Image
+          source={require("../assets/images/fundo_arroz_natalino.png")}
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
 
-        <View style={styles.row}>
-          <Text style={styles.paragraph}>Arroz Natalino</Text>
+        <View style={styles.tituloContainer}>
+          <TouchableOpacity onPress={() => nav.navigate("natal")}>
+            <Feather name="chevron-left" size={28} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.paragraph}>ARROZ NATALINO</Text>
         </View>
 
         <Text style={styles.ingredientes}>INGREDIENTES</Text>
         <View style={styles.ingredientesContainer}>
-                 <View>
-                   {Object.entries(itemsMap).map(([key, label]) => (
-                     <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                       <Text style={styles.topicos}>
-                         {checkedItems[key] ? (
-                           <Text style={styles.check}>✓</Text>
-                         ) : (
-                           <Text style={styles.bolinha}>⚪ </Text>
-                         )}
-                         {label}
-                       </Text>
-                     </TouchableOpacity>
-                   ))}
-                 </View>
-                 </View>
+          <View>
+            {Object.entries(itemsMap).map(([key, item]) => (
+              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <Text style={styles.topicos}>
+                  {checkedItems[key] ? (
+                    <Text style={styles.check}>✓ </Text>
+                  ) : (
+                    <Text style={styles.bolinha}>⚪ </Text>
+                  )}
+                  {item}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
 
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-
-        <TouchableOpacity onPress={() => toggleCheck('step1')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step1 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Refogue a cebola no óleo até dourar.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step2')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step2 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Acrescente o frango desfiado e o molho de tomate, mexa bem.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step3')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step3 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Junte os legumes e os tomates picados.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step4')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step4 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Misture o arroz cozido e tempere com sal e pimenta.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step5')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step5 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Acrescente o requeijão e o queijo mussarela, mexa delicadamente.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step6')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step6 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Finalize com salsa e cebolinha e sirva com batata palha por cima.
-          </Text>
-        </TouchableOpacity>
+        {Object.entries(stepsMap).map(([key, step]) => (
+          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <Text style={styles.topicos}>
+              {checkedItems[key] ? (
+                <Text style={styles.check}>✓ </Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}
+              {step}
+            </Text>
+          </TouchableOpacity>
+        ))}
 
         <View style={styles.botoesContainer}>
-                 <TouchableOpacity style={styles.botaoVerde}>
-                   <Feather
-                     name="refresh-cw"
-                     size={20}
-                     color="#fff"
-                     style={styles.iconeBotao}
-                   />
-                   <Text style={styles.textoBotao}>Forma correta descarte</Text>
-                 </TouchableOpacity>
-                 <TouchableOpacity
-                   style={styles.botaoCinza}
-                   onPress={salvarListaDeCompras}
-                 >
-                   <Feather
-                     name="download"
-                     size={20}
-                     color="#FFCC00"
-                     style={styles.iconeBotao}
-                   />
-                   <Text style={styles.textoBotao}>Baixar lista de compra</Text>
-                 </TouchableOpacity>
-               </View>
-      </ImageBackground>
+          <TouchableOpacity
+            style={styles.botaoVerde}
+            onPress={() => Alert.alert("Forma correta descarte")}
+          >
+            <Feather
+              name="refresh-cw"
+              size={20}
+              color="#fff"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.botaoCinza}
+            onPress={salvarListaDeCompras}
+          >
+            <Feather
+              name="download"
+              size={20}
+              color="#FFCC00"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </ScrollView>
   );
 }
 
+
 const styles = StyleSheet.create({
-    container: {
+  container: {
     flex: 1,
-    width: '100%',
-    height: '90%',
-    backgroundColor: '#ececec',
+    width: "100%",
+    height: "50%",
+    backgroundColor: "#ECECEC",
   },
-    row: {
-        flexDirection: 'row',
-        alignItems: 'center',
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  tituloContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 90,
+    marginLeft: 10,
+  },
+  paragraph: {
+    fontSize: 22,
+    color: "#242424",
+    textTransform: "uppercase",
+    marginLeft: 5,
+    width: 240,
+  },
 
-    },
-    paragraph: {
-        fontSize: 22,
-        color: '#242424',
-        textTransform: 'uppercase',
-        top: 70,
-        left: 37,
-        marginBottom: 90
-    },
+  ingredientes: {
+    marginTop: 100,
+    fontSize: 18,
+    marginBottom: 20,
+    paddingVertical: 5,
+    left: 44,
+  },
+  ingredientesContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  topicos: {
+    marginBottom: 10,
+    lineHeight: 24,
+    left: 44,
+    width: 290,
+  },
+  check: {
+    color: "#32CD32",
+    fontSize: 20,
+    marginRight: 5,
+  },
+  bolinha: {
+    fontSize: 16,
+  },
+  seta: {
+    top: 55,
+  },
 
-    ingredientes: {
-        marginTop: 40,
-        fontSize: 18,
-        marginBottom: 10,
-        paddingVertical: 5,
-        left: 44,
-
-
-    },
-    ingredientesContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-
-    },
-    topicos: {
-        marginBottom: 10,
-        lineHeight: 24,
-        left: 44,
-        width: 280,
-        top: 10
-    },
-    check: {
-        color: '#32CD32',
-        fontSize: 20,
-        marginRight: 5,
-    },
-    bolinha: {
-        fontSize: 16,
-    },
-    seta: {
-        top: 50
-    },
-
-    botoesContainer: {
+  botoesContainer: {
     flexDirection: "row",
     width: "100%",
     height: 50,
@@ -283,9 +269,19 @@ const styles = StyleSheet.create({
   iconeBotao: {
     marginRight: 10,
   },
-   textoBotao: {
+
+  textoBotao: {
     color: "#fff",
     fontSize: 16,
   },
-});
 
+  decorativeImage: {
+    position: "absolute",
+    left: 102,
+    top: 0,
+    right: 0,
+    width: 350, // ajuste conforme necessário
+    height: 720, // ajuste conforme necessário
+    zIndex: 0,
+  },
+});

@@ -5,7 +5,7 @@ import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
   Alert,
-  ImageBackground,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -47,7 +47,7 @@ export default function AlmondegasDeCarneDeJaca() {
     item2: '1 tomate.',
     item3: '4 dentes de alho.',
     item4: 'Sal a gosto.',
-    item5: 'Pimenta-do-reino a \ngosto.',
+    item5: 'Pimenta-do-reino a gosto.',
     item6: 'Ervas a gosto.',
     item7: '300 g de carne de jaca desfiada/cozida.',
     item8: '1 colher de sobremesa de chia.',
@@ -57,11 +57,14 @@ export default function AlmondegasDeCarneDeJaca() {
   };
 
   const stepsMap: { [key: string]: string } = {
-    step1: 'Em um processador ou liquidificador, coloque a cebola, o tomate, o alho, o sal, a pimenta, as ervas e bata bem.',
+    step1:
+      'Em um processador ou liquidificador, coloque a cebola, o tomate, o alho, o sal, a pimenta, as ervas e bata bem.',
     step2: 'Adicione a carne de jaca e triture um pouco.',
-    step3: 'Transfira para uma tigela e adicione a chia, a farinha de baru e misture.',
+    step3:
+      'Transfira para uma tigela e adicione a chia, a farinha de baru e misture.',
     step4: 'Modele bolinhas de almôndega e passe na farinha para empanar.',
-    step5: 'Coloque as almôndegas no molho de tomate e deixe por dez minutos descansando.',
+    step5:
+      'Coloque as almôndegas no molho de tomate e deixe por dez minutos descansando.',
     step6: 'Adicione o molho de tomate: Coloque o molho de tomate por cima da mistura de arroz.',
     step7: 'Cozinhe por dez minutos e está pronto.',
     step8: 'Bom apetite.',
@@ -102,17 +105,20 @@ export default function AlmondegasDeCarneDeJaca() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_almon.png')} // Pode trocar pela imagem correta para almôndegas
-      >
-        <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('dietas')}>
-          <Feather name="chevron-left" size={28} color="#000" />
-        </TouchableOpacity>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        {/* Imagem decorativa de fundo */}
+        <Image
+          source={require('../assets/images/fundo_almon.png')} // caminho da imagem de fundo das almôndegas
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
 
-        <View style={styles.row}>
-          <Text style={styles.paragraph}>Almôndegas de <br></br>Carne de Jaca</Text>
+        <View style={styles.tituloContainer}>
+          <TouchableOpacity onPress={() => nav.navigate('dietas')}>
+            <Feather name="chevron-left" size={28} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.paragraph}>ALMÔNDEGAS DE{"\n"}CARNE DE JACA</Text>
         </View>
 
         <Text style={styles.ingredientes}>INGREDIENTES</Text>
@@ -134,23 +140,24 @@ export default function AlmondegasDeCarneDeJaca() {
         </View>
 
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        <View>
-          {Object.entries(stepsMap).map(([key, step], index) => (
-            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-              <Text style={styles.topicos}>
-                {checkedItems[key] ? (
-                  <Text style={styles.check}>✓ </Text>
-                ) : (
-                  <Text style={styles.bolinha}>⚪ </Text>
-                )}
-                {step}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        {Object.entries(stepsMap).map(([key, step]) => (
+          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <Text style={styles.topicos}>
+              {checkedItems[key] ? (
+                <Text style={styles.check}>✓ </Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}
+              {step}
+            </Text>
+          </TouchableOpacity>
+        ))}
 
-         <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoVerde}>
+        <View style={styles.botoesContainer}>
+          <TouchableOpacity
+            style={styles.botaoVerde}
+            onPress={() => Alert.alert('Forma correta descarte')}
+          >
             <Feather
               name="refresh-cw"
               size={20}
@@ -172,7 +179,7 @@ export default function AlmondegasDeCarneDeJaca() {
             <Text style={styles.textoBotao}>Baixar lista de compra</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </View>
     </ScrollView>
   );
 }
@@ -180,82 +187,87 @@ export default function AlmondegasDeCarneDeJaca() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#ECECEC',
     width: '100%',
-    height: '70%',
-    backgroundColor: '#ececec',
+    paddingBottom: 40,
   },
-  row: {
+  tituloContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 90,
+    marginLeft: 10,
   },
   paragraph: {
     fontSize: 22,
     color: '#242424',
     textTransform: 'uppercase',
-    top: 90,
-    left: 57,
-    marginBottom: 99,
+    marginLeft: 5,
+    width: 240,
   },
   ingredientes: {
-    marginTop: 50,
+    marginTop: 100,
     fontSize: 18,
-    marginBottom: 10,
+    marginBottom: 20,
     paddingVertical: 5,
     left: 44,
   },
   ingredientesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingRight: 50,
   },
   topicos: {
     marginBottom: 10,
     lineHeight: 24,
     left: 44,
-    width: 280,
-    top: 10,
+    width: 300,
   },
   check: {
     color: '#32CD32',
     fontSize: 20,
-    marginRight: 5,
   },
   bolinha: {
     fontSize: 16,
   },
-  seta: {
-    top: 120,
-    left: 10,
-  },
-   botoesContainer: {
-    flexDirection: "row",
-    width: "100%",
+  botoesContainer: {
+    flexDirection: 'row',
+    width: '100%',
     height: 50,
     marginTop: 40,
+    paddingHorizontal: 40,
+    justifyContent: 'space-between',
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: '#009B4D',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: '#2F4B54',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 10,
   },
-
   iconeBotao: {
     marginRight: 10,
   },
-   textoBotao: {
-    color: "#fff",
+  textoBotao: {
+    color: '#fff',
     fontSize: 16,
+  },
+  decorativeImage: {
+    position: 'absolute',
+    left: 102,
+    top: 0,
+    width: 350,
+    height: 720,
+    zIndex: 0,
   },
 });

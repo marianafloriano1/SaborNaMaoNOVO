@@ -5,7 +5,7 @@ import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
     Alert,
-    ImageBackground,
+    Image,
     ScrollView,
     StyleSheet,
     Text,
@@ -14,231 +14,219 @@ import {
 } from 'react-native';
 
 type CheckedItems = {
-    [key: string]: boolean;
+  [key: string]: boolean;
 };
 
 export default function Brigadeiro() {
-    const nav = useNavigation<NavigationProp<any>>();
+  const nav = useNavigation<NavigationProp<any>>();
 
-    const [checkedItems, setCheckedItems] = useState<CheckedItems>({
-        item1: false,
-        item2: false,
-        item3: false,
-        step1: false,
-        step2: false,
-        step3: false,
-        step4: false,
-    });
+  const [checkedItems, setCheckedItems] = useState<CheckedItems>({
+    item1: false,
+    item2: false,
+    item3: false,
+    step1: false,
+    step2: false,
+    step3: false,
+    step4: false,
+  });
 
-    const itemsMap: { [key: string]: string } = {
-        item1: '2 colheres cheias de \nchocolate em pó',
-        item2: 'Granulado preto/\ncolorido',
-        item3: '1/2 lata de leite \ncondensado',
-    };
+  const itemsMap: { [key: string]: string } = {
+    item1: '2 colheres cheias de chocolate em pó',
+    item2: 'Granulado preto/colorido',
+    item3: '1/2 lata de leite condensado',
+  };
 
-    const toggleCheck = (item: string) => {
-        setCheckedItems((prev) => ({
-            ...prev,
-            [item]: !prev[item],
-        }));
-    };
+  const stepsMap: { [key: string]: string } = {
+    step1: 'Misture bem o leite condensado com o chocolate em pó e coloque no copo.',
+    step2: 'Coloque na geladeira por 30 minutos.',
+    step3: 'Retire do copo e enrole como uma bolinha.',
+    step4: 'Coloque o granulado.',
+  };
 
-    const salvarListaDeCompras = async () => {
-        const naoSelecionados = Object.keys(itemsMap)
-            .filter((key) => !checkedItems[key])
-            .map((key) => `- ${itemsMap[key]}`)
-            .join('\n');
+  const toggleCheck = (item: string) => {
+    setCheckedItems((prev) => ({ ...prev, [item]: !prev[item] }));
+  };
 
-        if (!naoSelecionados) {
-            Alert.alert('Tudo certo!', 'Todos os ingredientes foram marcados.');
-            return;
-        }
+  const salvarListaDeCompras = async () => {
+    const naoSelecionados = Object.keys(itemsMap)
+      .filter((key) => !checkedItems[key])
+      .map((key) => `- ${itemsMap[key]}`)
+      .join('\n');
 
-        const fileUri = FileSystem.documentDirectory + 'lista_de_compras_brigadeiro.txt';
+    if (!naoSelecionados) {
+      Alert.alert('Tudo certo!', 'Todos os ingredientes foram marcados.');
+      return;
+    }
 
-        try {
-            await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
-                encoding: FileSystem.EncodingType.UTF8,
-            });
+    const fileUri = FileSystem.documentDirectory + 'lista_de_compras_brigadeiro.txt';
 
-            const canShare = await Sharing.isAvailableAsync();
-            if (canShare) {
-                await Sharing.shareAsync(fileUri);
-            } else {
-                Alert.alert('Arquivo salvo', `Lista salva em:\n${fileUri}`);
-            }
-        } catch (err) {
-            Alert.alert('Erro ao salvar', 'Não foi possível criar o arquivo.');
-            console.error(err);
-        }
-    };
+    try {
+      await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
+        encoding: FileSystem.EncodingType.UTF8,
+      });
 
-    return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-            <ImageBackground
-                style={styles.container}
-                source={require('../assets/images/fundo_briga.png')} // atualize com a imagem correta
-            >
-                <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('kids')}>
-                    <Feather name="chevron-left" size={28} color="#000" />
-                </TouchableOpacity>
+      const canShare = await Sharing.isAvailableAsync();
+      if (canShare) {
+        await Sharing.shareAsync(fileUri);
+      } else {
+        Alert.alert('Arquivo salvo', `Lista salva em:\n${fileUri}`);
+      }
+    } catch (err) {
+      Alert.alert('Erro ao salvar', 'Não foi possível criar o arquivo.');
+      console.error(err);
+    }
+  };
 
-                <View style={styles.row}>
-                    <Text style={styles.paragraph}>Brigadeiro</Text>
-                </View>
+  return (
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/images/fundo_briga.png')} // Certifique-se de que o caminho está correto
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
 
-                <Text style={styles.ingredientes}>INGREDIENTES</Text>
-                <View style={styles.ingredientesContainer}>
-                    <View>
-                        {Object.entries(itemsMap).map(([key, label]) => (
-                            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                                <Text style={styles.topicos}>
-                                    {checkedItems[key] ? (
-                                        <Text style={styles.check}>✓ </Text>
-                                    ) : (
-                                        <Text style={styles.bolinha}>⚪ </Text>
-                                    )}
-                                    {label}
-                                </Text>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                </View>
+        <View style={styles.tituloContainer}>
+          <TouchableOpacity onPress={() => nav.navigate('kids')}>
+            <Feather name="chevron-left" size={28} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.paragraph}>BRIGADEIRO</Text>
+        </View>
 
-                <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+        <Text style={styles.ingredientes}>INGREDIENTES</Text>
+        <View style={styles.ingredientesContainer}>
+          <View>
+            {Object.entries(itemsMap).map(([key, label]) => (
+              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <Text style={styles.topicos}>
+                  {checkedItems[key] ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
+                  {label}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
 
-                <TouchableOpacity onPress={() => toggleCheck('step1')}>
-                    <Text style={styles.topicos}>
-                        {checkedItems.step1 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-                        Misture bem o leite condensado com o chocolate em pó e coloque no copo.
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => toggleCheck('step2')}>
-                    <Text style={styles.topicos}>
-                        {checkedItems.step2 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-                        Coloque na geladeira por 30 minutos.
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => toggleCheck('step3')}>
-                    <Text style={styles.topicos}>
-                        {checkedItems.step3 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-                        Retire do copo e enrole como uma bolinha.
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => toggleCheck('step4')}>
-                    <Text style={styles.topicos}>
-                        {checkedItems.step4 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-                        Coloque o granulado.
-                    </Text>
-                </TouchableOpacity>
+        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+        {Object.entries(stepsMap).map(([key, step]) => (
+          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <Text style={styles.topicos}>
+              {checkedItems[key] ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
+              {step}
+            </Text>
+          </TouchableOpacity>
+        ))}
 
-       <View style={styles.botoesContainer}>
-                        <TouchableOpacity style={styles.botaoVerde}>
-                          <Feather
-                            name="refresh-cw"
-                            size={20}
-                            color="#fff"
-                            style={styles.iconeBotao}
-                          />
-                          <Text style={styles.textoBotao}>Forma correta descarte</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={styles.botaoCinza}
-                          onPress={salvarListaDeCompras}
-                        >
-                          <Feather
-                            name="download"
-                            size={20}
-                            color="#FFCC00"
-                            style={styles.iconeBotao}
-                          />
-                          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
-                        </TouchableOpacity>
-                      </View>
-            </ImageBackground>
-        </ScrollView>
-    );
+        <View style={styles.botoesContainer}>
+          <TouchableOpacity
+            style={styles.botaoVerde}
+            onPress={() => Alert.alert('Forma correta descarte')}
+          >
+            <Feather
+              name="refresh-cw"
+              size={20}
+              color="#fff"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
+            <Feather
+              name="download"
+              size={20}
+              color="#FFCC00"
+              style={styles.iconeBotao}
+            />
+            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        width: '100%',
-        height: '150%',
-        backgroundColor: '#ececec',
-    },
-    row: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    paragraph: {
-        fontSize: 22,
-        color: '#242424',
-        textTransform: 'uppercase',
-        top: 70,
-        left: 67,
-        marginBottom: 90,
-    },
-    ingredientes: {
-        marginTop: 40,
-        fontSize: 18,
-        marginBottom: 10,
-        paddingVertical: 5,
-        left: 44,
-    },
-    ingredientesContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    topicos: {
-        marginBottom: 10,
-        lineHeight: 24,
-        left: 44,
-        width: 280,
-        top: 10,
-    },
-    check: {
-        color: '#32CD32',
-        fontSize: 20,
-        marginRight: 5,
-    },
-    bolinha: {
-        fontSize: 16,
-    },
-    seta: {
-        top: 100,
-        left: 10,
-    },
-       botoesContainer: {
-    flexDirection: "row",
-    width: "100%",
+  container: {
+    flex: 1,
+    width: '100%',
+    height: '50%',
+    backgroundColor: '#ECECEC',
+  },
+  tituloContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 90,
+    marginLeft: 10,
+  },
+  paragraph: {
+    fontSize: 22,
+    color: '#242424',
+    textTransform: 'uppercase',
+    marginLeft: 5,
+    width: 240,
+  },
+  ingredientes: {
+    marginTop: 100,
+    fontSize: 18,
+    marginBottom: 20,
+    paddingVertical: 5,
+    left: 44,
+  },
+  ingredientesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  topicos: {
+    marginBottom: 10,
+    lineHeight: 24,
+    left: 44,
+    width: 290,
+  },
+  check: {
+    color: '#32CD32',
+    fontSize: 20,
+    marginRight: 5,
+  },
+  bolinha: {
+    fontSize: 16,
+  },
+  botoesContainer: {
+    flexDirection: 'row',
+    width: '100%',
     height: 50,
     marginTop: 40,
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: '#009B4D',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: '#2F4B54',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   iconeBotao: {
     marginRight: 10,
   },
   textoBotao: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 16,
+  },
+  decorativeImage: {
+    position: 'absolute',
+    left: 102,
+    top: 0,
+    right: 0,
+    width: 350,
+    height: 720,
+    zIndex: 0,
   },
 });

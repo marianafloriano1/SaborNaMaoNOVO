@@ -5,7 +5,7 @@ import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
   Alert,
-  ImageBackground,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -87,17 +87,19 @@ export default function FarofaDeOvo() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_farofa.png')} // Substitua pela imagem correta
-      >
-        <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('natal')}>
-          <Feather name="chevron-left" size={28} color="#000" />
-        </TouchableOpacity>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/images/fundo_farofa.png')}
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
 
-        <View style={styles.row}>
-          <Text style={styles.paragraph}>Farofa de Ovo</Text>
+        <View style={styles.tituloContainer}>
+          <TouchableOpacity onPress={() => nav.navigate('natal')}>
+            <Feather name="chevron-left" size={28} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.paragraph}>FAROFA DE OVO</Text>
         </View>
 
         <Text style={styles.ingredientes}>INGREDIENTES</Text>
@@ -119,7 +121,7 @@ export default function FarofaDeOvo() {
         </View>
 
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        {Object.entries(stepsMap).map(([key, step], index) => (
+        {Object.entries(stepsMap).map(([key, step]) => (
           <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
             <Text style={styles.topicos}>
               {checkedItems[key] ? (
@@ -155,7 +157,7 @@ export default function FarofaDeOvo() {
             <Text style={styles.textoBotao}>Baixar lista de compra</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </View>
     </ScrollView>
   );
 }
@@ -164,23 +166,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    height: '90%',
-    backgroundColor: '#ececec',
+    height: '50%',
+    backgroundColor: '#ECECEC',
   },
-  row: {
+  decorativeImage: {
+    position: 'absolute',
+    left: 102,
+    top: 0,
+    right: 0,
+    width: 350,
+    height: 720,
+    zIndex: 0,
+  },
+  tituloContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 90,
+    marginLeft: 10,
   },
   paragraph: {
     fontSize: 22,
     color: '#242424',
     textTransform: 'uppercase',
-    top: 40,
-    left: 60,
-    marginBottom: 90
+    marginLeft: 5,
+    width: 240,
   },
   ingredientes: {
-    marginTop: 60,
+    marginTop: 100,
     fontSize: 18,
     marginBottom: 20,
     paddingVertical: 5,
@@ -195,7 +207,6 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     left: 44,
     width: 290,
-    top: 10,
   },
   check: {
     color: '#32CD32',
@@ -205,40 +216,33 @@ const styles = StyleSheet.create({
   bolinha: {
     fontSize: 16,
   },
-  seta: {
-    top: 70,
-    left: 20,
-  },
   botoesContainer: {
-    flexDirection: "row",
-    width: "100%",
+    flexDirection: 'row',
+    width: '100%',
     height: 50,
     marginTop: 40,
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: '#009B4D',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: '#2F4B54',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   iconeBotao: {
     marginRight: 10,
   },
   textoBotao: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 16,
   },
 });

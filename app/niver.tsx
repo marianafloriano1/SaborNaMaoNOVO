@@ -32,7 +32,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.card}
-              onPress={() => console.log("Botão 1")}
+              onPress={() => nav.navigate("niverBriga")}
             >
               <ImageBackground
                 source={require("../assets/images/fundoNiver.jpg")} // Imagem de fundo
@@ -51,7 +51,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-              onPress={() => console.log("Botão 2")}
+              onPress={() => nav.navigate("niverBolo")}
             >
               <ImageBackground
                 source={require("../assets/images/fundoNiver.jpg")} // Imagem de fundo
@@ -70,7 +70,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.card}
-              onPress={() => console.log("Botão 3")}
+              onPress={() => nav.navigate("niverCoxinha")}
             >
               <ImageBackground
                 source={require("../assets/images/fundoNiver.jpg")} // Imagem de fundo
@@ -89,14 +89,14 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-              onPress={() => console.log("Botão 4")}
+              onPress={() => nav.navigate("niverMini")}
             >
               <ImageBackground
                 source={require("../assets/images/fundoNiver.jpg")} // Imagem de fundo
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>mini hamburguer</Text>
+              <Text style={styles.texto}>Mini hamburguer</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/8047933/pexels-photo-8047933.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",

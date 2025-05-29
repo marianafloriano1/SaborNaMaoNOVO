@@ -5,7 +5,7 @@ import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
   Alert,
-  ImageBackground,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -13,13 +13,10 @@ import {
   View,
 } from 'react-native';
 
-type CheckedItems = {
-  [key: string]: boolean;
-};
+type CheckedItems = { [key: string]: boolean };
 
 export default function CoelhoDeChocolate() {
   const nav = useNavigation<NavigationProp<any>>();
-
   const [checkedItems, setCheckedItems] = useState<CheckedItems>({
     item1: false,
     item3: false,
@@ -41,11 +38,20 @@ export default function CoelhoDeChocolate() {
     item8: 'Gota de corante comestível \n(anilina) variado a gosto',
   };
 
+  const stepsMap: { [key: string]: string } = {
+    step1: 'Derreta o chocolate meio amargo no micro-ondas por 3 minutos na potência média.',
+    step2: 'Retire do forno e mexa até acabar de derreter.',
+    step3: 'Transfira para um refratário limpo e bem seco, e mexa o chocolate até que, ao encostar um pouco nos lábios, dê a sensação de frio.',
+    step4: 'Preencha formas para pirulito no formato de coelhinhos com o chocolate derretido e coloque o palito no lugar indicado.',
+    step5: 'Leve à geladeira e deixe secar até a forma ficar opaca.',
+    step6: 'Retire a forma da geladeira e desenforme com cuidado.',
+    step7: 'Deixe secar completamente.',
+    step8: 'Derreta o chocolate branco no banho-maria e retire do fogo.',
+    step9: 'Use o chocolate branco para fazer os detalhes do coelho.',
+  };
+
   const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+    setCheckedItems((prev) => ({ ...prev, [item]: !prev[item] }));
   };
 
   const salvarListaDeCompras = async () => {
@@ -79,17 +85,19 @@ export default function CoelhoDeChocolate() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_coelho.png')} // Pode trocar para uma imagem apropriada
-      >
-        <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('pascoa')}>
-          <Feather name="chevron-left" size={28} color="#000" />
-        </TouchableOpacity>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/images/fundo_coelho.png')}
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
 
-        <View style={styles.row}>
-          <Text style={styles.paragraph}>Coelho de Chocolate</Text>
+        <View style={styles.tituloContainer}>
+          <TouchableOpacity onPress={() => nav.navigate('pascoa')}>
+            <Feather name="chevron-left" size={28} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.paragraph}>COELHO DE CHOCOLATE</Text>
         </View>
 
         <Text style={styles.ingredientes}>INGREDIENTES</Text>
@@ -98,11 +106,7 @@ export default function CoelhoDeChocolate() {
             {Object.entries(itemsMap).map(([key, label]) => (
               <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
                 <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
+                  {checkedItems[key] ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
                   {label}
                 </Text>
               </TouchableOpacity>
@@ -111,94 +115,30 @@ export default function CoelhoDeChocolate() {
         </View>
 
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-
-        <TouchableOpacity onPress={() => toggleCheck('step1')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step1 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Derreta o chocolate meio amargo no micro-ondas por 3 minutos na potência média.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step2')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step2 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Retire do forno e mexa até acabar de derreter.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step3')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step3 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Transfira para um refratário limpo e bem seco, e mexa o chocolate até que, ao encostar um pouco nos lábios, dê a sensação de frio.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step4')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step4 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Preencha formas para pirulito no formato de coelhinhos com o chocolate derretido e coloque o palito no lugar indicado.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step5')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step5 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Leve à geladeira e deixe secar até a forma ficar opaca.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step6')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step6 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Retire a forma da geladeira e desenforme com cuidado.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step7')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step7 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Deixe secar completamente.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step8')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step8 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Derreta o chocolate branco no banho-maria e retire do fogo.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step9')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step9 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Use o chocolate branco para fazer os detalhes do coelho.
-          </Text>
-        </TouchableOpacity>
+        {Object.entries(stepsMap).map(([key, step]) => (
+          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <Text style={styles.topicos}>
+              {checkedItems[key] ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
+              {step}
+            </Text>
+          </TouchableOpacity>
+        ))}
 
         <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoVerde}>
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
+          <TouchableOpacity
+            style={styles.botaoVerde}
+            onPress={() => Alert.alert('Forma correta descarte')}
+          >
+            <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
             <Text style={styles.textoBotao}>Forma correta descarte</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={salvarListaDeCompras}
-          >
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
+
+          <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
+            <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
             <Text style={styles.textoBotao}>Baixar lista de compra</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </View>
     </ScrollView>
   );
 }
@@ -207,44 +147,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    height: '90%',
-    backgroundColor: '#ececec'
-
+    height: '50%',
+    backgroundColor: '#ECECEC',
   },
-  row: {
+  tituloContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-
+    marginTop: 90,
+    marginLeft: 10,
   },
   paragraph: {
     fontSize: 22,
     color: '#242424',
     textTransform: 'uppercase',
-    top: 70,
-    left: 37,
-    marginBottom: 90
+    marginLeft: 5,
+    width: 240,
   },
-
   ingredientes: {
-    marginTop: 40,
+    marginTop: 100,
     fontSize: 18,
     marginBottom: 20,
     paddingVertical: 5,
     left: 44,
-
-
   },
   ingredientesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-
   },
   topicos: {
     marginBottom: 10,
     lineHeight: 24,
     left: 44,
-    width: 280,
-    top: 10
+    width: 290,
   },
   check: {
     color: '#32CD32',
@@ -254,39 +188,42 @@ const styles = StyleSheet.create({
   bolinha: {
     fontSize: 16,
   },
-  seta: {
-    top: 100
-  },
   botoesContainer: {
-    flexDirection: "row",
-    width: "100%",
+    flexDirection: 'row',
+    width: '100%',
     height: 50,
     marginTop: 40,
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: '#009B4D',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: '#2F4B54',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   iconeBotao: {
     marginRight: 10,
   },
   textoBotao: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 16,
+  },
+  decorativeImage: {
+    position: 'absolute',
+    left: 102,
+    top: 0,
+    right: 0,
+    width: 350,
+    height: 720,
+    zIndex: 0,
   },
 });

@@ -5,7 +5,7 @@ import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
   Alert,
-  ImageBackground,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -35,6 +35,12 @@ export default function PaozinhoDeBatataDoce() {
     item3: '2 colheres de sopa de goma de tapioca',
   };
 
+  const stepsMap: { [key: string]: string } = {
+    step1: 'Misture tudo e modele as bolinhas.',
+    step2: 'Pincele azeite e leve pra assar em forno convencional ou airfryer por 20 minutos a 180°C.',
+    step3: 'Sirva e aproveite!',
+  };
+
   const toggleCheck = (item: string) => {
     setCheckedItems((prev) => ({
       ...prev,
@@ -53,7 +59,7 @@ export default function PaozinhoDeBatataDoce() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + 'lista_de_compras_paozinho.txt';
+    const fileUri = FileSystem.documentDirectory + 'lista_de_compras_paozinho_batata_doce.txt';
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -73,17 +79,19 @@ export default function PaozinhoDeBatataDoce() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_pao.png')}
-      >
-        <TouchableOpacity style={styles.seta} onPress={() => nav.navigate('kids')}>
-          <Feather name="chevron-left" size={28} color="#000" />
-        </TouchableOpacity>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/images/fundo_pao.png')} // verifique se o caminho está correto
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
 
-        <View style={styles.row}>
-          <Text style={styles.paragraph}>Pãozinho de Batata<br /> Doce</Text>
+        <View style={styles.tituloContainer}>
+          <TouchableOpacity onPress={() => nav.navigate('kids')}>
+            <Feather name="chevron-left" size={28} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.paragraph}>Pãozinho de{"\n"}Batata Doce</Text>
         </View>
 
         <Text style={styles.ingredientes}>INGREDIENTES</Text>
@@ -105,30 +113,23 @@ export default function PaozinhoDeBatataDoce() {
         </View>
 
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+        {Object.entries(stepsMap).map(([key, label], index) => (
+          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+            <Text style={styles.topicos}>
+              {checkedItems[key] ? (
+                <Text style={styles.check}>✓ </Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}
+              {index + 1}. {label}
+            </Text>
+          </TouchableOpacity>
+        ))}
 
-        <TouchableOpacity onPress={() => toggleCheck('step1')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step1 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Misture tudo e modele as bolinhas.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step2')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step2 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Pincele azeite e leve pra assar em forno convencional ou airfryer por 20 minutos a 180°C.
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => toggleCheck('step3')}>
-          <Text style={styles.topicos}>
-            {checkedItems.step3 ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
-            Sirva e aproveite!
-          </Text>
-        </TouchableOpacity>
-
-        <Text style={styles.ingredientes}>ATENÇÃO!</Text>
-        <Text style={styles.topicos}>Adequado a partir de 6 meses.</Text>
+        <Text style={[styles.ingredientes, { marginTop: 40 }]}>ATENÇÃO!</Text>
+        <Text style={[styles.topicos, { left: 44, width: 290, marginBottom: 0 }]}>
+          Adequado a partir de 6 meses.
+        </Text>
 
         <View style={styles.botoesContainer}>
           <TouchableOpacity style={styles.botaoVerde}>
@@ -140,6 +141,7 @@ export default function PaozinhoDeBatataDoce() {
             />
             <Text style={styles.textoBotao}>Forma correta descarte</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.botaoCinza}
             onPress={salvarListaDeCompras}
@@ -153,7 +155,7 @@ export default function PaozinhoDeBatataDoce() {
             <Text style={styles.textoBotao}>Baixar lista de compra</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </View>
     </ScrollView>
   );
 }
@@ -162,27 +164,40 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    height: '110%',
-    backgroundColor: '#ececec',
+    backgroundColor: '#ECECEC',
+    paddingBottom: 40,
   },
-  row: {
+  decorativeImage: {
+    position: 'absolute',
+    left: 102,
+    top: 0,
+    right: 0,
+    width: 350,
+    height: 720,
+    zIndex: 0,
+  },
+  tituloContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 90,
+    marginLeft: 10,
+    zIndex: 1,
   },
   paragraph: {
     fontSize: 22,
     color: '#242424',
     textTransform: 'uppercase',
-    top: 90,
-    left: 37,
-    marginBottom: 99,
+    marginLeft: 5,
+    width: 240,
+    lineHeight: 26,
   },
   ingredientes: {
-    marginTop: 50,
+    marginTop: 100,
     fontSize: 18,
-    marginBottom: 10,
+    marginBottom: 20,
     paddingVertical: 5,
     left: 44,
+    color: '#000',
   },
   ingredientesContainer: {
     flexDirection: 'row',
@@ -192,8 +207,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     lineHeight: 24,
     left: 44,
-    width: 280,
-    top: 10,
+    width: 290,
   },
   check: {
     color: '#32CD32',
@@ -203,39 +217,33 @@ const styles = StyleSheet.create({
   bolinha: {
     fontSize: 16,
   },
-  seta: {
-    top: 120,
-  },
   botoesContainer: {
-    flexDirection: "row",
-    width: "100%",
+    flexDirection: 'row',
+    width: '100%',
     height: 50,
     marginTop: 40,
   },
-
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D", // verde da imagem
+    backgroundColor: '#009B4D',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54", // cinza azulado da imagem
+    backgroundColor: '#2F4B54',
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-
   iconeBotao: {
     marginRight: 10,
   },
   textoBotao: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 16,
   },
 });

@@ -29,7 +29,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.card}
-              onPress={() => console.log("Botão 1")}
+              onPress={() => nav.navigate("snackCookkies")}
             >
               <ImageBackground
                 source={require("../assets/images/fundoSnack.jpg")} // Imagem de fundo
@@ -48,7 +48,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-              onPress={() => console.log("Botão 2")}
+              onPress={() => nav.navigate("snackPipo")}
             >
               <ImageBackground
                 source={require("../assets/images/fundoSnack.jpg")} // Imagem de fundo
@@ -67,7 +67,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.card}
-              onPress={() => console.log("Botão 3")}
+              onPress={() => nav.navigate("snackBata")}
             >
               <ImageBackground
                 source={require("../assets/images/fundoSnack.jpg")} // Imagem de fundo
@@ -86,7 +86,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-              onPress={() => console.log("Botão 4")}
+             onPress={() => nav.navigate("snackNacho")}
             >
               <ImageBackground
                 source={require("../assets/images/fundoSnack.jpg")} // Imagem de fundo
