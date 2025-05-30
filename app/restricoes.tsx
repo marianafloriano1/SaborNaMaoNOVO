@@ -52,7 +52,7 @@ export default function ComidasInfantis() {
                     <TouchableOpacity onPress={() => nav.navigate("home")}>
                         <Feather name="chevron-left" size={24} color="#000" style={styles.seta} />
                     </TouchableOpacity>
-                    <Text style={styles.paragraph}>Restrições Alimentares</Text>
+                    <Text style={styles.paragraph}>Restrições e Intolerâncias</Text>
                 </View>
 
                 {/* Toggle Buttons */}
@@ -66,7 +66,7 @@ export default function ComidasInfantis() {
                             ]}
                             onPress={() => toggleCategory("intolerancia")}
                         >
-                            <Text style={styles.toggleText}>Intolerância à lactose</Text>
+                            <Text style={styles.toggleText}>Lactose</Text>
                         </Pressable>
 
                         <Pressable
@@ -76,7 +76,7 @@ export default function ComidasInfantis() {
                             ]}
                             onPress={() => toggleCategory("gluten")}
                         >
-                            <Text style={styles.toggleText}>Sensibilidade a glúten</Text>
+                            <Text style={styles.toggleText}>Glúten</Text>
                         </Pressable>
                     </View>
 
@@ -352,12 +352,11 @@ const styles = StyleSheet.create({
     },
 
     pressable: {
-        width: "45%", // ou 150 se quiser fixo
-        height: 30,
+        width: 180,
+        height: 40,
         borderRadius: 20,
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: 10, // opcional para espaçamento
     },
 
     activeToggle: { backgroundColor: "#86C0FF" },

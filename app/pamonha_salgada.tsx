@@ -216,10 +216,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   botoesContainer: {
-    flexDirection: 'row',
-    width: '100%',
+    flexDirection: "row",
+    width: "100%",
     height: 50,
-    marginTop: 40,
+    marginTop: 70,
   },
   botaoVerde: {
     flex: 1,

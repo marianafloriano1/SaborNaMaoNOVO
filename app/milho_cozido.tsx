@@ -97,7 +97,7 @@ export default function MilhoCozido() {
           <TouchableOpacity onPress={() => nav.navigate('arraia')}>
             <Feather name="chevron-left" size={28} color="#000" />
           </TouchableOpacity>
-          <Text style={styles.paragraph}>MILHO{"\n"}COZIDO</Text>
+          <Text style={styles.paragraph}>MILHO COZIDO</Text>
         </View>
 
         <Text style={styles.ingredientes}>INGREDIENTES</Text>

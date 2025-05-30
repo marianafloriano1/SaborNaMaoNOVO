@@ -120,7 +120,7 @@ export default function App() {
           <TouchableOpacity onPress={() => nav.navigate("niver")}>
             <Feather name="chevron-left" size={28} color="#000" />
           </TouchableOpacity>
-          <Text style={styles.paragraph}>Brigadeiro</Text>
+          <Text style={styles.paragraph}>Coxinha de Frango</Text>
         </View>
         <Text style={styles.ingredientes}>INGREDIENTES</Text>
         <View style={styles.ingredientesContainer}>

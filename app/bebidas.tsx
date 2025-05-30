@@ -50,42 +50,46 @@ export default function ComidasInfantis() {
         {/* Header */}
         <View style={styles.row}>
           <TouchableOpacity onPress={() => nav.navigate("home")}>
-            <Feather name="chevron-left" size={24} color="#000" />
+            <Feather name="chevron-left" size={24} color="#000" style={styles.seta} />
           </TouchableOpacity>
           <Text style={styles.paragraph}>Bebidas</Text>
         </View>
 
         {/* Toggle Buttons */}
         <View style={styles.toggleRow}>
-          <Pressable
-            style={[
-              styles.pressable,
-              showVegano ? styles.activeToggle : styles.inactiveToggle,
-            ]}
-            onPress={() => toggleCategory("vegano")}
-          >
-            <Text style={styles.toggleText}>Chá</Text>
-          </Pressable>
+         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                                 <Pressable
+                                     style={[
+                                         styles.pressable,
+                                         showVegetariano ? styles.activeToggle : styles.inactiveToggle,
+                                     ]}
+                                     onPress={() => toggleCategory("vegetariano")}
+                                 >
+                                     <Text style={styles.toggleText}>Vitaminas</Text>
+                                 </Pressable>
+         
+                                 <Pressable
+                                     style={[
+                                         styles.pressable,
+                                         showVegano ? styles.activeToggle : styles.inactiveToggle,
+                                     ]}
+                                     onPress={() => toggleCategory("vegano")}
+                                 >
+                                     <Text style={styles.toggleText}>Chás</Text>
+                                 </Pressable>
+                             </View>
 
-          <Pressable
-            style={[
-              styles.pressable,
-              showVegetariano ? styles.activeToggle : styles.inactiveToggle,
-            ]}
-            onPress={() => toggleCategory("vegetariano")}
-          >
-            <Text style={styles.toggleText}>Vitamina</Text>
-          </Pressable>
-
-          <Pressable
-            style={[
-              styles.pressable,
-              showSuco ? styles.activeToggle : styles.inactiveToggle,
-            ]}
-            onPress={() => toggleCategory("suco")}
-          >
-            <Text style={styles.toggleText}>Suco Natural</Text>
-          </Pressable>
+          <View style={{ marginTop: 10, alignItems: "flex-start" }}>
+            <Pressable
+              style={[
+                styles.pressable,
+                showSuco ? styles.activeToggle : styles.inactiveToggle,
+              ]}
+              onPress={() => toggleCategory("suco")}
+            >
+              <Text style={styles.toggleText}>Suco natural</Text>
+            </Pressable>
+          </View>
         </View>
 
         {/* Cards */}
@@ -244,7 +248,7 @@ export default function ComidasInfantis() {
             <>
               {/* Sucos */}
               <TouchableOpacity style={styles.card}
-              onPress={() => nav.navigate("bebiLaran")}
+                onPress={() => nav.navigate("bebiLaran")}
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_bebida.png")}
@@ -260,7 +264,7 @@ export default function ComidasInfantis() {
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.cardD}
-              onPress={() => nav.navigate("bebiLimao")}
+                onPress={() => nav.navigate("bebiLimao")}
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_bebida.png")}
@@ -275,7 +279,7 @@ export default function ComidasInfantis() {
                 />
               </TouchableOpacity>
               <TouchableOpacity style={styles.card}
-              onPress={() => nav.navigate("bebiMoran")}
+                onPress={() => nav.navigate("bebiMoran")}
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_bebida.png")}
@@ -290,7 +294,7 @@ export default function ComidasInfantis() {
                 />
               </TouchableOpacity>
               <TouchableOpacity style={styles.cardD}
-              onPress={() => nav.navigate("bebiAbac")}
+                onPress={() => nav.navigate("bebiAbac")}
               >
                 <ImageBackground
                   source={require("../assets/images/fundo_bebida.png")}
@@ -321,7 +325,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     gap: 12,
   },
-  paragraph: { fontSize: 24, color: "#242424", textTransform: "uppercase" },
+  paragraph: {
+    fontSize: 24,
+    color: "#242424",
+    textTransform: "uppercase",
+    top: 10
+  },
+  seta: {
+    top: 10
+  },
   branco: {
     backgroundColor: "white",
     flex: 1,
@@ -331,21 +343,23 @@ const styles = StyleSheet.create({
     top: 30,
   },
   toggleRow: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
+    flexDirection: "column",
     marginTop: 40,
+    margin: 10
   },
+
   pressable: {
-    width: 120,
-    height: 30,
+    width: 180,
+    height: 40,
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
   },
+
   activeToggle: { backgroundColor: "#FEB080" },
   inactiveToggle: { backgroundColor: "#ccc" },
   toggleText: {
-    fontSize: 14,
+    fontSize: 13,
     color: "#fff",
     textTransform: "uppercase",
     width: 200,
@@ -365,7 +379,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginBottom: 16,
     marginTop: 16,
-  
   },
   cardD: {
     width: "47%",

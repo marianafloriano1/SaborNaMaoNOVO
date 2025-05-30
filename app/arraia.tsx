@@ -56,7 +56,7 @@ export default function Arraia() {
                         <TouchableOpacity style={styles.card} onPress={() => nav.navigate('pacoca')}>
                             <ImageBackground style={styles.backgroundImage} resizeMode="cover" source={require('../assets/images/fundo_receita_arraia.png')}> </ImageBackground>
                             <Text style={styles.texto}>Paçoca</Text>
-                            <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/2/23/Pa%C3%A7oca.jpg'}} style={styles.cardImage} />
+                            <Image source={{uri: 'https://images.pexels.com/photos/13111782/pexels-photo-13111782.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'}} style={styles.cardImage} />
                         </TouchableOpacity>
                     </View>
                     <View>
