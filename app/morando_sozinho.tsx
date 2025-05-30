@@ -20,7 +20,7 @@ export default function AnoNovo() {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.row}>
           <TouchableOpacity onPress={() => nav.navigate("home")}>
-            <Feather name="chevron-left" size={24} color="#242424" />
+            <Feather name="chevron-left" size={24} color="#242424" style={styles.seta} />
           </TouchableOpacity>
 
           <Text style={styles.paragraph}>Receitas individuais</Text>
@@ -29,7 +29,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.card}
-               onPress={() => nav.navigate("arroz_forno")}
+              onPress={() => nav.navigate("arroz_forno")}
             >
               <ImageBackground
                 source={require("../assets/images/fundo_sozinho.png")} // Imagem de fundo
@@ -48,7 +48,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-               onPress={() => nav.navigate("coxinha")}
+              onPress={() => nav.navigate("coxinha")}
             >
               <ImageBackground
                 source={require("../assets/images/fundo_sozinho.png")} // Imagem de fundo
@@ -67,7 +67,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.card}
-               onPress={() => nav.navigate("macarrao_bolonhesa")}
+              onPress={() => nav.navigate("macarrao_bolonhesa")}
             >
               <ImageBackground
                 source={require("../assets/images/fundo_sozinho.png")} // Imagem de fundo
@@ -75,6 +75,7 @@ export default function AnoNovo() {
                 resizeMode="cover"
               ></ImageBackground>
               <Text style={styles.texto}>Macarrão à bolonhesa</Text>
+
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/6287534/pexels-photo-6287534.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -86,7 +87,7 @@ export default function AnoNovo() {
           <View>
             <TouchableOpacity
               style={styles.cardD}
-               onPress={() => nav.navigate("pudim")}
+              onPress={() => nav.navigate("pudim")}
             >
               <ImageBackground
                 source={require("../assets/images/fundo_sozinho.png")} // Imagem de fundo
@@ -126,6 +127,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#242424",
     textTransform: "uppercase",
+    top: 20
+  },
+  seta: {
+    top: 20
   },
 
   branco: {
@@ -166,6 +171,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textTransform: "uppercase",
     zIndex: 2,
+    flexWrap: "wrap", 
+    width: 100
+
   },
 
   cardD: {

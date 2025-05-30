@@ -36,8 +36,8 @@ export default function Sanduiche() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "1 xícara de farinha de arroz",
-    item2: "1/4 de xícara de fécula de batata",
+    item1: "1 xícara de farinha de \narroz",
+    item2: "1/4 de xícara de fécula de \nbatata",
     item3: "1 ovo",
     item4: "3 colheres de sopa de óleo",
     item5: "1 colher de chá de sal",
@@ -217,12 +217,13 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
-  decorativeImage: {
-    position: "absolute",
-    left: 102,
+decorativeImage: {
+     position: 'absolute',
+    left: 135,
     top: 0,
+    right: 0,
     width: 350,
-    height: 720,
+    height: 500,
     zIndex: 0,
   },
 });

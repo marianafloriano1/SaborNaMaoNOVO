@@ -4,13 +4,13 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -43,7 +43,7 @@ export default function CoxinhaDeFrango() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "1 colher de sopa de manteiga",
+    item1: "1 colher de sopa de \nmanteiga",
     item2: "25 ml de leite",
     item3: "1 batata média cozida e amassada",
     item4: "50g de farinha de trigo",
@@ -250,13 +250,13 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
-  decorativeImage: {
-    position: "absolute",
-    left: 102,
+decorativeImage: {
+     position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
     width: 350,
-    height: 720,
+    height: 500,
     zIndex: 0,
   },
 });

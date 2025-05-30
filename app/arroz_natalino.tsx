@@ -45,7 +45,7 @@ export default function ArrozNatalino() {
 
   const itemsMap: { [key: string]: string } = {
     item1: "3 xícaras de arroz cozido",
-    item2: "1 peito de frango cozido e desfiado",
+    item2: "1 peito de frango cozido \ne desfiado",
     item3: "1 cebola média picada em rodelas",
     item4: "1/2 xícara de batata palha",
     item5: "Sal",
@@ -276,12 +276,12 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+    position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
-    width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    width: 350,
+    height: 500,
     zIndex: 0,
   },
 });

@@ -56,7 +56,7 @@ export default function App() {
 
   const itemsMap: { [key: string]: string } = {
     item1: "1 xícara de suco de abacaxi",
-    item2: "1/2 xícara de água com gás ou soda (gelada)",
+    item2: "1/2 xícara de água com \ngás ou soda (gelada)",
     item3: "1 colher (chá) de gengibre fresco ralado (opcional)",
     item4: "1 colher (sopa) de suco de limão",
     item5: "4 folhas de hortelã",
@@ -110,7 +110,7 @@ export default function App() {
           resizeMode="contain"
         />
         <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate("natal")}>
+          <TouchableOpacity onPress={() => nav.navigate("ano_novo")}>
             <Feather name="chevron-left" size={28} color="#000" />
           </TouchableOpacity>
           <Text style={styles.paragraph}>Mocktail de Abacaxi</Text>
@@ -292,12 +292,12 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+     position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
-    width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    width: 350,
+    height: 500,
     zIndex: 0,
   },
 });

@@ -5,7 +5,7 @@ import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
   Alert,
-  ImageBackground,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -100,77 +100,56 @@ export default function TortaDeLegumesRicota() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_torta.png')} // Troque pela imagem que desejar
-      >
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/images/fundo_torta.png')} // imagem da torta
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
+
         <View style={styles.tituloContainer}>
           <TouchableOpacity onPress={() => nav.navigate('dietas')}>
             <Feather name="chevron-left" size={28} color="#000" />
           </TouchableOpacity>
-          <Text style={styles.paragraph}>TORTA DE{"\n"}LEGUMES E RICOTA</Text>
+          <Text style={styles.paragraph}>TORTA DE{"\n"}LEGUMES E{"\n"}RICOTA</Text>
         </View>
 
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          <View>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+               <View style={styles.ingredientesContainer}>
+                 <View>
+                   {Object.entries(itemsMap).map(([key, label]) => (
+                     <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                       <Text style={styles.topicos}>
+                         {checkedItems[key] ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
+                         {label}
+                       </Text>
+                     </TouchableOpacity>
+                   ))}
+                 </View>
+               </View>
 
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
         {steps.map((step, index) => (
-          <TouchableOpacity
-            key={`step${index + 1}`}
-            onPress={() => toggleCheck(`step${index + 1}`)}
-          >
+          <TouchableOpacity key={`step${index + 1}`} onPress={() => toggleCheck(`step${index + 1}`)}>
             <Text style={styles.topicos}>
-              {checkedItems[`step${index + 1}`] ? (
-                <Text style={styles.check}>✓ </Text>
-              ) : (
-                <Text style={styles.bolinha}>⚪ </Text>
-              )}
-              {step}
+              {checkedItems[`step${index + 1}`] ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
+              {index + 1}. {step}
             </Text>
           </TouchableOpacity>
         ))}
 
         <View style={styles.botoesContainer}>
           <TouchableOpacity style={styles.botaoVerde}>
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
+            <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
             <Text style={styles.textoBotao}>Forma correta descarte</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={salvarListaDeCompras}
-          >
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
+          <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
+            <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
             <Text style={styles.textoBotao}>Baixar lista de compra</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </View>
     </ScrollView>
   );
 }
@@ -181,6 +160,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '50%',
     backgroundColor: '#ECECEC',
+  },
+decorativeImage: {
+     position: 'absolute',
+    left: 135,
+    top: 0,
+    right: 0,
+    width: 350,
+    height: 500,
+    zIndex: 0,
   },
   tituloContainer: {
     flexDirection: 'row',

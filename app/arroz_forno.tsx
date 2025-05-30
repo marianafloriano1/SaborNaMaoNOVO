@@ -4,13 +4,13 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -43,7 +43,7 @@ export default function ArrozDeForno() {
 
   const itemsMap: { [key: string]: string } = {
     item1: "1 xícara de arroz cozido",
-    item2: "1/4 xíc. frango desfiado ou carne a gosto",
+    item2: "1/4 xíc. frango desfiado ou \ncarne a gosto",
     item3: "1/4 xíc. de queijo ralado",
     item4: "1/4 xíc. de molho de tomate",
     item5: "1/4 de cebola picada",
@@ -100,7 +100,7 @@ export default function ArrozDeForno() {
           resizeMode="contain"
         />
         <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.goBack()}>
+          <TouchableOpacity onPress={() => nav.navigate("morando_sozinho")}>
             <Feather name="chevron-left" size={28} color="#000" />
           </TouchableOpacity>
           <Text style={styles.paragraph}>Arroz de Forno</Text>
@@ -238,12 +238,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+     position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
     width: 350,
-    height: 720,
+    height: 500,
     zIndex: 0,
   },
 });

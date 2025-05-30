@@ -11,29 +11,21 @@ import {
   View,
 } from 'react-native';
 
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { firebaseConfig } from '../firebaseConfig'; // ajuste o caminho conforme seu projeto
-
-// Inicializa o Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+import { validateUser } from '../bancodedados';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const router = useRouter();
 
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, senha)
-      .then(userCredential => {
-        Alert.alert('Login', `Bem-vindo, ${userCredential.user.email}!`);
-        router.replace('/home'); // redireciona para a tela home
-      })
-      .catch(error => {
-        console.log(error);
-        Alert.alert('Erro ao logar', error.message);
-      });
+  const handleLogin = async () => {
+    const user = await validateUser(email, senha);
+    if (user) {
+      Alert.alert('Login', `Bem-vindo, ${user.email}!`);
+      router.replace('/home');
+    } else {
+      Alert.alert('Erro', 'Email ou senha inválidos');
+    }
   };
 
   return (
@@ -79,10 +71,11 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+ container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
     alignItems: 'center',
+    top: 30
   },
   textoTopo: {
     color: '#F8D12D',
@@ -104,7 +97,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     alignItems: 'center',
     marginTop: -50,
-    height: '60%'
+    height: '60%',
   },
   titulo: {
     fontSize: 22,
@@ -115,7 +108,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#565656',
     marginBottom: 20,
-    marginTop: 10
+    marginTop: 10,
   },
   linkCadastro: {
     color: '#839deb',
@@ -131,13 +124,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#565656',
     marginBottom: 16,
-    marginTop: 20
-  },
-  linkSenha: {
-    color: '#839deb',
-    fontSize: 16,
-    alignSelf: 'flex-start',
-    marginBottom: 20,
+    marginTop: 20,
   },
   botao: {
     backgroundColor: 'rgba(108, 198, 150, 0.7)',
@@ -147,9 +134,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#565656',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.1,
-    elevation: 10,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    elevation: 20,
+    top: 40,
+    left: 100
   },
   botaoTexto: {
     color: '#fff',

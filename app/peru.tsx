@@ -5,7 +5,7 @@ import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
   Alert,
-  ImageBackground,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -21,13 +21,14 @@ export default function PeruABrasileira() {
   const nav = useNavigation<NavigationProp<any>>();
 
   const [checkedItems, setCheckedItems] = useState<CheckedItems>({
+    // Ingredientes
     item1: false, item2: false, item3: false, item4: false, item5: false,
     item6: false, item7: false, item8: false, item9: false, item10: false,
     item11: false, item12: false, item13: false, item14: false, item15: false,
     item16: false, item17: false, item18: false, item19: false, item20: false,
+    // Modo de preparo
     step1: false, step2: false, step3: false, step4: false, step5: false,
-    step6: false, step7: false, step8: false, step9: false, step10: false,
-    step11: false,
+    step6: false, step7: false, step8: false, step9: false,
   });
 
   const itemsMap: { [key: string]: string } = {
@@ -53,22 +54,23 @@ export default function PeruABrasileira() {
     item20: 'Miúdos de Peru',
   };
 
-  const steps = [
-    'Bata no liquidificador: 1 xícara de vinho, 1 xícara de caldo de galinha, a cebola em pedaços, alho, mostarda, molho de pimenta, a margarina ou manteiga e o sal.',
-    'Coloque em um refratário e acrescente o restante do vinho e do caldo de galinha, misture bem e reserve.',
-    'Em fogo baixo refogue os miúdos cortados em pedaços menores da mistura de óleo e azeite, até mudarem de cor.',
-    'Adicione o milho, o caldo de galinha, as bananas, as farinhas peneiradas e a pimenta, sem parar de mexer, até formar uma farofa solta e úmida.',
-    'Retire do fogo, acrescente o tempero verde e recheie o peru.',
-    'Coloque o peru na assadeira sem untar.',
-    'Cubra com papel alumínio e leve ao forno por volta de 1 hora e meia, regando constantemente com o molho da assadeira.',
-    'Retire o papel alumínio para dourar por mais 1 hora e meia aproximadamente, continue regando com o molho.',
-    'Coloque no refratário de servir e decore com farofa e tempero verde.',
-    '(Passo repetido, pode ajustar se quiser)',
-    '(Passo repetido, pode ajustar se quiser)',
-  ];
+  const stepsMap: { [key: string]: string } = {
+    step1: 'Bata no liquidificador: 1 xícara de vinho, 1 xícara de caldo de galinha, a cebola em pedaços, alho, mostarda, molho de pimenta, a margarina ou manteiga e o sal.',
+    step2: 'Coloque em um refratário e acrescente o restante do vinho e do caldo de galinha, misture bem e reserve.',
+    step3: 'Em fogo baixo refogue os miúdos cortados em pedaços menores da mistura de óleo e azeite, até mudarem de cor.',
+    step4: 'Adicione o milho, o caldo de galinha, as bananas, as farinhas peneiradas e a pimenta, sem parar de mexer, até formar uma farofa solta e úmida.',
+    step5: 'Retire do fogo, acrescente o tempero verde e recheie o peru.',
+    step6: 'Coloque o peru na assadeira sem untar.',
+    step7: 'Cubra com papel alumínio e leve ao forno por volta de 1 hora e meia, regando constantemente com o molho da assadeira.',
+    step8: 'Retire o papel alumínio para dourar por mais 1 hora e meia aproximadamente, continue regando com o molho.',
+    step9: 'Coloque no refratário de servir e decore com farofa e tempero verde.',
+  };
 
   const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({ ...prev, [item]: !prev[item] }));
+    setCheckedItems((prev) => ({
+      ...prev,
+      [item]: !prev[item],
+    }));
   };
 
   const salvarListaDeCompras = async () => {
@@ -103,43 +105,44 @@ export default function PeruABrasileira() {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_peru.png')} // ajuste o caminho da imagem
-      >
+      <View style={styles.container}>
+        {/* Imagem decorativa como fundo visual */}
+        <Image
+          source={require('../assets/images/fundo_peru.png')}
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
+
         <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate('natal')}>
+          <TouchableOpacity onPress={() => nav.goBack()}>
             <Feather name="chevron-left" size={28} color="#000" />
           </TouchableOpacity>
-          <Text style={styles.paragraph}>PERU À{"\n"}BRASILEIRA</Text>
+          <Text style={styles.paragraph}>PERU{"\n"}À BRASILEIRA</Text>
         </View>
 
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          <View>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+                <View style={styles.ingredientesContainer}>
+                  <View>
+                    {Object.entries(itemsMap).map(([key, item]) => (
+                      <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                        <Text style={styles.topicos}>
+                          {checkedItems[key] ? (
+                            <Text style={styles.check}>✓ </Text>
+                          ) : (
+                            <Text style={styles.bolinha}>⚪ </Text>
+                          )}
+                          {item}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </View>
 
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        {steps.map((step, index) => (
-          <TouchableOpacity
-            key={`step${index + 1}`}
-            onPress={() => toggleCheck(`step${index + 1}`)}
-          >
+        {Object.entries(stepsMap).map(([key, step]) => (
+          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
             <Text style={styles.topicos}>
-              {checkedItems[`step${index + 1}`] ? (
+              {checkedItems[key] ? (
                 <Text style={styles.check}>✓ </Text>
               ) : (
                 <Text style={styles.bolinha}>⚪ </Text>
@@ -172,31 +175,30 @@ export default function PeruABrasileira() {
             <Text style={styles.textoBotao}>Baixar lista de compra</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </View>
     </ScrollView>
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    height: '50%',
-    backgroundColor: '#ECECEC',
+    backgroundColor: "#ECECEC",
+    width: "100%",
   },
   tituloContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 90,
     marginLeft: 10,
   },
   paragraph: {
     fontSize: 22,
-    color: '#242424',
-    textTransform: 'uppercase',
+    color: "#242424",
+    textTransform: "uppercase",
     marginLeft: 5,
     width: 240,
-    lineHeight: 26,
   },
   ingredientes: {
     marginTop: 100,
@@ -206,52 +208,61 @@ const styles = StyleSheet.create({
     left: 44,
   },
   ingredientesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   topicos: {
     marginBottom: 10,
     lineHeight: 24,
     left: 44,
     width: 290,
-    fontSize: 14,
-    color: '#444',
+  },
+  numero: {
+    fontWeight: "bold",
   },
   check: {
-    color: '#32CD32',
+    color: "#32CD32",
     fontSize: 20,
-    marginRight: 5,
   },
   bolinha: {
     fontSize: 16,
   },
   botoesContainer: {
-    flexDirection: 'row',
-    width: '100%',
+    flexDirection: "row",
+    width: "100%",
     height: 50,
     marginTop: 40,
   },
   botaoVerde: {
     flex: 1,
-    backgroundColor: '#009B4D',
+    backgroundColor: "#009B4D",
     padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   botaoCinza: {
     flex: 1,
-    backgroundColor: '#2F4B54',
+    backgroundColor: "#2F4B54",
     padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   iconeBotao: {
     marginRight: 10,
   },
   textoBotao: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
+  },
+  decorativeImage: {
+     position: 'absolute',
+    left: 135,
+    top: 0,
+    right: 0,
+    width: 350,
+    height: 500,
+    zIndex: 0,
   },
 });

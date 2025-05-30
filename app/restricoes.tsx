@@ -50,7 +50,7 @@ export default function ComidasInfantis() {
                 {/* Header */}
                 <View style={styles.row}>
                     <TouchableOpacity onPress={() => nav.navigate("home")}>
-                        <Feather name="chevron-left" size={24} color="#000" />
+                        <Feather name="chevron-left" size={24} color="#000" style={styles.seta} />
                     </TouchableOpacity>
                     <Text style={styles.paragraph}>Restrições Alimentares</Text>
                 </View>
@@ -331,7 +331,11 @@ const styles = StyleSheet.create({
     paragraph: {
         fontSize: 24,
         color: "#242424",
-        textTransform: "uppercase"
+        textTransform: "uppercase",
+        top: 10
+    },
+    seta:{
+        top: 10
     },
     branco: {
         backgroundColor: "white",
@@ -362,7 +366,6 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: "#fff",
         textTransform: "uppercase",
-        margin: 70,
         width: 200,
         textAlign: "center",
     },
@@ -404,6 +407,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         textTransform: "uppercase",
         zIndex: 2,
+        width: 100
     },
     cardImage: {
         width: 80,

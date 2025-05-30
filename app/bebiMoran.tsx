@@ -57,7 +57,7 @@ export default function App() {
   const itemsMap: { [key: string]: string } = {
     item1: "Gelo a gosto (opcional)",
     item2: "500 ml de água gelada",
-    item3: "Suco de ½ limão (opcional, para realçar o sabor)",
+    item3: "Suco de 1/2 limão \n(opcional, para realçar o sabor)",
     item4: "250 g de morangos frescos (lavados e sem folhas)",
     item5: "2 a 4 colheres (sopa) de açúcar ou mel (a gosto)",
 
@@ -291,11 +291,11 @@ const styles = StyleSheet.create({
 
   decorativeImage: {
     position: "absolute",
-    left: 102,
+    left: 135,
     top: 0,
     right: 0,
     width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    height: 500, // ajuste conforme necessário
     zIndex: 0,
   },
 });

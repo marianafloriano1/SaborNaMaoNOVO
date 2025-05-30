@@ -55,7 +55,7 @@ export default function App() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "1 xícara de framboesas frescas ou congeladas",
+    item1: "1 xícara de framboesas \nfrescas ou congeladas",
     item2: "1 banana média (opcional, para dar cremosidade e adoçar naturalmente)",
     item3: "1 xícara de leite (pode ser integral, desnatado ou vegetal, como leite de amêndoas ou aveia)",
     item4: "1 colher (sopa) de mel, açúcar ou adoçante a gosto (opcional)",
@@ -286,11 +286,11 @@ const styles = StyleSheet.create({
 
   decorativeImage: {
     position: "absolute",
-    left: 102,
+    left: 135,
     top: 0,
     right: 0,
     width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    height: 500, // ajuste conforme necessário
     zIndex: 0,
   },
 });

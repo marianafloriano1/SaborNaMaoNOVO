@@ -112,7 +112,7 @@ export default function App() {
           resizeMode="contain"
         />
         <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate("natal")}>
+          <TouchableOpacity onPress={() => nav.navigate("ano_novo")}>
             <Feather name="chevron-left" size={28} color="#000" />
           </TouchableOpacity>
           <Text style={styles.paragraph}>
@@ -301,12 +301,12 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+     position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
-    width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    width: 350,
+    height: 500,
     zIndex: 0,
   },
 });

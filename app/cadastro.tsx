@@ -1,56 +1,53 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-
-// Firebase
-import { initializeApp } from 'firebase/app';
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
-import { firebaseConfig } from '../firebaseConfig'; // certifique-se que este arquivo existe
-
-// Inicializa o Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+import {
+  Alert,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import { saveUser } from '../bancodedados'; // sua função de salvar no "banco de dados" local
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const router = useRouter();
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (!email || !senha) {
       Alert.alert('Erro', 'Preencha todos os campos');
       return;
+    }else {
+      Alert.alert('Erro', 'Email ou senha inválidos');
     }
 
-    if (senha.length < 6) {
-      Alert.alert('Erro', 'A senha deve conter no mínimo 6 caracteres');
-      return;
-    }
 
-    createUserWithEmailAndPassword(auth, email, senha)
-      .then((userCredential) => {
-        console.log('Conta criada:', userCredential.user);
-        Alert.alert('Sucesso', 'Conta criada com sucesso!');
-        router.replace('/');
-      })
-      .catch((error) => {
-        console.error(error);
-        Alert.alert('Erro ao cadastrar', error.message);
-      });
+    try {
+      await saveUser(email, senha);
+      Alert.alert('Sucesso', 'Conta criada com sucesso!');
+      router.replace('/');
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Erro', 'Não foi possível criar a conta.');
+    }
   };
 
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <Text style={styles.texto_cima}>Sabor Na Mão</Text>
+        <Text style={styles.textoTopo}>Sabor Na Mão</Text>
 
         <Image source={require('../assets/images/cadastro.png')} style={styles.imagem} />
 
-        <View style={styles.quadrado}>
-          <Text style={styles.texto1}>Crie sua conta</Text>
+        <View style={styles.card}>
+          <Text style={styles.titulo}>Crie sua conta</Text>
           <Pressable onPress={() => router.replace('/')}>
-            <Text style={styles.texto}>
-              Já tem uma conta? <Text style={styles.texto2}>Faça o login</Text>
+            <Text style={styles.subtitulo}>
+              Já tem uma conta? <Text style={styles.linkCadastro}>Faça o login</Text>
             </Text>
           </Pressable>
 
@@ -81,88 +78,84 @@ export default function RegisterScreen() {
   );
 }
 
-
 const styles = StyleSheet.create({
-  container: {
+ container: {
     flex: 1,
-    alignItems: 'center',
-    width: 'auto',
     backgroundColor: '#F5F5F5',
+    alignItems: 'center',
+    top: 30
   },
-  texto_cima: {
+  textoTopo: {
     color: '#F8D12D',
     fontWeight: 'bold',
-    fontSize: 37,
-    marginBottom: 10,
-    top: 80,
+    fontSize: 36,
+    marginTop: 40,
   },
   imagem: {
-    width: 360,
-    height: 360,
-    top: 63,
+    width: 340,
+    height: 340,
+    marginTop: 20,
     marginRight: 100,
   },
-  quadrado: {
-     backgroundColor: '#ececec',
+  card: {
+    backgroundColor: '#ececec',
     width: '100%',
     borderTopRightRadius: 80,
     paddingVertical: 40,
     paddingHorizontal: 24,
     alignItems: 'center',
+    marginTop: -50,
+    height: '60%',
+  },
+  titulo: {
+    fontSize: 22,
+    color: '#565656',
+    marginBottom: 10,
+  },
+  texto3:{
+    color: 'red',
+    right: 100,
+    top: -10
+  },
+  subtitulo: {
+    fontSize: 18,
+    color: '#565656',
+    marginBottom: 20,
     marginTop: 10,
-    height: '55%'
+  },
+  linkCadastro: {
+    color: '#839deb',
+    fontWeight: 'bold',
+  },
+  input: {
+    height: 50,
+    width: '100%',
+    borderWidth: 1.5,
+    borderColor: 'rgba(248, 209, 45, 0.7)',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    fontSize: 16,
+    color: '#565656',
+    marginBottom: 16,
+    marginTop: 20,
   },
   botao: {
     backgroundColor: 'rgba(248, 209, 45, 0.7)',
     borderRadius: 9,
-    height: 40,
-    width: 135,
-    padding: 5,
-    left: 104,
+    height: 45,
+    width: 160,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#565656',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.1,
-    elevation: 15,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    elevation: 20,
+    top: 40,
+    left: 100
   },
   botaoTexto: {
     color: '#fff',
     fontWeight: 'bold',
-    textAlign: 'center',
     fontSize: 17,
-  },
-  input: {
-    height: 50,
-    width: 346,
-    borderWidth: 1.5,
-    borderColor: 'rgba(248, 209, 45, 0.7)',
-    fontSize: 16,
-    padding: 10,
-    borderRadius: 8,
-    color: '#565656',
-    margin: 20,
-    marginBottom: 10
-
-  },
-  texto: {
-     fontSize: 20,
-    color: '#565656',
-    marginBottom: 10,
-  },
-  texto1: {
- fontSize: 22,
-    color: '#565656',
-    marginBottom: 20,
-  },
-  texto2: {
-    fontSize: 20,
-    color: '#839deb',
-  },
-  texto3: {
-    fontSize: 12,
-    color: 'red',
-    top: -10,
-    left: -110,
   },
 });

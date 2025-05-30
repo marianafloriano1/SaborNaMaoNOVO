@@ -57,7 +57,7 @@ export default function App() {
   const itemsMap: { [key: string]: string } = {
     item1: "2 xícaras de água",
     item2: "1 pedaço de gengibre fresco",
-    item3: "Mel, limão ou canela (opcional, para sabor)",
+    item3: "Mel, limão ou canela \n(opcional, para sabor)",
   };
 
   const toggleCheck = (item: string) => {
@@ -291,12 +291,12 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+    position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
-    width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    width: 350,
+    height: 400,
     zIndex: 0,
   },
 });

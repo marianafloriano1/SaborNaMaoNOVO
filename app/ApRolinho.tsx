@@ -55,7 +55,7 @@ export default function App() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "Palitos de dente ou palitos de bambu",
+    item1: "Palitos de dente ou palitos \nde bambu",
     item2: "1/2 melão (tipo cantaloupe ou orange melon)",
     item3: "Hortelã fresca (opcional, para decorar ou aromatizar)",
     item4:
@@ -282,12 +282,12 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+    position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
-    width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    width: 350,
+    height: 500,
     zIndex: 0,
   },
 });

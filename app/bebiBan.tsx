@@ -55,8 +55,8 @@ export default function App() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "Gelo a gosto (opcional)",
-    item2: "Mel ou açúcar a gosto (opcional)",
+    item1: "Gelo a gosto \n(opcional)",
+    item2: "Mel ou açúcar a gosto \n(opcional)",
     item3: "1 colher de sopa de aveia (opcional, para dar mais sustância)",
     item4: "1 copo (200–250 ml) de leite (integral, desnatado ou vegetal: aveia, amêndoas, etc.)",
     item5: "1 ou 2 bananas maduras (quanto mais madura, mais doce a vitamina)",
@@ -287,12 +287,12 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+     position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
-    width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    width: 350,
+    height: 500,
     zIndex: 0,
   },
 });

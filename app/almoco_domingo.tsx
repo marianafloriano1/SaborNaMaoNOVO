@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#242424",
     textTransform: "uppercase",
-    top: 10
+    top: 20
   },
 
   branco: {

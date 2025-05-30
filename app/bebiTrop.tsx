@@ -56,7 +56,7 @@ export default function App() {
 
   const itemsMap: { [key: string]: string } = {
     item1: "Gelo a gosto (opcional)",
-    item2: "Suco de 1 limão (espremido na hora)",
+    item2: "Suco de 1 limão \n(espremido na hora)",
     item3: "1 cenoura média, crua e descascada",
     item4: "1 copo (200-250 ml) de água gelada ou água de coco",
     item5: "1 colher de sopa de mel ou outro adoçante natural (opcional)",
@@ -290,12 +290,12 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+   position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
-    width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    width: 350,
+    height: 500,
     zIndex: 0,
   },
 });

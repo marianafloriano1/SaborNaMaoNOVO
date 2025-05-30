@@ -2,13 +2,13 @@ import { Feather } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -39,7 +39,7 @@ export default function Pizza() {
 
   const itemsMap: { [key: string]: string } = {
     item1: "1 xícara de farinha de arroz",
-    item2: "1/4 de xícara de fécula de batata",
+    item2: "1/4 de xícara de fécula de \nbatata",
     item3: "1/4 de xícara de amido de milho",
     item4: "1/2 batata média amassada ou mandioca",
     item5: "1 colher de fermento (sobremesa)",
@@ -220,11 +220,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+     position: 'absolute',
+    left: 135,
     top: 0,
+    right: 0,
     width: 350,
-    height: 720,
+    height: 500,
     zIndex: 0,
   },
 });

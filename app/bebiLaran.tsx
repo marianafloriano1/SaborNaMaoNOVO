@@ -55,8 +55,8 @@ export default function App() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "Gelo a gosto (opcional)",
-    item2: "Açúcar ou mel a gosto (opcional)",
+    item1: "Gelo a gosto \n(opcional)",
+    item2: "Açúcar ou mel a gosto \n(opcional)",
     item3: "Água (opcional, se quiser diluir)",
     item4: "5 a 6 laranjas (de preferência bem maduras e doces)",
     
@@ -292,12 +292,12 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+     position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
-    width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    width: 350,
+    height: 500,
     zIndex: 0,
   },
 });

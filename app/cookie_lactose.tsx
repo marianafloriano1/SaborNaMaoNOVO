@@ -2,13 +2,13 @@ import { Feather } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -217,12 +217,13 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
-  decorativeImage: {
-    position: "absolute",
-    left: 102,
+ decorativeImage: {
+     position: 'absolute',
+    left: 135,
     top: 0,
+    right: 0,
     width: 350,
-    height: 720,
+    height: 500,
     zIndex: 0,
   },
 });

@@ -41,7 +41,7 @@ export default function PudimAirFryer() {
     const itemsMap: { [key: string]: string } = {
         item1: "75g De leite condensado \n(5 colheres de sopa).",
         item2: "1 Gema.",
-        item3: "35ml leite (3 colheres de sopa).",
+        item3: "35ml leite (3 colheres de \nsopa).",
         item4: "Essência de baunilha.",
         item5: "50g Açúcar cristal.",
         item6: "20ml De água.",
@@ -255,13 +255,13 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 16,
     },
-    decorativeImage: {
-        position: "absolute",
-        left: 102,
-        top: 0,
-        right: 0,
-        width: 350,
-        height: 720,
-        zIndex: 0,
-    },
+decorativeImage: {
+     position: 'absolute',
+    left: 135,
+    top: 0,
+    right: 0,
+    width: 350,
+    height: 500,
+    zIndex: 0,
+  },
 });

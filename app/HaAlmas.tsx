@@ -55,7 +55,7 @@ export default function App() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "4 batatas médias ou batata-doce ",
+    item1: "4 batatas médias ou \nbatata-doce ",
     item2: "Sal a gosto",
     item3: "2 colheres (sopa) de azeite de oliva",
     item4: "Páprica doce ou defumada (opcional)",
@@ -289,12 +289,12 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+     position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
-    width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    width: 350,
+    height: 500,
     zIndex: 0,
   },
 });

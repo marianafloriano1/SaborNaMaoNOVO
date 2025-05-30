@@ -38,7 +38,7 @@ export default function QuibeVegetais() {
 
   const itemsMap: { [key: string]: string } = {
     item1: "200g de trigo para quibe",
-    item2: "200g de abobrinhas verdes",
+    item2: "200g de abobrinhas \nverdes",
     item3: "200g de cenouras",
     item4: "200g de brócolis",
     item5: "200g de palmito",
@@ -225,12 +225,13 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
-  decorativeImage: {
-    position: "absolute",
-    left: 102,
+ decorativeImage: {
+     position: 'absolute',
+    left: 135,
     top: 0,
+    right: 0,
     width: 350,
-    height: 720,
+    height: 500,
     zIndex: 0,
   },
 });

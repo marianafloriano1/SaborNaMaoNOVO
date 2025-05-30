@@ -55,9 +55,9 @@ export default function App() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "Sal e pimenta-do-reino a gosto",
-    item2: "1 dente de alho amassado (opcional)",
-    item3: "1/2 cebola bem picadinha (opcional)",
+    item1: "Sal e pimenta-do-reino \na gosto",
+    item2: "1 dente de alho amassado \n(opcional)",
+    item3: "1/2 cebola bem picadinha \n(opcional)",
     item4: "500g de carne moída (patinho, acém ou fraldinha)",
     item5: "1 colher (sopa) de farinha de rosca (opcional, para dar liga)",
     item6:
@@ -281,13 +281,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  decorativeImage: {
-    position: "absolute",
-    left: 102,
+ decorativeImage: {
+     position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
-    width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    width: 350,
+    height: 500,
     zIndex: 0,
   },
 });

@@ -56,7 +56,7 @@ export default function App() {
 
   const itemsMap: { [key: string]: string } = {
     item1: "Manteiga",
-    item2: "1 lata de leite condensado (395g)",
+    item2: "1 lata de leite condensado",
     item3: "Chocolate granulado para enrolar",
     item4: "1 colher (sopa) de manteiga (ou margarina sem sal)",
     item5:
@@ -294,12 +294,12 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+     position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
-    width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    width: 350,
+    height: 500,
     zIndex: 0,
   },
 });

@@ -176,13 +176,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#ECECEC',
     paddingBottom: 40,
   },
-  decorativeImage: {
-    position: 'absolute',
-    left: 102,
+decorativeImage: {
+     position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
     width: 350,
-    height: 720,
+    height: 500,
     zIndex: 0,
   },
   tituloContainer: {

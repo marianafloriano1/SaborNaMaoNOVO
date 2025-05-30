@@ -20,7 +20,7 @@ export default function AnoNovo() {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.row}>
           <TouchableOpacity onPress={() => nav.navigate("home")}>
-            <Feather name="chevron-left" size={24} color="#242424" />
+            <Feather name="chevron-left" size={24} color="#242424" style={styles.seta} />
           </TouchableOpacity>
 
           <Text style={styles.paragraph}> Receitas para Noites de Snacks</Text>
@@ -126,6 +126,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#242424",
     textTransform: "uppercase",
+    top: 20
+  },
+  seta:{
+    top: 7
   },
 
   branco: {

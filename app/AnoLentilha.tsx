@@ -56,7 +56,7 @@ export default function App() {
 
   const itemsMap: { [key: string]: string } = {
     item1: "1 xícara de lentilha crua",
-    item2: "1/2 cebola roxa picada em cubinhos",
+    item2: "1/2 cebola roxa picada em \ncubinhos",
     item3: "1/2 pimentão vermelho picado",
     item4: "1/2 pepino em cubos pequenos",
     item5: "10 tomates-cereja cortados ao meio",
@@ -112,7 +112,7 @@ export default function App() {
           resizeMode="contain"
         />
         <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate("natal")}>
+          <TouchableOpacity onPress={() => nav.navigate("ano_novo")}>
             <Feather name="chevron-left" size={28} color="#000" />
           </TouchableOpacity>
           <Text style={styles.paragraph}>Salada de Lentilha</Text>
@@ -304,12 +304,12 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+    position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
-    width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    width: 350,
+    height: 500,
     zIndex: 0,
   },
 });

@@ -46,7 +46,7 @@ export default function BoboDeCamarao() {
 
   const itemsMap: { [key: string]: string } = {
     item1: "1 kg de camarão fresco",
-    item2: "3 dentes de alho picados e amassados",
+    item2: "3 dentes de alho picados \ne amassados",
     item3: "6 colheres (sopa) de azeite de oliva",
     item4: "1 maço de cheiro-verde picado",
     item5: "2 latas de molho pronto de tomate",
@@ -275,12 +275,12 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+    position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
-    width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    width: 350,
+    height: 500,
     zIndex: 0,
   },
 });

@@ -263,11 +263,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   decorativeImage: {
-    position: 'absolute',
-    left: 102,
+    position: "absolute",
+    left: 135,
     top: 0,
-    width: 350,
-    height: 720,
+    right: 0,
+    width: 350, // ajuste conforme necessário
+    height: 500, // ajuste conforme necessário
     zIndex: 0,
   },
 });

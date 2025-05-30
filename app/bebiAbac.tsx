@@ -56,7 +56,7 @@ export default function App() {
 
   const itemsMap: { [key: string]: string } = {
     item1: "Gelo a gosto (opcional)",
-    item2: "500 ml de água gelada ou de coco",
+    item2: "500 ml de água gelada \nou de coco",
     item3: "1 abacaxi médio maduro",
     item4: "Açúcar, mel ou adoçante a gosto (opcional)",
     item5: "Folhas de hortelã (opcional, para dar um toque refrescante)",
@@ -290,12 +290,12 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-    position: "absolute",
-    left: 102,
+    position: 'absolute',
+    left: 135,
     top: 0,
     right: 0,
-    width: 350, // ajuste conforme necessário
-    height: 720, // ajuste conforme necessário
+    width: 350,
+    height: 500,
     zIndex: 0,
   },
 });

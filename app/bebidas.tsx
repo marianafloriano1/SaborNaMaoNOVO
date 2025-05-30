@@ -266,7 +266,7 @@ export default function ComidasInfantis() {
                   source={require("../assets/images/fundo_bebida.png")}
                   style={styles.backgroundImage}
                 />
-                <Text style={styles.texto}>Suco limão</Text>
+                <Text style={styles.texto}>Suco de limão</Text>
                 <Image
                   source={{
                     uri: "https://images.pexels.com/photos/8805353/pexels-photo-8805353.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -281,7 +281,7 @@ export default function ComidasInfantis() {
                   source={require("../assets/images/fundo_bebida.png")}
                   style={styles.backgroundImage}
                 />
-                <Text style={styles.texto}>Suco morango</Text>
+                <Text style={styles.texto}>Suco de morango</Text>
                 <Image
                   source={{
                     uri: "https://images.pexels.com/photos/30412118/pexels-photo-30412118.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -296,7 +296,7 @@ export default function ComidasInfantis() {
                   source={require("../assets/images/fundo_bebida.png")}
                   style={styles.backgroundImage}
                 />
-                <Text style={styles.texto}>Suco abacaxi</Text>
+                <Text style={styles.texto}>Suco de abacaxi</Text>
                 <Image
                   source={{
                     uri: "https://images.pexels.com/photos/25935078/pexels-photo-25935078/free-photo-of-coquetel-aperitivo-drink-vidro.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -348,8 +348,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#fff",
     textTransform: "uppercase",
-    margin: 20,
-    width: 100,
+    width: 200,
     textAlign: "center",
   },
   card: {
@@ -366,6 +365,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginBottom: 16,
     marginTop: 16,
+  
   },
   cardD: {
     width: "47%",
@@ -390,6 +390,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textTransform: "uppercase",
     zIndex: 2,
+    width: 100
   },
   cardImage: {
     width: 80,

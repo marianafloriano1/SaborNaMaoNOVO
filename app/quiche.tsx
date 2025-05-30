@@ -5,7 +5,7 @@ import * as Sharing from 'expo-sharing';
 import React, { useState } from 'react';
 import {
   Alert,
-  ImageBackground,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -40,6 +40,16 @@ export default function QuicheDeLegumes() {
     item9: '1 colher (chá) de sal',
     item10: 'Pimenta-do-reino e noz-moscada a gosto',
     item11: '3 colheres (sopa) de queijo parmesão ralado',
+  };
+
+  const stepsMap: { [key: string]: string } = {
+    step1: 'Forre o fundo e a lateral de uma forma com a massa folhada.',
+    step2: 'Corte o excesso e fure com um garfo.',
+    step3: 'Bata os ovos com o creme de leite.',
+    step4: 'Adicione o brócolis, queijos, tomate seco, cheiro-verde, sal e temperos.',
+    step5: 'Misture bem e coloque sobre a massa.',
+    step6: 'Polvilhe com parmesão e asse a 180ºC por 30 minutos.',
+    step7: 'Desenforme morna e sirva.',
   };
 
   const toggleCheck = (item: string) => {
@@ -77,24 +87,32 @@ export default function QuicheDeLegumes() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        style={styles.container}
-        source={require('../assets/images/fundo_quiche.png')} // Altere aqui para a imagem de fundo correta
-      >
-      <View style={styles.tituloContainer}>
-                <TouchableOpacity onPress={() => nav.navigate('dietas')}>
-                  <Feather name="chevron-left" size={28} color="#000" />
-                </TouchableOpacity>
-                <Text style={styles.paragraph}>QUICHE DE <br></br>LEGUMES</Text>
-              </View>
+    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/images/fundo_quiche.png')} // atualize para o caminho correto da imagem
+          style={styles.decorativeImage}
+          resizeMode="contain"
+        />
+
+        <View style={styles.tituloContainer}>
+          <TouchableOpacity onPress={() => nav.navigate('dietas')}>
+            <Feather name="chevron-left" size={28} color="#000" />
+          </TouchableOpacity>
+          <Text style={styles.paragraph}>QUICHE{"\n"}DE LEGUMES</Text>
+        </View>
+
         <Text style={styles.ingredientes}>INGREDIENTES</Text>
         <View style={styles.ingredientesContainer}>
           <View>
             {Object.entries(itemsMap).map(([key, label]) => (
               <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
                 <Text style={styles.topicos}>
-                  {checkedItems[key] ? <Text style={styles.check}>✓ </Text> : <Text style={styles.bolinha}>⚪ </Text>}
+                  {checkedItems[key] ? (
+                    <Text style={styles.check}>✓ </Text>
+                  ) : (
+                    <Text style={styles.bolinha}>⚪ </Text>
+                  )}
                   {label}
                 </Text>
               </TouchableOpacity>
@@ -103,54 +121,35 @@ export default function QuicheDeLegumes() {
         </View>
 
         <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        {[
-          'Forre o fundo e a lateral de uma forma com a massa folhada.',
-          'Corte o excesso e fure com um garfo.',
-          'Bata os ovos com o creme de leite.',
-          'Adicione o brócolis, queijos, tomate seco, cheiro-verde, sal e temperos.',
-          'Misture bem e coloque sobre a massa.',
-          'Polvilhe com parmesão e asse a 180ºC por 30 minutos.',
-          'Desenforme morna e sirva.'
-        ].map((step, index) => (
-          <TouchableOpacity key={`step${index + 1}`} onPress={() => toggleCheck(`step${index + 1}`)}>
+        {Object.entries(stepsMap).map(([key, step], index) => (
+          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
             <Text style={styles.topicos}>
-              {checkedItems[`step${index + 1}`] ? (
+              {checkedItems[key] ? (
                 <Text style={styles.check}>✓ </Text>
               ) : (
                 <Text style={styles.bolinha}>⚪ </Text>
               )}
-              {step}
+              {index + 1}. {step}
             </Text>
           </TouchableOpacity>
         ))}
 
         <View style={styles.botoesContainer}>
           <TouchableOpacity style={styles.botaoVerde}>
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
+            <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
             <Text style={styles.textoBotao}>Forma correta descarte</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={salvarListaDeCompras}
-          >
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
+
+          <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
+            <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
             <Text style={styles.textoBotao}>Baixar lista de compra</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </View>
     </ScrollView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -160,11 +159,11 @@ const styles = StyleSheet.create({
   },
   decorativeImage: {
     position: 'absolute',
-    left: 102,
+    left: 135,
     top: 0,
     right: 0,
     width: 350,
-    height: 720,
+    height: 500,
     zIndex: 0,
   },
   tituloContainer: {
