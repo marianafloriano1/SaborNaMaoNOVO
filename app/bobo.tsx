@@ -60,14 +60,16 @@ export default function BoboDeCamarao() {
   };
 
   const stepsMap: { [key: string]: string } = {
-    step1: "Lave os camarões e tempere com sal, alho, pimenta e limão, deixe marinar.",
+    step1:
+      "Lave os camarões e tempere com sal, alho, pimenta e limão, deixe marinar.",
     step2: "Cozinhe a mandioca em pedacinhos, com louro e a cebola em rodelas.",
     step3: "Quando estiver mole, acrescente um vidro de leite de coco.",
     step4: "Deixe esfriar um pouco e bata no liquidificador.",
     step5: "Esquente o azeite de oliva, junte a cebola ralada e deixe dourar.",
     step6: "Acrescente os camarões e frite.",
     step7: "Acrescente o molho de tomate e deixe cozinhar por 5 minutos.",
-    step8: "Junte o azeite de dendê, misture bem e cozinhe por mais 10 minutos.",
+    step8:
+      "Junte o azeite de dendê, misture bem e cozinhe por mais 10 minutos.",
     step9: "Sirva quente, decorado com cheiro-verde.",
   };
 
@@ -89,7 +91,8 @@ export default function BoboDeCamarao() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_de_compras_bobo_de_camarao.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "lista_de_compras_bobo_de_camarao.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -109,82 +112,85 @@ export default function BoboDeCamarao() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <Image
-          source={require("../assets/images/fundo_bobo.png")}
-          style={styles.decorativeImage}
-          resizeMode="contain"
-        />
+    <View style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <Image
+            source={require("../assets/images/fundo_bobo.png")}
+            style={styles.decorativeImage}
+            resizeMode="contain"
+          />
 
-        <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate("pascoa")}>
-            <Feather name="chevron-left" size={28} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.paragraph}>BOBÓ DE CAMARÃO</Text>
-        </View>
-
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          <View>
-            {Object.entries(itemsMap).map(([key, item]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
-                  {item}
-                </Text>
-              </TouchableOpacity>
-            ))}
+          <View style={styles.tituloContainer}>
+            <TouchableOpacity onPress={() => nav.navigate("pascoa")}>
+              <Feather name="chevron-left" size={28} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.paragraph}>BOBÓ DE CAMARÃO</Text>
           </View>
+
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+          <View style={styles.ingredientesContainer}>
+            <View>
+              {Object.entries(itemsMap).map(([key, item]) => (
+                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓ </Text>
+                    ) : (
+                      <Text style={styles.bolinha}>⚪ </Text>
+                    )}
+                    {item}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+
+          <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+          {Object.entries(stepsMap).map(([key, step]) => (
+            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+              <Text style={styles.topicos}>
+                {checkedItems[key] ? (
+                  <Text style={styles.check}>✓ </Text>
+                ) : (
+                  <Text style={styles.bolinha}>⚪ </Text>
+                )}
+                {step}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
+      </ScrollView>{" "}
+      <View style={styles.botoesContainer}>
+        <TouchableOpacity
+          style={styles.botaoVerde}
+          onPress={() => Alert.alert("Forma correta descarte")}
+        >
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+        </TouchableOpacity>
 
-        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        {Object.entries(stepsMap).map(([key, step]) => (
-          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-            <Text style={styles.topicos}>
-              {checkedItems[key] ? (
-                <Text style={styles.check}>✓ </Text>
-              ) : (
-                <Text style={styles.bolinha}>⚪ </Text>
-              )}
-              {step}
-            </Text>
-          </TouchableOpacity>
-        ))}
-
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity
-            style={styles.botaoVerde}
-            onPress={() => Alert.alert("Forma correta descarte")}
-          >
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Forma correta descarte</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={salvarListaDeCompras}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -244,7 +250,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 50,
-    marginTop: 40,
   },
 
   botaoVerde: {
@@ -275,7 +280,7 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-    position: 'absolute',
+    position: "absolute",
     left: 135,
     top: 0,
     right: 0,

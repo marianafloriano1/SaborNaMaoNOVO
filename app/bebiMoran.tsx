@@ -60,8 +60,7 @@ export default function App() {
     item3: "Suco de 1/2 limão \n(opcional, para realçar o sabor)",
     item4: "250 g de morangos frescos (lavados e sem folhas)",
     item5: "2 a 4 colheres (sopa) de açúcar ou mel (a gosto)",
-
-};
+  };
 
   const toggleCheck = (item: string) => {
     setCheckedItems((prev) => ({
@@ -101,103 +100,99 @@ export default function App() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        <Image
-          source={require("../assets/images/fundo_sucomorango.png")}
-          style={styles.decorativeImage}
-          resizeMode="contain"
-        />
-        <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate("bebidas")}>
-            <Feather name="chevron-left" size={28} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.paragraph}>Suco de Morango</Text>
-        </View>
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          <View>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓</Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+    <View style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <Image
+            source={require("../assets/images/fundo_sucomorango.png")}
+            style={styles.decorativeImage}
+            resizeMode="contain"
+          />
+          <View style={styles.tituloContainer}>
+            <TouchableOpacity onPress={() => nav.navigate("bebidas")}>
+              <Feather name="chevron-left" size={28} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.paragraph}>Suco de Morango</Text>
           </View>
-        </View>
-        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        <TouchableOpacity onPress={() => toggleCheck("step1")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step1 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}
-Lave bem os morangos e retire as folhas.
-
-Coloque os morangos no liquidificador com a água, o açúcar (ou mel) e o suco de limão, se for usar.
-
-
-
-
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck("step2")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step2 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-Bata bem por 1 a 2 minutos até ficar homogêneo.
-
-Coe se quiser um suco mais leve, sem sementes (opcional).
-
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck("step3")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step3 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-Sirva com gelo e, se quiser, decore com pedaços de morango ou folhas de hortelã. Se os morangos estiverem muito doces, talvez nem precise adoçar.
-
-
-          </Text>
-        </TouchableOpacity>
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoVerde}>
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+          <View style={styles.ingredientesContainer}>
+            <View>
+              {Object.entries(itemsMap).map(([key, label]) => (
+                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓</Text>
+                    ) : (
+                      <Text style={styles.bolinha}>⚪ </Text>
+                    )}
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+          <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+          <TouchableOpacity onPress={() => toggleCheck("step1")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step1 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}
+              Lave bem os morangos e retire as folhas. Coloque os morangos no
+              liquidificador com a água, o açúcar (ou mel) e o suco de limão, se
+              for usar.
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={salvarListaDeCompras}
-          >
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+          <TouchableOpacity onPress={() => toggleCheck("step2")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step2 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Bata bem por 1 a 2 minutos até ficar homogêneo. Coe se quiser um
+              suco mais leve, sem sementes (opcional).
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => toggleCheck("step3")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step3 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Sirva com gelo e, se quiser, decore com pedaços de morango ou
+              folhas de hortelã. Se os morangos estiverem muito doces, talvez
+              nem precise adoçar.
+            </Text>
           </TouchableOpacity>
         </View>
+      </ScrollView>
+      <View style={styles.botoesContainer}>
+        <TouchableOpacity style={styles.botaoVerde}>
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={salvarListaDeCompras}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -259,7 +254,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 50,
-    marginTop: 40,
   },
 
   botaoVerde: {

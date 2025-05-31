@@ -38,24 +38,28 @@ export default function Pizza() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "1 xícara de farinha de arroz",
-    item2: "1/4 de xícara de fécula de \nbatata",
-    item3: "1/4 de xícara de amido de milho",
+    item1: "1 ovo",
+    item2: "1 colher rasa de sal (chá)",
+    item3: "1 xícara de farinha de arroz",
     item4: "1/2 batata média amassada ou mandioca",
     item5: "1 colher de fermento (sobremesa)",
-    item6: "1 colher rasa de sal (chá)",
+    item6: "1/4 de xícara de fécula de batata",
     item7: "1 colher de açúcar (sobremesa)",
-    item8: "1 ovo",
+    item8: "1/4 de xícara de amido de milho ",
     item9: "3 colheres de óleo ou azeite (sopa)",
     item10: "1 colher rasa de agar-agar (chá, opcional, para melhorar a massa)",
   };
 
   const stepsMap: { [key: string]: string } = {
     step1: "Adicione todos os ingredientes em uma vasilha.",
-    step2: "Mexa bem todos os ingredientes, até a massa ficar boa para mexer com as mãos. Se necessário, coloque mais farinha de arroz.",
-    step3: "Unte as mãos e coloque a massa em uma forma untada e enfarinhada com farinha de arroz. É necessário limpar e repassar óleo nas mãos quando a massa começar a agarrar.",
-    step4: "Deixe a massa no forno pré-aquecido a 200~250 graus por 10 minutos, dependendo da potência do seu forno.",
-    step5: "Retire a massa, recheie como quiser e deixe por mais 7 a 10 minutos.",
+    step2:
+      "Mexa bem todos os ingredientes, até a massa ficar boa para mexer com as mãos. Se necessário, coloque mais farinha de arroz.",
+    step3:
+      "Unte as mãos e coloque a massa em uma forma untada e enfarinhada com farinha de arroz. É necessário limpar e repassar óleo nas mãos quando a massa começar a agarrar.",
+    step4:
+      "Deixe a massa no forno pré-aquecido a 200~250 graus por 10 minutos, dependendo da potência do seu forno.",
+    step5:
+      "Retire a massa, recheie como quiser e deixe por mais 7 a 10 minutos.",
     step6: "Rende uma pizza de 4 pedaços.",
   };
 
@@ -67,80 +71,81 @@ export default function Pizza() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        {/* Imagem decorativa igual do pastel, troque a imagem conforme desejar */}
-        <Image
-          source={require("../assets/images/fundo_pizza.png")}
-          style={styles.decorativeImage}
-          resizeMode="contain"
-        />
+    <View style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          {/* Imagem decorativa igual do pastel, troque a imagem conforme desejar */}
+          <Image
+            source={require("../assets/images/fundo_pizza.png")}
+            style={styles.decorativeImage}
+            resizeMode="contain"
+          />
 
-        <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate("restricoes")}>
-            <Feather name="chevron-left" size={28} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.paragraph}>PIZZA</Text>
-        </View>
-
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          <View>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+          <View style={styles.tituloContainer}>
+            <TouchableOpacity onPress={() => nav.navigate("restricoes")}>
+              <Feather name="chevron-left" size={28} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.paragraph}>PIZZA</Text>
           </View>
-        </View>
 
-        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        {Object.entries(stepsMap).map(([key, step], idx) => (
-          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-            <Text style={styles.topicos}>
-              {checkedItems[key] ? (
-                <Text style={styles.check}>✓ </Text>
-              ) : (
-                <Text style={styles.bolinha}>⚪ </Text>
-              )}
-              {step}
-            </Text>
-          </TouchableOpacity>
-        ))}
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+          <View style={styles.ingredientesContainer}>
+            <View>
+              {Object.entries(itemsMap).map(([key, label]) => (
+                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓ </Text>
+                    ) : (
+                      <Text style={styles.bolinha}>⚪ </Text>
+                    )}
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
 
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoVerde}>
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Forma correta descarte</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            // Aqui pode adicionar função para baixar ou salvar lista
-            onPress={() => Alert.alert("Função em desenvolvimento")}
-          >
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
-          </TouchableOpacity>
+          <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+          {Object.entries(stepsMap).map(([key, step], idx) => (
+            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+              <Text style={styles.topicos}>
+                {checkedItems[key] ? (
+                  <Text style={styles.check}>✓ </Text>
+                ) : (
+                  <Text style={styles.bolinha}>⚪ </Text>
+                )}
+                {step}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
+      </ScrollView>
+      <View style={styles.botoesContainer}>
+        <TouchableOpacity style={styles.botaoVerde}>
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          // Aqui pode adicionar função para baixar ou salvar lista
+          onPress={() => Alert.alert("Função em desenvolvimento")}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -194,7 +199,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 50,
-    marginTop: 40,
   },
   botaoVerde: {
     flex: 1,
@@ -220,7 +224,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   decorativeImage: {
-     position: 'absolute',
+    position: "absolute",
     left: 135,
     top: 0,
     right: 0,

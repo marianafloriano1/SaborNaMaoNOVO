@@ -43,10 +43,10 @@ export default function ArrozDeForno() {
 
   const itemsMap: { [key: string]: string } = {
     item1: "1 xícara de arroz cozido",
-    item2: "1/4 xíc. frango desfiado ou \ncarne a gosto",
+    item2: "1/4 de cebola picada",
     item3: "1/4 xíc. de queijo ralado",
     item4: "1/4 xíc. de molho de tomate",
-    item5: "1/4 de cebola picada",
+    item5: "1/4 xíc. frango desfiado ou carne a gosto",
     item6: "1 dente de alho picado",
     item7: "1/4 de pimentão picado (opcional)",
     item8: "1/4 de cenoura ralada (opcional)",
@@ -92,75 +92,87 @@ export default function ArrozDeForno() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        <Image
-          source={require("../assets/images/fundo_arrozForno.png")} // substitua pelo seu fundo
-          style={styles.decorativeImage}
-          resizeMode="contain"
-        />
-        <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate("morando_sozinho")}>
-            <Feather name="chevron-left" size={28} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.paragraph}>Arroz de Forno</Text>
-        </View>
-
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          {Object.entries(itemsMap).map(([key, label]) => (
-            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-              <Text style={styles.topicos}>
-                {checkedItems[key] ? (
-                  <Text style={styles.check}>✓</Text>
-                ) : (
-                  <Text style={styles.bolinha}>⚪ </Text>
-                )}
-                {label}
-              </Text>
+    <View style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <Image
+            source={require("../assets/images/fundo_arrozForno.png")} // substitua pelo seu fundo
+            style={styles.decorativeImage}
+            resizeMode="contain"
+          />
+          <View style={styles.tituloContainer}>
+            <TouchableOpacity onPress={() => nav.navigate("home")}>
+              <Feather name="chevron-left" size={28} color="#000" />
             </TouchableOpacity>
-          ))}
-        </View>
+            <Text style={styles.paragraph}>Arroz de Forno</Text>
+          </View>
 
-        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        {[
-          "Preaqueça o forno a 180°C.",
-          "Refogue cebola e alho no azeite. Adicione pimentão e cenoura se desejar.",
-          "Adicione o frango ou carne, tempere com sal e pimenta.",
-          "Misture o arroz ao refogado.",
-          "Transfira para um refratário.",
-          "Cubra com molho de tomate.",
-          "Adicione o queijo por cima.",
-          "Leve ao forno por 15-20 min ou até gratinar.",
-          "Deixe esfriar um pouco e sirva.",
-        ].map((step, index) => {
-          const key = `step${index + 1}`;
-          return (
-            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-              <Text style={styles.topicos}>
-                {checkedItems[key] ? (
-                  <Text style={styles.check}>✓</Text>
-                ) : (
-                  <Text style={styles.bolinha}>⚪ </Text>
-                )}
-                {step}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+          <View style={styles.ingredientesContainer}>
+            {Object.entries(itemsMap).map(([key, label]) => (
+              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <Text style={styles.topicos}>
+                  {checkedItems[key] ? (
+                    <Text style={styles.check}>✓</Text>
+                  ) : (
+                    <Text style={styles.bolinha}>⚪ </Text>
+                  )}
+                  {label}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
 
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoVerde}>
-            <Feather name="refresh-cw" size={20} color="#fff" style={styles.iconeBotao} />
-            <Text style={styles.textoBotao}>Forma correta descarte</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
-            <Feather name="download" size={20} color="#FFCC00" style={styles.iconeBotao} />
-            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
-          </TouchableOpacity>
+          <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+          {[
+            "Preaqueça o forno a 180°C.",
+            "Refogue cebola e alho no azeite. Adicione pimentão e cenoura se desejar.",
+            "Adicione o frango ou carne, tempere com sal e pimenta.",
+            "Misture o arroz ao refogado. Transfira para um refratário.",
+            "Cubra com molho de tomate. Adicione o queijo por cima.",
+            "Leve ao forno por 15-20 min ou até gratinar.",
+            "Deixe esfriar um pouco e sirva.",
+          ].map((step, index) => {
+            const key = `step${index + 1}`;
+            return (
+              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <Text style={styles.topicos}>
+                  {checkedItems[key] ? (
+                    <Text style={styles.check}>✓</Text>
+                  ) : (
+                    <Text style={styles.bolinha}>⚪ </Text>
+                  )}
+                  {step}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
+      </ScrollView>
+      <View style={styles.botoesContainer}>
+        <TouchableOpacity style={styles.botaoVerde}>
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={salvarListaDeCompras}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -212,7 +224,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 50,
-    marginTop: 40,
   },
   botaoVerde: {
     flex: 1,
@@ -238,7 +249,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   decorativeImage: {
-     position: 'absolute',
+    position: "absolute",
     left: 135,
     top: 0,
     right: 0,

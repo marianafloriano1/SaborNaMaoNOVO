@@ -103,117 +103,119 @@ export default function App() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        <Image
-          source={require("../assets/images/fundo_cookies.png")}
-          style={styles.decorativeImage}
-          resizeMode="contain"
-        />
-        <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate("snack")}>
-            <Feather name="chevron-left" size={28} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.paragraph}>Cookies com gotas de Chocolate</Text>
-        </View>
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          <View>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓</Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+    <View style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <Image
+            source={require("../assets/images/fundo_cookies.png")}
+            style={styles.decorativeImage}
+            resizeMode="contain"
+          />
+          <View style={styles.tituloContainer}>
+            <TouchableOpacity onPress={() => nav.navigate("snack")}>
+              <Feather name="chevron-left" size={28} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.paragraph}>Cookies com gotas de Chocolate</Text>
           </View>
-        </View>
-        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        <TouchableOpacity onPress={() => toggleCheck("step1")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step1 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-            Pré-aqueça o forno a 180 °C e forre uma assadeira com papel
-            manteiga.
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck("step2")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step2 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-            Em uma tigela, bata a manteiga com os açúcares até formar um creme.
-            Acrescente o ovo e a baunilha e misture bem.
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck("step3")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step3 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-            Adicione as gotas de chocolate e mexa bem.
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck("step4")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step4 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-            Faça bolinhas (de 1 colher de sopa) e coloque na assadeira, deixando
-            espaço entre elas (eles espalham).
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck("step5")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step5 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-            Leve ao forno por 10 a 12 minutos, ou até as bordas começarem a
-            dourar. O centro deve ficar macio. Deixe esfriar na forma por 5
-            minutos e depois transfira para uma grade.
-          </Text>
-        </TouchableOpacity>
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoVerde}>
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+          <View style={styles.ingredientesContainer}>
+            <View>
+              {Object.entries(itemsMap).map(([key, label]) => (
+                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓</Text>
+                    ) : (
+                      <Text style={styles.bolinha}>⚪ </Text>
+                    )}
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+          <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+          <TouchableOpacity onPress={() => toggleCheck("step1")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step1 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Pré-aqueça o forno a 180 °C e forre uma assadeira com papel
+              manteiga.
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={salvarListaDeCompras}
-          >
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+          <TouchableOpacity onPress={() => toggleCheck("step2")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step2 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Em uma tigela, bata a manteiga com os açúcares até formar um
+              creme. Acrescente o ovo e a baunilha e misture bem.
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => toggleCheck("step3")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step3 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Adicione as gotas de chocolate e mexa bem.
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => toggleCheck("step4")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step4 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Faça bolinhas (de 1 colher de sopa) e coloque na assadeira,
+              deixando espaço entre elas (eles espalham).
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => toggleCheck("step5")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step5 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Leve ao forno por 10 a 12 minutos, ou até as bordas começarem a
+              dourar. O centro deve ficar macio. Deixe esfriar na forma por 5
+              minutos e depois transfira para uma grade.
+            </Text>
           </TouchableOpacity>
         </View>
+      </ScrollView>{" "}
+      <View style={styles.botoesContainer}>
+        <TouchableOpacity style={styles.botaoVerde}>
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={salvarListaDeCompras}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -275,7 +277,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 50,
-    marginTop: 40,
   },
 
   botaoVerde: {
@@ -305,8 +306,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-decorativeImage: {
-     position: 'absolute',
+  decorativeImage: {
+    position: "absolute",
     left: 135,
     top: 0,
     right: 0,

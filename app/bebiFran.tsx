@@ -56,13 +56,13 @@ export default function App() {
 
   const itemsMap: { [key: string]: string } = {
     item1: "1 xícara de framboesas \nfrescas ou congeladas",
-    item2: "1 banana média (opcional, para dar cremosidade e adoçar naturalmente)",
-    item3: "1 xícara de leite (pode ser integral, desnatado ou vegetal, como leite de amêndoas ou aveia)",
+    item2:
+      "1 banana média (opcional, para dar cremosidade e adoçar naturalmente)",
+    item3:
+      "1 xícara de leite (pode ser integral, desnatado ou vegetal, como leite de amêndoas ou aveia)",
     item4: "1 colher (sopa) de mel, açúcar ou adoçante a gosto (opcional)",
     item5: "Cubos de gelo (opcional, se quiser mais refrescante)",
-
-
-};
+  };
 
   const toggleCheck = (item: string) => {
     setCheckedItems((prev) => ({
@@ -102,97 +102,94 @@ export default function App() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        <Image
-          source={require("../assets/images/fundo_framboesa.png")}
-          style={styles.decorativeImage}
-          resizeMode="contain"
-        />
-        <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate("bebidas")}>
-            <Feather name="chevron-left" size={28} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.paragraph}>Vitamina de Franboesa</Text>
-        </View>
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          <View>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓</Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+    <View style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <Image
+            source={require("../assets/images/fundo_framboesa.png")}
+            style={styles.decorativeImage}
+            resizeMode="contain"
+          />
+          <View style={styles.tituloContainer}>
+            <TouchableOpacity onPress={() => nav.navigate("bebidas")}>
+              <Feather name="chevron-left" size={28} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.paragraph}>Vitamina de Franboesa</Text>
           </View>
-        </View>
-        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        <TouchableOpacity onPress={() => toggleCheck("step1")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step1 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}
-            Coloque todos os ingredientes no liquidificador.
-
-
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck("step2")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step2 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-Bata por cerca de 1 minuto ou até obter uma mistura homogênea.
-
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck("step3")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step3 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-            Prove e ajuste o doce, se necessário.Sirva imediatamente!
-
-
-          </Text>
-        </TouchableOpacity>
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoVerde}>
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+          <View style={styles.ingredientesContainer}>
+            <View>
+              {Object.entries(itemsMap).map(([key, label]) => (
+                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓</Text>
+                    ) : (
+                      <Text style={styles.bolinha}>⚪ </Text>
+                    )}
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+          <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+          <TouchableOpacity onPress={() => toggleCheck("step1")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step1 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}
+              Coloque todos os ingredientes no liquidificador.
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={salvarListaDeCompras}
-          >
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+          <TouchableOpacity onPress={() => toggleCheck("step2")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step2 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Bata por cerca de 1 minuto ou até obter uma mistura homogênea.
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => toggleCheck("step3")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step3 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Prove e ajuste o doce, se necessário.Sirva imediatamente!
+            </Text>
           </TouchableOpacity>
         </View>
+      </ScrollView>{" "}
+      <View style={styles.botoesContainer}>
+        <TouchableOpacity style={styles.botaoVerde}>
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={salvarListaDeCompras}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -254,7 +251,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 50,
-    marginTop: 40,
   },
 
   botaoVerde: {

@@ -57,14 +57,18 @@ export default function CoxinhaDeFrango() {
     step1: "Em uma panela coloque a manteiga e deixe derreter.",
     step2: "Acrescente o leite, e a batata amassada e mexa bem.",
     step3: "Adicione os temperos a gosto.",
-    step4: "Coloque a farinha e mexa por aproximadamente 3 minutos e desligue a panela.",
-    step5: "Ainda quente sove com uma espátula a massa e depois que esfriar sove mais com a mão, e reserve.",
+    step4:
+      "Coloque a farinha e mexa por aproximadamente 3 minutos e desligue a panela.",
+    step5:
+      "Ainda quente sove com uma espátula a massa e depois que esfriar sove mais com a mão, e reserve.",
     step6: "Corte meio peito de frango em cubos e tempere à gosto.",
     step7: "Leve o frango em uma frigideira quente e espere fritar.",
     step8: "Desfie o frango com auxílio de garfos.",
     step9: "Depois de desfiado misture o frango com o requeijão (opcional).",
-    step10: "Pegue a massa reservada, abra na mão, coloque o recheio no meio e vá moldando a sua coxinha.",
-    step11: "Passe a sua coxinha com cuidado na farinha de rosca ou farinha panko e leve para fritar em óleo bem quente até ficar dourada.",
+    step10:
+      "Pegue a massa reservada, abra na mão, coloque o recheio no meio e vá moldando a sua coxinha.",
+    step11:
+      "Passe a sua coxinha com cuidado na farinha de rosca ou farinha panko e leve para fritar em óleo bem quente até ficar dourada.",
     step12: "Está pronto a sua coxinha! Aproveite!",
   };
 
@@ -86,7 +90,8 @@ export default function CoxinhaDeFrango() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_coxinha_de_frango.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "lista_coxinha_de_frango.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -106,23 +111,39 @@ export default function CoxinhaDeFrango() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        <Image
-          source={require("../assets/images/fundo_coxinha2.png")} // substitua pelo seu fundo
-          style={styles.decorativeImage}
-          resizeMode="contain"
-        />
-        <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.goBack()}>
-            <Feather name="chevron-left" size={28} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.paragraph}>Coxinha de Frango</Text>
-        </View>
+    <View style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <Image
+            source={require("../assets/images/fundo_coxinha2.png")} // substitua pelo seu fundo
+            style={styles.decorativeImage}
+            resizeMode="contain"
+          />
+          <View style={styles.tituloContainer}>
+            <TouchableOpacity onPress={() => nav.goBack()}>
+              <Feather name="chevron-left" size={28} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.paragraph}>Coxinha de Frango</Text>
+          </View>
 
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          {Object.entries(itemsMap).map(([key, label]) => (
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+          <View style={styles.ingredientesContainer}>
+            {Object.entries(itemsMap).map(([key, label]) => (
+              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <Text style={styles.topicos}>
+                  {checkedItems[key] ? (
+                    <Text style={styles.check}>✓</Text>
+                  ) : (
+                    <Text style={styles.bolinha}>⚪ </Text>
+                  )}
+                  {label}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+          {Object.entries(stepsMap).map(([key, step], index) => (
             <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
               <Text style={styles.topicos}>
                 {checkedItems[key] ? (
@@ -130,48 +151,36 @@ export default function CoxinhaDeFrango() {
                 ) : (
                   <Text style={styles.bolinha}>⚪ </Text>
                 )}
-                {label}
+                {step}
               </Text>
             </TouchableOpacity>
           ))}
         </View>
-
-        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        {Object.entries(stepsMap).map(([key, step], index) => (
-          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-            <Text style={styles.topicos}>
-              {checkedItems[key] ? (
-                <Text style={styles.check}>✓</Text>
-              ) : (
-                <Text style={styles.bolinha}>⚪ </Text>
-              )}
-              {step}
-            </Text>
-          </TouchableOpacity>
-        ))}
-
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoVerde}>
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Forma correta descarte</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.botaoCinza} onPress={salvarListaDeCompras}>
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
-          </TouchableOpacity>
-        </View>
+      </ScrollView>{" "}
+      <View style={styles.botoesContainer}>
+        <TouchableOpacity style={styles.botaoVerde}>
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={salvarListaDeCompras}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -225,7 +234,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 50,
-    marginTop: 40,
   },
   botaoVerde: {
     flex: 1,
@@ -250,8 +258,8 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
-decorativeImage: {
-     position: 'absolute',
+  decorativeImage: {
+    position: "absolute",
     left: 135,
     top: 0,
     right: 0,

@@ -40,25 +40,33 @@ export default function Pastel() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: "60 gramas de polvilho \ndoce",
-    item2: "110 gramas de farinha de arroz",
-    item3: "50 gramas de fécula de batata",
-    item4: "20 ml de óleo",
-    item5: "10 ml de vinagre branco",
-    item6: "3 gramas de sal",
-    item7: "100 ml de água fria",
+    item1: "60g de polvilho \ndoce",
+    item2: "110g de farinha de arroz",
+    item3: "50g de fécula de batata",
+    item4: "20ml de óleo",
+    item5: "10ml de vinagre branco",
+    item6: "3g de sal",
+    item7: "100ml de água fria",
     item8: "1 ovo",
   };
 
   const stepsMap: { [key: string]: string } = {
-    step1: "No recheio, você pode variar. Além da carne moída, experimente usar frango desfiado, queijo ralado, calabresa, legumes etc. Dá para aproveitar o que tem na geladeira.",
-    step2: "Em uma tigela grande, coloque a farinha de arroz, a fécula de batata, o polvilho doce, o amido de milho, a goma xantana e o sal. Com uma colher, misture todos os ingredientes secos.",
-    step3: "Quebre o ovo separadamente e, se a aparência e cheiro estiverem bons, adicione-o à tigela com as farinhas. Acrescente o óleo, o vinagre branco e misture novamente.",
-    step4: "Despeje a água fria e continue misturando. Ao formar uma farofa úmida, passe-a para a bancada higienizada e polvilhada com polvilho doce. Mexa com as mãos até formar uma massa mais consistente.",
-    step5: "Sove bem a massa por cerca de 5 minutos (se preciso, salpique mais polvilho doce sobre a bancada). Cubra a massa totalmente com papel filme, evitando o contato com o ar, e deixe-a descansar por 10 minutos.",
-    step6: "Divida a massa em duas partes iguais. Novamente, salpique polvilho em uma bancada e abra a massa com um rolo até atingir a espessura de cerca de 0,5 cm (se você tiver cilindro, pode fazer esse processo nele).",
-    step7: "Para cortar os pasteis, use o aro 9 ou do tamanho que desejar. Coloque o recheio em cima da massa aberta e molhe as bordas com água. Feche o pastel e aperte todas as laterais com as pontas dos dedos, selando bem as bordas.",
-    step8: "Coloque um pedacinho de massa no óleo, assim que ele borbulhar, a temperatura está boa para fritura. Frite poucas unidades por vez para não diminuir muito a temperatura do óleo. Sirva quentinho!",
+    step1:
+      "No recheio, você pode variar. Além da carne moída, experimente usar frango desfiado, queijo ralado, calabresa, legumes etc. Dá para aproveitar o que tem na geladeira.",
+    step2:
+      "Em uma tigela grande, coloque a farinha de arroz, a fécula de batata, o polvilho doce, o amido de milho, a goma xantana e o sal. Com uma colher, misture todos os ingredientes secos.",
+    step3:
+      "Quebre o ovo separadamente e, se a aparência e cheiro estiverem bons, adicione-o à tigela com as farinhas. Acrescente o óleo, o vinagre branco e misture novamente.",
+    step4:
+      "Despeje a água fria e continue misturando. Ao formar uma farofa úmida, passe-a para a bancada higienizada e polvilhada com polvilho doce. Mexa com as mãos até formar uma massa mais consistente.",
+    step5:
+      "Sove bem a massa por cerca de 5 minutos (se preciso, salpique mais polvilho doce sobre a bancada). Cubra a massa totalmente com papel filme, evitando o contato com o ar, e deixe-a descansar por 10 minutos.",
+    step6:
+      "Divida a massa em duas partes iguais. Novamente, salpique polvilho em uma bancada e abra a massa com um rolo até atingir a espessura de cerca de 0,5 cm (se você tiver cilindro, pode fazer esse processo nele).",
+    step7:
+      "Para cortar os pasteis, use o aro 9 ou do tamanho que desejar. Coloque o recheio em cima da massa aberta e molhe as bordas com água. Feche o pastel e aperte todas as laterais com as pontas dos dedos, selando bem as bordas.",
+    step8:
+      "Coloque um pedacinho de massa no óleo, assim que ele borbulhar, a temperatura está boa para fritura. Frite poucas unidades por vez para não diminuir muito a temperatura do óleo. Sirva quentinho!",
   };
 
   const toggleCheck = (item: string) => {
@@ -79,7 +87,8 @@ export default function Pastel() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "pastel_lista_de_compras.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "pastel_lista_de_compras.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -99,77 +108,78 @@ export default function Pastel() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        <Image
-          source={require("../assets/images/fundo_pastel.png")}
-          style={styles.decorativeImage}
-          resizeMode="contain"
-        />
-        <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate("restricoes")}>
-            <Feather name="chevron-left" size={28} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.paragraph}>PASTEL</Text>
-        </View>
-
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          <View>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+    <View style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <Image
+            source={require("../assets/images/fundo_pastel.png")}
+            style={styles.decorativeImage}
+            resizeMode="contain"
+          />
+          <View style={styles.tituloContainer}>
+            <TouchableOpacity onPress={() => nav.navigate("restricoes")}>
+              <Feather name="chevron-left" size={28} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.paragraph}>massa de PASTEL</Text>
           </View>
-        </View>
 
-        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        {Object.entries(stepsMap).map(([key, step], idx) => (
-          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-            <Text style={styles.topicos}>
-              {checkedItems[key] ? (
-                <Text style={styles.check}>✓ </Text>
-              ) : (
-                <Text style={styles.bolinha}>⚪ </Text>
-              )}
-              {step}
-            </Text>
-          </TouchableOpacity>
-        ))}
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+          <View style={styles.ingredientesContainer}>
+            <View>
+              {Object.entries(itemsMap).map(([key, label]) => (
+                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓ </Text>
+                    ) : (
+                      <Text style={styles.bolinha}>⚪ </Text>
+                    )}
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
 
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoVerde}>
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Forma correta descarte</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={salvarListaDeCompras}
-          >
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
-          </TouchableOpacity>
+          <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+          {Object.entries(stepsMap).map(([key, step], idx) => (
+            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+              <Text style={styles.topicos}>
+                {checkedItems[key] ? (
+                  <Text style={styles.check}>✓ </Text>
+                ) : (
+                  <Text style={styles.bolinha}>⚪ </Text>
+                )}
+                {step}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
+      </ScrollView>{" "}
+      <View style={styles.botoesContainer}>
+        <TouchableOpacity style={styles.botaoVerde}>
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={salvarListaDeCompras}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -223,7 +233,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 50,
-    marginTop: 40,
   },
   botaoVerde: {
     flex: 1,
@@ -248,8 +257,8 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
-decorativeImage: {
-     position: 'absolute',
+  decorativeImage: {
+    position: "absolute",
     left: 135,
     top: 0,
     right: 0,

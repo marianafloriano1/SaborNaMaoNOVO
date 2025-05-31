@@ -105,114 +105,116 @@ export default function App() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        <Image
-          source={require("../assets/images/fundo_dedo.png")}
-          style={styles.decorativeImage}
-          resizeMode="contain"
-        />
-        <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate("hallow")}>
-            <Feather name="chevron-left" size={28} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.paragraph}>Dedos de Zumbi de Biscoito</Text>
-        </View>
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          <View>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓</Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+    <View style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <Image
+            source={require("../assets/images/fundo_dedo.png")}
+            style={styles.decorativeImage}
+            resizeMode="contain"
+          />
+          <View style={styles.tituloContainer}>
+            <TouchableOpacity onPress={() => nav.navigate("hallow")}>
+              <Feather name="chevron-left" size={28} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.paragraph}>Dedos de Zumbi de Biscoito</Text>
           </View>
-        </View>
-        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        <TouchableOpacity onPress={() => toggleCheck("step1")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step1 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-            Em uma tigela, misture a manteiga e o açúcar até formar um creme.
-            Adicione o ovo, a essência de baunilha, o sal e misture bem.
-            Acrescente a farinha aos poucos até formar uma massa lisa. Se
-            quiser, adicione algumas gotas de corante verde ou roxo para dar o
-            tom de "zumbi".
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck("step2")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step2 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-            Pegue pequenas porções de massa, enrole como se fossem palitinhos e
-            modele em formato de dedo. Use uma faca para marcar as “dobras” das
-            articulações. No topo de cada dedo, pressione uma amêndoa como se
-            fosse a unha.
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck("step3")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step3 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-            Coloque os dedos em uma assadeira forrada com papel manteiga. Leve
-            ao forno preaquecido a 180 °C por cerca de 15 a 20 minutos ou até
-            ficarem levemente dourados.
-          </Text>
-        </TouchableOpacity>{" "}
-        <TouchableOpacity onPress={() => toggleCheck("step4")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step4 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-            Depois de assados, retire as amêndoas com cuidado, coloque um pouco
-            de geleia no local e recoloque a amêndoa por cima, deixando o
-            “sangue” escorrer. Se quiser, passe geleia também na base dos dedos,
-            como se estivessem "cortados".
-          </Text>
-        </TouchableOpacity>
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoVerde}>
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+          <View style={styles.ingredientesContainer}>
+            <View>
+              {Object.entries(itemsMap).map(([key, label]) => (
+                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓</Text>
+                    ) : (
+                      <Text style={styles.bolinha}>⚪ </Text>
+                    )}
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+          <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+          <TouchableOpacity onPress={() => toggleCheck("step1")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step1 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Em uma tigela, misture a manteiga e o açúcar até formar um creme.
+              Adicione o ovo, a essência de baunilha, o sal e misture bem.
+              Acrescente a farinha aos poucos até formar uma massa lisa. Se
+              quiser, adicione algumas gotas de corante verde ou roxo para dar o
+              tom de "zumbi".
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={salvarListaDeCompras}
-          >
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+          <TouchableOpacity onPress={() => toggleCheck("step2")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step2 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Pegue pequenas porções de massa, enrole como se fossem palitinhos
+              e modele em formato de dedo. Use uma faca para marcar as “dobras”
+              das articulações. No topo de cada dedo, pressione uma amêndoa como
+              se fosse a unha.
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => toggleCheck("step3")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step3 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Coloque os dedos em uma assadeira forrada com papel manteiga. Leve
+              ao forno preaquecido a 180 °C por cerca de 15 a 20 minutos ou até
+              ficarem levemente dourados.
+            </Text>
+          </TouchableOpacity>{" "}
+          <TouchableOpacity onPress={() => toggleCheck("step4")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step4 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Depois de assados, retire as amêndoas com cuidado, coloque um
+              pouco de geleia no local e recoloque a amêndoa por cima, deixando
+              o “sangue” escorrer. Se quiser, passe geleia também na base dos
+              dedos, como se estivessem "cortados".
+            </Text>
           </TouchableOpacity>
         </View>
+      </ScrollView>{" "}
+      <View style={styles.botoesContainer}>
+        <TouchableOpacity style={styles.botaoVerde}>
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={salvarListaDeCompras}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -274,7 +276,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 50,
-    marginTop: 40,
   },
 
   botaoVerde: {
@@ -305,7 +306,7 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-     position: 'absolute',
+    position: "absolute",
     left: 135,
     top: 0,
     right: 0,

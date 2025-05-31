@@ -59,11 +59,7 @@ export default function App() {
     item2: "Açúcar ou mel a gosto \n(opcional)",
     item3: "500 ml de água gelada",
     item4: "3 limões (taiti ou siciliano)",
-    
-
-
-
-};
+  };
 
   const toggleCheck = (item: string) => {
     setCheckedItems((prev) => ({
@@ -103,103 +99,100 @@ export default function App() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        <Image
-          source={require("../assets/images/fundo_sucolimao.png")}
-          style={styles.decorativeImage}
-          resizeMode="contain"
-        />
-        <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate("bebidas")}>
-            <Feather name="chevron-left" size={28} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.paragraph}>Suco de limão</Text>
-        </View>
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          <View>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓</Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+    <View style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <Image
+            source={require("../assets/images/fundo_sucolimao.png")}
+            style={styles.decorativeImage}
+            resizeMode="contain"
+          />
+          <View style={styles.tituloContainer}>
+            <TouchableOpacity onPress={() => nav.navigate("bebidas")}>
+              <Feather name="chevron-left" size={28} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.paragraph}>Suco de limão</Text>
           </View>
-        </View>
-        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        <TouchableOpacity onPress={() => toggleCheck("step1")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step1 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}
-Lave bem os limões.
-
-Corte os limões ao meio e esprema o suco com um espremedor.
-
-
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck("step2")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step2 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-Coe o suco para remover sementes e parte do bagaço.
-
-Em uma jarra, misture o suco com a água gelada.
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => toggleCheck("step3")}>
-          <Text style={styles.topicos}>
-            {checkedItems.step3 ? (
-              <Text style={styles.check}>✓</Text>
-            ) : (
-              <Text style={styles.bolinha}>⚪ </Text>
-            )}{" "}
-Adoce a gosto com açúcar, mel ou adoçante.
-
-Adicione gelo e mexa bem.Para um toque especial, adicione algumas folhas de hortelã ou um pedacinho de gengibre ralado.
-
-Se quiser uma versão tipo limonada suíça, bata no liquidificador 1 limão cortado (com casca e sem sementes), água, açúcar e coe antes de servir.
-
-          </Text>
-        </TouchableOpacity>
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoVerde}>
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Forma correta descarte</Text>
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+          <View style={styles.ingredientesContainer}>
+            <View>
+              {Object.entries(itemsMap).map(([key, label]) => (
+                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓</Text>
+                    ) : (
+                      <Text style={styles.bolinha}>⚪ </Text>
+                    )}
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+          <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+          <TouchableOpacity onPress={() => toggleCheck("step1")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step1 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}
+              Lave bem os limões. Corte os limões ao meio e esprema o suco com
+              um espremedor.
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={salvarListaDeCompras}
-          >
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+          <TouchableOpacity onPress={() => toggleCheck("step2")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step2 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Coe o suco para remover sementes e parte do bagaço. Em uma jarra,
+              misture o suco com a água gelada.
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => toggleCheck("step3")}>
+            <Text style={styles.topicos}>
+              {checkedItems.step3 ? (
+                <Text style={styles.check}>✓</Text>
+              ) : (
+                <Text style={styles.bolinha}>⚪ </Text>
+              )}{" "}
+              Adoce a gosto com açúcar, mel ou adoçante. Adicione gelo e mexa
+              bem.Para um toque especial, adicione algumas folhas de hortelã ou
+              um pedacinho de gengibre ralado. Se quiser uma versão tipo
+              limonada suíça, bata no liquidificador 1 limão cortado (com casca
+              e sem sementes), água, açúcar e coe antes de servir.
+            </Text>
           </TouchableOpacity>
         </View>
+      </ScrollView>{" "}
+      <View style={styles.botoesContainer}>
+        <TouchableOpacity style={styles.botaoVerde}>
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={salvarListaDeCompras}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -261,7 +254,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 50,
-    marginTop: 40,
   },
 
   botaoVerde: {
@@ -292,7 +284,7 @@ const styles = StyleSheet.create({
   },
 
   decorativeImage: {
-     position: 'absolute',
+    position: "absolute",
     left: 135,
     top: 0,
     right: 0,

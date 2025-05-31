@@ -46,8 +46,7 @@ export default function ChurrosSemLactose() {
   };
 
   const stepsMap: { [key: string]: string } = {
-    step1:
-      "Em uma panela, ferva a água, o óleo, o açúcar e o sal.",
+    step1: "Em uma panela, ferva a água, o óleo, o açúcar e o sal.",
     step2:
       "Adicione a farinha de trigo e misture até formar uma massa homogênea.",
     step3:
@@ -66,82 +65,83 @@ export default function ChurrosSemLactose() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-      <View style={styles.container}>
-        {/* Substitua o caminho da imagem pelo seu fundo desejado */}
-        <Image
-          source={require("../assets/images/fundo_churros.png")}
-          style={styles.decorativeImage}
-          resizeMode="contain"
-        />
+    <View style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+        <View style={styles.container}>
+          {/* Substitua o caminho da imagem pelo seu fundo desejado */}
+          <Image
+            source={require("../assets/images/fundo_churros.png")}
+            style={styles.decorativeImage}
+            resizeMode="contain"
+          />
 
-        <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate("restricoes")}>
-            <Feather name="chevron-left" size={28} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.paragraph}>CHURROS SEM LACTOSE</Text>
-        </View>
-
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          <View>
-            {Object.entries(itemsMap).map(([key, item]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
-                  {item}
-                </Text>
-              </TouchableOpacity>
-            ))}
+          <View style={styles.tituloContainer}>
+            <TouchableOpacity onPress={() => nav.navigate("restricoes")}>
+              <Feather name="chevron-left" size={28} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.paragraph}>CHURROS SEM LACTOSE</Text>
           </View>
-        </View>
 
-        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        {Object.entries(stepsMap).map(([key, step], index) => (
-          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-            <Text style={styles.topicos}>
-              {checkedItems[key] ? (
-                <Text style={styles.check}>✓ </Text>
-              ) : (
-                <Text style={styles.bolinha}>⚪ </Text>
-              )}
-               {step}
-            </Text>
-          </TouchableOpacity>
-        ))}
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+          <View style={styles.ingredientesContainer}>
+            <View>
+              {Object.entries(itemsMap).map(([key, item]) => (
+                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓ </Text>
+                    ) : (
+                      <Text style={styles.bolinha}>⚪ </Text>
+                    )}
+                    {item}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
 
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity
-            style={styles.botaoVerde}
-            onPress={() => Alert.alert("Forma correta descarte")}
-          >
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Forma correta descarte</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={() => Alert.alert("Função em desenvolvimento")}
-          >
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
-          </TouchableOpacity>
+          <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+          {Object.entries(stepsMap).map(([key, step], index) => (
+            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+              <Text style={styles.topicos}>
+                {checkedItems[key] ? (
+                  <Text style={styles.check}>✓ </Text>
+                ) : (
+                  <Text style={styles.bolinha}>⚪ </Text>
+                )}
+                {step}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
+      </ScrollView>
+      <View style={styles.botoesContainer}>
+        <TouchableOpacity
+          style={styles.botaoVerde}
+          onPress={() => Alert.alert("Forma correta descarte")}
+        >
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={() => Alert.alert("Função em desenvolvimento")}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     left: 44,
     width: 300,
   },
-  
+
   check: {
     color: "#32CD32",
     fontSize: 20,
@@ -195,9 +195,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 50,
-    marginTop: 40,
-    paddingHorizontal: 40,
-    justifyContent: "space-between",
   },
   botaoVerde: {
     flex: 1,
@@ -206,7 +203,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 10,
   },
   botaoCinza: {
     flex: 1,
@@ -215,7 +211,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: 10,
   },
   iconeBotao: {
     marginRight: 10,
@@ -224,8 +219,8 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
- decorativeImage: {
-     position: 'absolute',
+  decorativeImage: {
+    position: "absolute",
     left: 135,
     top: 0,
     right: 0,

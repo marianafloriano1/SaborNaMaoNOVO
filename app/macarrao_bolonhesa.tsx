@@ -61,12 +61,17 @@ export default function MacarraoBolonhesa() {
 
   const stepsMap: { [key: string]: string } = {
     step1: "Em uma panela média, aqueça o azeite em fogo médio.",
-    step2: "Adicione a cebola e o alho e refogue até que fiquem macios e levemente dourados.",
+    step2:
+      "Adicione a cebola e o alho e refogue até que fiquem macios e levemente dourados.",
     step3: "Adicione a carne moída e cozinhe até que esteja bem dourada.",
-    step4: "Adicione o salsão (se estiver usando) e refogue por alguns minutos.",
-    step5: "Adicione o molho de tomate, o extrato de tomate (se estiver usando), o orégano, o manjericão, sal e pimenta a gosto.",
-    step6: "Enquanto o molho está cozinhando, coloque água para ferver em uma panela grande. Adicione sal a gosto.",
-    step7: "Adicione o macarrão e cozinhe até que esteja al dente, seguindo as instruções da embalagem.",
+    step4:
+      "Adicione o salsão (se estiver usando) e refogue por alguns minutos.",
+    step5:
+      "Adicione o molho de tomate, o extrato de tomate (se estiver usando), o orégano, o manjericão, sal e pimenta a gosto.",
+    step6:
+      "Enquanto o molho está cozinhando, coloque água para ferver em uma panela grande. Adicione sal a gosto.",
+    step7:
+      "Adicione o macarrão e cozinhe até que esteja al dente, seguindo as instruções da embalagem.",
     step8: "Escorra o macarrão e adicione ao molho. Misture bem.",
     step9: "Sirva quente e aproveite sua refeição!",
     step10: "Bom apetite!",
@@ -90,7 +95,8 @@ export default function MacarraoBolonhesa() {
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + "lista_macarrao_bolonhesa.txt";
+    const fileUri =
+      FileSystem.documentDirectory + "lista_macarrao_bolonhesa.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -110,23 +116,39 @@ export default function MacarraoBolonhesa() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <Image
-          source={require("../assets/images/fundo_macarrao.png")} // substitua com sua imagem de fundo
-          style={styles.decorativeImage}
-          resizeMode="contain"
-        />
-        <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.goBack()}>
-            <Feather name="chevron-left" size={28} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.paragraph}>Macarrão à Bolonhesa</Text>
-        </View>
+    <View style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <Image
+            source={require("../assets/images/fundo_macarrao.png")} // substitua com sua imagem de fundo
+            style={styles.decorativeImage}
+            resizeMode="contain"
+          />
+          <View style={styles.tituloContainer}>
+            <TouchableOpacity onPress={() => nav.goBack()}>
+              <Feather name="chevron-left" size={28} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.paragraph}>Macarrão à Bolonhesa</Text>
+          </View>
 
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          {Object.entries(itemsMap).map(([key, label]) => (
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+          <View style={styles.ingredientesContainer}>
+            {Object.entries(itemsMap).map(([key, label]) => (
+              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                <Text style={styles.topicos}>
+                  {checkedItems[key] ? (
+                    <Text style={styles.check}>✓ </Text>
+                  ) : (
+                    <Text style={styles.bolinha}>⚪ </Text>
+                  )}
+                  {label}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+          {Object.entries(stepsMap).map(([key, step], index) => (
             <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
               <Text style={styles.topicos}>
                 {checkedItems[key] ? (
@@ -134,63 +156,47 @@ export default function MacarraoBolonhesa() {
                 ) : (
                   <Text style={styles.bolinha}>⚪ </Text>
                 )}
-                {label}
+                {step}
               </Text>
             </TouchableOpacity>
           ))}
         </View>
+      </ScrollView>
+      <View style={styles.botoesContainer}>
+        <TouchableOpacity
+          style={styles.botaoVerde}
+          onPress={() =>
+            Alert.alert(
+              "Descarte correto",
+              "Descarte restos de comida e embalagens adequadamente para evitar desperdício."
+            )
+          }
+        >
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+        </TouchableOpacity>
 
-        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        {Object.entries(stepsMap).map(([key, step], index) => (
-          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-            <Text style={styles.topicos}>
-              {checkedItems[key] ? (
-                <Text style={styles.check}>✓ </Text>
-              ) : (
-                <Text style={styles.bolinha}>⚪ </Text>
-              )}
-              {step}
-            </Text>
-          </TouchableOpacity>
-        ))}
-
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity
-            style={styles.botaoVerde}
-            onPress={() =>
-              Alert.alert(
-                "Descarte correto",
-                "Descarte restos de comida e embalagens adequadamente para evitar desperdício."
-              )
-            }
-          >
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Forma correta descarte</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={salvarListaDeCompras}
-          >
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={salvarListaDeCompras}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -242,7 +248,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: 50,
-    marginTop: 40,
   },
   botaoVerde: {
     flex: 1,
@@ -268,7 +273,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   decorativeImage: {
-     position: 'absolute',
+    position: "absolute",
     left: 135,
     top: 0,
     right: 0,

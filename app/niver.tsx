@@ -77,7 +77,7 @@ export default function AnoNovo() {
                 style={styles.backgroundImage}
                 resizeMode="cover"
               ></ImageBackground>
-              <Text style={styles.texto}>Coxinha</Text>
+              <Text style={styles.texto}>Coxinha de frango</Text>
               <Image
                 source={{
                   uri: "https://images.pexels.com/photos/4842865/pexels-photo-4842865.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",

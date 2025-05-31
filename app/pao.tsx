@@ -1,8 +1,8 @@
-import { Feather } from '@expo/vector-icons';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import * as FileSystem from 'expo-file-system';
-import * as Sharing from 'expo-sharing';
-import React, { useState } from 'react';
+import { Feather } from "@expo/vector-icons";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+import React, { useState } from "react";
 import {
   Alert,
   Image,
@@ -11,7 +11,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
+} from "react-native";
 
 type CheckedItems = {
   [key: string]: boolean;
@@ -30,15 +30,16 @@ export default function PaozinhoDeBatataDoce() {
   });
 
   const itemsMap: { [key: string]: string } = {
-    item1: '1 batata doce pequena \ncozida e amassada',
-    item2: '2 colheres de sopa de queijo ralado',
-    item3: '2 colheres de sopa de goma de tapioca',
+    item1: "1 batata doce pequena \ncozida e amassada",
+    item2: "2 colheres de sopa de queijo ralado",
+    item3: "2 colheres de sopa de goma de tapioca",
   };
 
   const stepsMap: { [key: string]: string } = {
-    step1: 'Misture tudo e modele as bolinhas.',
-    step2: 'Pincele azeite e leve pra assar em forno convencional ou airfryer por 20 minutos a 180°C.',
-    step3: 'Sirva e aproveite!',
+    step1: "Misture tudo e modele as bolinhas.",
+    step2:
+      "Pincele azeite e leve pra assar em forno convencional ou airfryer por 20 minutos a 180°C.",
+    step3: "Sirva e aproveite!",
   };
 
   const toggleCheck = (item: string) => {
@@ -52,14 +53,16 @@ export default function PaozinhoDeBatataDoce() {
     const naoSelecionados = Object.keys(itemsMap)
       .filter((key) => !checkedItems[key])
       .map((key) => `- ${itemsMap[key]}`)
-      .join('\n');
+      .join("\n");
 
     if (!naoSelecionados) {
-      Alert.alert('Tudo certo!', 'Todos os ingredientes foram marcados.');
+      Alert.alert("Tudo certo!", "Todos os ingredientes foram marcados.");
       return;
     }
 
-    const fileUri = FileSystem.documentDirectory + 'lista_de_compras_paozinho_batata_doce.txt';
+    const fileUri =
+      FileSystem.documentDirectory +
+      "lista_de_compras_paozinho_batata_doce.txt";
 
     try {
       await FileSystem.writeAsStringAsync(fileUri, naoSelecionados, {
@@ -70,105 +73,108 @@ export default function PaozinhoDeBatataDoce() {
       if (canShare) {
         await Sharing.shareAsync(fileUri);
       } else {
-        Alert.alert('Arquivo salvo', `Lista salva em:\n${fileUri}`);
+        Alert.alert("Arquivo salvo", `Lista salva em:\n${fileUri}`);
       }
     } catch (err) {
-      Alert.alert('Erro ao salvar', 'Não foi possível criar o arquivo.');
+      Alert.alert("Erro ao salvar", "Não foi possível criar o arquivo.");
       console.error(err);
     }
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <Image
-          source={require('../assets/images/fundo_pao.png')} // verifique se o caminho está correto
-          style={styles.decorativeImage}
-          resizeMode="contain"
-        />
+    <View style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <Image
+            source={require("../assets/images/fundo_pao.png")} // verifique se o caminho está correto
+            style={styles.decorativeImage}
+            resizeMode="contain"
+          />
 
-        <View style={styles.tituloContainer}>
-          <TouchableOpacity onPress={() => nav.navigate('kids')}>
-            <Feather name="chevron-left" size={28} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.paragraph}>Pãozinho de{"\n"}Batata Doce</Text>
-        </View>
-
-        <Text style={styles.ingredientes}>INGREDIENTES</Text>
-        <View style={styles.ingredientesContainer}>
-          <View>
-            {Object.entries(itemsMap).map(([key, label]) => (
-              <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-                <Text style={styles.topicos}>
-                  {checkedItems[key] ? (
-                    <Text style={styles.check}>✓ </Text>
-                  ) : (
-                    <Text style={styles.bolinha}>⚪ </Text>
-                  )}
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            ))}
+          <View style={styles.tituloContainer}>
+            <TouchableOpacity onPress={() => nav.navigate("kids")}>
+              <Feather name="chevron-left" size={28} color="#000" />
+            </TouchableOpacity>
+            <Text style={styles.paragraph}>Pãozinho de{"\n"}Batata Doce</Text>
           </View>
-        </View>
 
-        <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-        {Object.entries(stepsMap).map(([key, label], index) => (
-          <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
-            <Text style={styles.topicos}>
-              {checkedItems[key] ? (
-                <Text style={styles.check}>✓ </Text>
-              ) : (
-                <Text style={styles.bolinha}>⚪ </Text>
-              )}
-              {index + 1}. {label}
-            </Text>
-          </TouchableOpacity>
-        ))}
+          <Text style={styles.ingredientes}>INGREDIENTES</Text>
+          <View style={styles.ingredientesContainer}>
+            <View>
+              {Object.entries(itemsMap).map(([key, label]) => (
+                <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+                  <Text style={styles.topicos}>
+                    {checkedItems[key] ? (
+                      <Text style={styles.check}>✓ </Text>
+                    ) : (
+                      <Text style={styles.bolinha}>⚪ </Text>
+                    )}
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
 
-        <Text style={[styles.ingredientes, { marginTop: 40 }]}>ATENÇÃO!</Text>
-        <Text style={[styles.topicos, { left: 44, width: 290, marginBottom: 0 }]}>
-          Adequado a partir de 6 meses.
-        </Text>
+          <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
+          {Object.entries(stepsMap).map(([key, label], index) => (
+            <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
+              <Text style={styles.topicos}>
+                {checkedItems[key] ? (
+                  <Text style={styles.check}>✓ </Text>
+                ) : (
+                  <Text style={styles.bolinha}>⚪ </Text>
+                )}
+                {index + 1}. {label}
+              </Text>
+            </TouchableOpacity>
+          ))}
 
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoVerde}>
-            <Feather
-              name="refresh-cw"
-              size={20}
-              color="#fff"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Forma correta descarte</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.botaoCinza}
-            onPress={salvarListaDeCompras}
+          <Text style={[styles.ingredientes, { marginTop: 40 }]}>ATENÇÃO!</Text>
+          <Text
+            style={[styles.topicos, { left: 44, width: 290, marginBottom: 0 }]}
           >
-            <Feather
-              name="download"
-              size={20}
-              color="#FFCC00"
-              style={styles.iconeBotao}
-            />
-            <Text style={styles.textoBotao}>Baixar lista de compra</Text>
-          </TouchableOpacity>
+            Adequado a partir de 6 meses.
+          </Text>
         </View>
+      </ScrollView>
+      <View style={styles.botoesContainer}>
+        <TouchableOpacity style={styles.botaoVerde}>
+          <Feather
+            name="refresh-cw"
+            size={20}
+            color="#fff"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Forma correta descarte</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.botaoCinza}
+          onPress={salvarListaDeCompras}
+        >
+          <Feather
+            name="download"
+            size={20}
+            color="#FFCC00"
+            style={styles.iconeBotao}
+          />
+          <Text style={styles.textoBotao}>Baixar lista de compra</Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    backgroundColor: '#ECECEC',
+    width: "100%",
+    backgroundColor: "#ECECEC",
     paddingBottom: 40,
   },
-decorativeImage: {
-     position: 'absolute',
+  decorativeImage: {
+    position: "absolute",
     left: 135,
     top: 0,
     right: 0,
@@ -177,16 +183,16 @@ decorativeImage: {
     zIndex: 0,
   },
   tituloContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 90,
     marginLeft: 10,
     zIndex: 1,
   },
   paragraph: {
     fontSize: 22,
-    color: '#242424',
-    textTransform: 'uppercase',
+    color: "#242424",
+    textTransform: "uppercase",
     marginLeft: 5,
     width: 240,
     lineHeight: 26,
@@ -197,11 +203,11 @@ decorativeImage: {
     marginBottom: 20,
     paddingVertical: 5,
     left: 44,
-    color: '#000',
+    color: "#000",
   },
   ingredientesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   topicos: {
     marginBottom: 10,
@@ -210,7 +216,7 @@ decorativeImage: {
     width: 290,
   },
   check: {
-    color: '#32CD32',
+    color: "#32CD32",
     fontSize: 20,
     marginRight: 5,
   },
@@ -218,32 +224,31 @@ decorativeImage: {
     fontSize: 16,
   },
   botoesContainer: {
-    flexDirection: 'row',
-    width: '100%',
+    flexDirection: "row",
+    width: "100%",
     height: 50,
-    marginTop: 40,
   },
   botaoVerde: {
     flex: 1,
-    backgroundColor: '#009B4D',
+    backgroundColor: "#009B4D",
     padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   botaoCinza: {
     flex: 1,
-    backgroundColor: '#2F4B54',
+    backgroundColor: "#2F4B54",
     padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   iconeBotao: {
     marginRight: 10,
   },
   textoBotao: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
   },
 });

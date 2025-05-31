@@ -45,6 +45,7 @@ export default function ComidasInfantis() {
   };
 
   return (
+    
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}

@@ -33,10 +33,13 @@ type RootStackParamList = {
     aniversario: undefined;
     snack: undefined;
     aperitivos: undefined;
+    economica: undefined;
+    home: undefined;
 };
 
 export default function App() {
     const nav = useNavigation<NavigationProp<RootStackParamList>>();
+    const [selectedCategory, setSelectedCategory] = useState<'tudo' | 'soboro' | 'economica'>('tudo');
 
     const names = [
         'Mister Panela',
@@ -127,19 +130,28 @@ export default function App() {
                     </Tooltip>
 
                     <View style={styles.categorias2}>
-
                         <TouchableOpacity
-                            style={styles.categoria21}
+                            style={[
+                                styles.categoria21,
+                                selectedCategory === 'tudo' && { backgroundColor: '#385A64' }, // cor do "tudo"
+                                selectedCategory !== 'tudo' && { backgroundColor: '#D3D3D3' } // cinza claro
+                            ]}
                             onPress={() => {
-                                nav.navigate('bebidas');
+                                setSelectedCategory('tudo');
+                                nav.navigate('home');
                             }}
                         >
                             <Text style={styles.texto22}>Tudo</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            style={styles.categoria2}
+                            style={[
+                                styles.categoria2,
+                                selectedCategory === 'soboro' && { backgroundColor: '#385A64' },
+                                selectedCategory !== 'soboro' && { backgroundColor: '#D3D3D3' }
+                            ]}
                             onPress={() => {
+                                setSelectedCategory('soboro');
                                 nav.navigate('kids');
                             }}
                         >
@@ -147,14 +159,20 @@ export default function App() {
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            style={styles.categoria2}
+                            style={[
+                                styles.categoria2,
+                                selectedCategory === 'economica' && { backgroundColor: '#385A64' },
+                                selectedCategory !== 'economica' && { backgroundColor: '#D3D3D3' }
+                            ]}
                             onPress={() => {
-                                nav.navigate('dietas');
+                                setSelectedCategory('economica');
+                                nav.navigate('economica');
                             }}
                         >
                             <Text style={styles.texto2}>Econômica</Text>
                         </TouchableOpacity>
                     </View>
+
 
                     <Image source={require('../assets/images/home2.png')} style={styles.img_home}></Image>
 
@@ -367,10 +385,10 @@ const styles = StyleSheet.create({
     },
 
     img_home: {
-        width: 400,
-        height: 200,
-        top: 30,
-        right: 20
+        width: 395,
+        height: 190,
+        marginTop: 70,
+        right: 12
     },
 
     quadrado_fundo: {
@@ -477,7 +495,7 @@ const styles = StyleSheet.create({
         color: '#565656',
         fontFamily: 'monospace'
     },
-   
+
     //tooltip
 
     tooltip: {
@@ -634,7 +652,7 @@ const styles = StyleSheet.create({
         left: 10,
         top: 10
     },
-     img_sozinho: {
+    img_sozinho: {
         width: 100,
         height: 140,
         left: 60,
@@ -645,7 +663,7 @@ const styles = StyleSheet.create({
         width: 140,
         height: 90,
         left: 10,
-        top: 8   
+        top: 8
 
     },
     img_almoco: {
