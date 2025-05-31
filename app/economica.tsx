@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
     texto: {
         textAlign: 'center',
         marginTop: 5,
-        fontSize: 12.8,
+        fontSize: 11.5,
         fontFamily: 'monospace',
         width: 200
     },

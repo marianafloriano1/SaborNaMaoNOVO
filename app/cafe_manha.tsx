@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: "#242424",
         textTransform: "uppercase",
+        top: 15
     },
 
     branco: {
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
         position: "relative",
         zIndex: -1,
         flex: 1,
-        minHeight: 300, // 👈 adicione isso ou outro valor
+        height: 900, // 👈 adicione isso ou outro valor
         width: "100%",
         borderTopLeftRadius: 0,
         borderTopRightRadius: 100,
@@ -168,6 +169,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         textTransform: "uppercase",
         zIndex: 2,
+        width: 150
     },
 
     cardD: {
