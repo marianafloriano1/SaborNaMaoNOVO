@@ -1,6 +1,6 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { router } from 'expo-router';
-import React, { useState } from 'react';
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
+import { router, useFocusEffect } from 'expo-router';
+import React, { useCallback, useState } from "react";
 import {
     Image,
     Pressable,
@@ -15,7 +15,7 @@ import Tooltip from 'react-native-walkthrough-tooltip';
 type RootStackParamList = {
     heranca: undefined;
     login: undefined;
-   marmitas: undefined;
+    marmitas: undefined;
     lanche_rapido: undefined;
     doces: undefined;
     receitas_rapidas: undefined;
@@ -26,17 +26,32 @@ type RootStackParamList = {
     cha_tarde: undefined;
     lanche_escolar: undefined;
     economica: undefined;
-    home: undefined
+    home: undefined;
+    soboro: undefined
+
 };
 
 export default function App() {
+    const route = useRoute();
     const nav = useNavigation<NavigationProp<RootStackParamList>>();
-    const routeName = nav.getState().routes[nav.getState().index]?.name;
-    const [selectedCategory, setSelectedCategory] = useState<'tudo' | 'soboro' | 'economica'>(
-        routeName === 'economica' ? 'economica' :
-            routeName === 'home' ? 'soboro' :
-                'tudo'
+
+    const [selectedCategory, setSelectedCategory] = useState("tudo");
+    const [toolTipVisible, setToolTipVisible] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [modalVisible, setModalVisible] = useState(false);
+
+    useFocusEffect(
+        useCallback(() => {
+            if (route.name === "home") {
+                setSelectedCategory("tudo");
+            } else if (route.name === "soboro") {
+                setSelectedCategory("soboro");
+            } else if (route.name === "economica") {
+                setSelectedCategory("economica");
+            }
+        }, [route.name])
     );
+
     const names = [
         'Mister Panela',
         'Mestre Cuca',
@@ -62,19 +77,15 @@ export default function App() {
 
     const [userProfile, setUserProfile] = useState(getRandomProfile());
 
-    const [toolTipVisible, setToolTipVisible] = useState(false);
 
     const items = [
         { title: 'Café da manhã', image: require('../assets/images/cafe_manha.png'), route: 'cafe_manha' },
         { title: 'Almoço', image: require('../assets/images/almoco.png'), route: 'almoco' },
         { title: 'Jantar', image: require('../assets/images/jantar.jpg'), route: 'jantar' },
-        { title: 'Sobremesas', image: require('../assets/images/hallowen.png'), route: 'sombremesa' },
-        { title: 'Chá da tarde', image: require('../assets/images/anonovo.png'), route: 'cha_tarde' },
-        { title: 'Lanche Escolar', image: require('../assets/images/festas.png'), route: 'lanche_escolar' },
+       
     ];
     const shadowColors = ['#FFE8AF', '#FFAB5C', '#005241', '#229E0C', '#00127A', '#B02652'];
 
-    const [currentIndex, setCurrentIndex] = useState(0);
 
     return (
         <View style={styles.container}>
@@ -129,12 +140,12 @@ export default function App() {
                         <TouchableOpacity
                             style={[
                                 styles.categoria21,
-                                selectedCategory === 'tudo' && { backgroundColor: '#385A64' }, // cor do "tudo"
-                                selectedCategory !== 'tudo' && { backgroundColor: '#D3D3D3' } // cinza claro
+                                selectedCategory === "tudo" && { backgroundColor: "#385A64" }, // cor do "tudo"
+                                selectedCategory !== "tudo" && { backgroundColor: "#D3D3D3" }, // cinza claro
                             ]}
                             onPress={() => {
-                                setSelectedCategory('tudo');
-                                nav.navigate('home');
+                                setSelectedCategory("tudo"); // Adiciona isso
+                                nav.navigate("home");
                             }}
                         >
                             <Text style={styles.texto22}>Tudo</Text>
@@ -143,12 +154,12 @@ export default function App() {
                         <TouchableOpacity
                             style={[
                                 styles.categoria2,
-                                selectedCategory === 'soboro' && { backgroundColor: '#385A64' },
-                                selectedCategory !== 'soboro' && { backgroundColor: '#D3D3D3' }
+                                selectedCategory === "soboro" && { backgroundColor: "#385A64" },
+                                selectedCategory !== "soboro" && { backgroundColor: "#D3D3D3" },
                             ]}
                             onPress={() => {
-                                setSelectedCategory('soboro');
-                                nav.navigate('home');
+                                setSelectedCategory("soboro");
+                                nav.navigate("soboro");
                             }}
                         >
                             <Text style={styles.texto2}>Soboro</Text>
@@ -157,12 +168,16 @@ export default function App() {
                         <TouchableOpacity
                             style={[
                                 styles.categoria2,
-                                selectedCategory === 'economica' && { backgroundColor: '#385A64' },
-                                selectedCategory !== 'economica' && { backgroundColor: '#D3D3D3' }
+                                selectedCategory === "economica" && {
+                                    backgroundColor: "#385A64",
+                                },
+                                selectedCategory !== "economica" && {
+                                    backgroundColor: "#D3D3D3",
+                                },
                             ]}
                             onPress={() => {
-                                setSelectedCategory('economica');
-                                nav.navigate('economica');
+                                setSelectedCategory("economica");
+                                nav.navigate("economica");
                             }}
                         >
                             <Text style={styles.texto2}>Econômica</Text>
@@ -201,7 +216,7 @@ export default function App() {
                     </View>
 
 
-                   
+
                 </View>
 
                 <Text style={styles.textoo}>Clique e conheça nossas receitas:</Text>
@@ -232,7 +247,9 @@ export default function App() {
                             }}
                             onPress={() => nav.navigate('lanche_rapido')}
                         >
+
                             <Text style={styles.texto_snack}>Lanches Rápidos</Text>
+                            <Image style={styles.img_snacks} source={require('../assets/images/lanche_rapido.png')} />
 
 
                         </Pressable>
@@ -285,10 +302,12 @@ export default function App() {
                                 elevation: 26,
                                 borderColor: '#565656',
                                 borderWidth: 0.2,
+                                top: 10
                             }}
                             onPress={() => nav.navigate('receitas_rapidas')}
                         >
                             <Text style={styles.texto_aperitivos}>Receitas Rápidas</Text>
+                            <Image style={styles.img_aperitivos} source={require('../assets/images/receita_rapida.jpg')} />
 
 
                         </Pressable>
@@ -309,6 +328,7 @@ export default function App() {
                                 elevation: 26,
                                 borderColor: '#565656',
                                 borderWidth: 0.2,
+                                top: 10
                             }}
                             onPress={() => nav.navigate('doces')}>
                             <Text style={styles.texto_almoco}>Doces</Text>
@@ -343,10 +363,10 @@ const styles = StyleSheet.create({
     },
 
     img_home: {
-        width: 400,
-        height: 190,
+        width: 360,
+        height: 170,
         marginTop: 70,
-        right: 20
+        right: 5,
     },
 
     quadrado_fundo: {
@@ -591,14 +611,14 @@ const styles = StyleSheet.create({
         height: 90,
         left: 20,
         top: 30,
-        
+
 
     },
     img_snacks: {
-        width: 140,
-        height: 90,
-        left: 10,
-        top: 8
+        width: 120,
+        height: 100,
+        left: 50,
+        bottom: 4
 
     },
     img_almoco: {
@@ -609,10 +629,10 @@ const styles = StyleSheet.create({
 
     },
     img_aperitivos: {
-        width: 150,
+        width: 95,
         height: 90,
         top: 8,
-        left: 5
+        left: 50
 
     },
 

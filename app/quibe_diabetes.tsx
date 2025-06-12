@@ -1,21 +1,25 @@
 import { Feather } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
   Alert,
   Image,
+  Linking,
+  Modal,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 
 type CheckedItems = {
   [key: string]: boolean;
 };
 
-export default function QuibeVegetais() {
+export default function QuicheDeLegumes() {
   const nav = useNavigation<NavigationProp<any>>();
 
   const [checkedItems, setCheckedItems] = useState<CheckedItems>({
@@ -27,6 +31,9 @@ export default function QuibeVegetais() {
     item6: false,
     item7: false,
     item8: false,
+    item9: false,
+    item10: false,
+    item11: false,
     step1: false,
     step2: false,
     step3: false,
@@ -63,20 +70,50 @@ export default function QuibeVegetais() {
       "Leve ao forno por alguns minutos para corar. Retire e decore a gosto.",
   };
 
+
+
   const toggleCheck = (item: string) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [item]: !prev[item],
-    }));
+    setCheckedItems((prev) => ({ ...prev, [item]: !prev[item] }));
   };
+
+  const salvarListaDeCompras = async () => {
+    const naoMarcados = Object.keys(itemsMap)
+      .filter((key) => !checkedItems[key])
+      .map((key) => `- ${itemsMap[key]}`)
+      .join("\n");
+
+    if (!naoMarcados) {
+      Alert.alert("Tudo certo!", "Todos os ingredientes foram marcados.");
+      return;
+    }
+
+    const fileUri =
+      FileSystem.documentDirectory + "lista_de_compras_quibe.txt";
+
+    try {
+      await FileSystem.writeAsStringAsync(fileUri, naoMarcados, {
+        encoding: FileSystem.EncodingType.UTF8,
+      });
+
+      const canShare = await Sharing.isAvailableAsync();
+      if (canShare) {
+        await Sharing.shareAsync(fileUri);
+      } else {
+        Alert.alert("Arquivo salvo", `Lista salva em:\n${fileUri}`);
+      }
+    } catch (err) {
+      Alert.alert("Erro ao salvar", "Não foi possível criar o arquivo.");
+      console.error(err);
+    }
+  };
+    const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
         <View style={styles.container}>
-          {/* Imagem decorativa */}
           <Image
-            source={require("../assets/images/fundo_quibe.png")} // coloque sua imagem
+            source={require("../assets/images/fundo_quibe.png")} // atualize para o caminho correto da imagem
             style={styles.decorativeImage}
             resizeMode="contain"
           />
@@ -85,7 +122,7 @@ export default function QuibeVegetais() {
             <TouchableOpacity onPress={() => nav.navigate("restricoes")}>
               <Feather name="chevron-left" size={28} color="#000" />
             </TouchableOpacity>
-            <Text style={styles.paragraph}>QUIBE DE VEGETAIS</Text>
+            <Text style={styles.paragraph}>QUIBE DE LEGUMES</Text>
           </View>
 
           <Text style={styles.ingredientes}>INGREDIENTES</Text>
@@ -107,7 +144,7 @@ export default function QuibeVegetais() {
           </View>
 
           <Text style={styles.ingredientes}>MODO DE PREPARO</Text>
-          {Object.entries(stepsMap).map(([key, step], idx) => (
+          {Object.entries(stepsMap).map(([key, step], index) => (
             <TouchableOpacity key={key} onPress={() => toggleCheck(key)}>
               <Text style={styles.topicos}>
                 {checkedItems[key] ? (
@@ -115,26 +152,66 @@ export default function QuibeVegetais() {
                 ) : (
                   <Text style={styles.bolinha}>⚪ </Text>
                 )}
-
-                {step}
+                {index + 1}. {step}
               </Text>
             </TouchableOpacity>
           ))}
         </View>
-      </ScrollView>{" "}
+      </ScrollView>
       <View style={styles.botoesContainer}>
-        <TouchableOpacity style={styles.botaoVerde}>
-          <Feather
-            name="refresh-cw"
-            size={20}
-            color="#fff"
-            style={styles.iconeBotao}
-          />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.botaoVerde}
+                onPress={() => setModalVisible(true)}>
+                <Feather
+                  name="refresh-cw"
+                  size={20}
+                  color="#fff"
+                  style={styles.iconeBotao}
+                />
+                <Text style={styles.textoBotao}>Forma correta descarte</Text>
+      
+                <Modal transparent visible={modalVisible} animationType="slide">
+                  <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                      <Text style={styles.modalTitulo}>
+                        O Que Fazer com Comida Estragada?
+                      </Text>
+                      <Text style={styles.modalTexto}>
+                        <Text style={{ fontWeight: 'bold' }}>Restos de comida:</Text> cascas, sobras e restos podem ir para o lixo orgânico. {"\n\n"}
+      
+                        <Text style={{ fontWeight: 'bold' }}>Plásticos e embalagens:</Text> potes, sacos, tampas e garrafas devem ser limpos e colocados no lixo reciclável. Não precisa lavar tudo com sabão, só tirar o grosso da sujeira já ajuda bastante.{"\n\n"}
+      
+                        <Text style={{ fontWeight: 'bold' }}>Vidros:</Text> potes de conservas, garrafas e frascos podem ser reciclados. Se estiverem quebrados, embale bem em jornal ou outro material para evitar acidentes.{"\n\n"}
+      
+                        <Text style={{ fontWeight: 'bold' }}>Papéis:</Text> caixas de alimentos, papel toalha (se seco e limpo), embalagens de papel e papelão vão para a reciclagem. Se estiver engordurado ou muito sujo, jogue no lixo comum.{"\n\n"}
+      
+                        <Text style={{ fontWeight: 'bold' }}>Óleo de cozinha usado:</Text> nunca descarte no ralo ou na pia. Guarde em uma garrafa plástica e leve até um ponto de coleta.{"\n\n"}
+      
+                        <Text style={{ fontWeight: 'bold' }}>Latas:</Text> latas de alimentos e bebidas devem ser enxaguadas e colocadas no lixo reciclável.{"\n\n"}
+      
+                        <Text style={{ fontWeight: 'bold' }}>Dica final:</Text> Acesse um manual completo sobre compostagem aqui:{" "}
+                        <Text
+                          style={{ color: "blue", textDecorationLine: "underline" }}
+                          onPress={() =>
+                            Linking.openURL(
+                              "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                            )
+                          }
+                        >
+                          Manual de Compostagem
+                        </Text>
+                      </Text>
+                      <TouchableOpacity onPress={() => setModalVisible(false)}>
+                        <Text style={styles.textoFechar}>Fechar</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </Modal>
+      
+              </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={() => Alert.alert("Função em desenvolvimento")}
+          onPress={salvarListaDeCompras}
         >
           <Feather
             name="download"
@@ -152,17 +229,24 @@ export default function QuibeVegetais() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ECECEC",
     width: "100%",
-    paddingHorizontal: 10,
-    paddingBottom: 40,
+    height: "50%",
+    backgroundColor: "#ECECEC",
+  },
+  decorativeImage: {
+    position: "absolute",
+    left: 135,
+    top: 0,
+    right: 0,
+    width: 350,
+    height: 500,
+    zIndex: 0,
   },
   tituloContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginTop: 90,
     marginLeft: 10,
-    marginBottom: 20,
   },
   paragraph: {
     fontSize: 22,
@@ -170,9 +254,10 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     marginLeft: 5,
     width: 240,
+    lineHeight: 26,
   },
   ingredientes: {
-    marginTop: 40,
+    marginTop: 100,
     fontSize: 18,
     marginBottom: 20,
     paddingVertical: 5,
@@ -188,13 +273,10 @@ const styles = StyleSheet.create({
     left: 44,
     width: 290,
   },
-  numero: {
-    fontWeight: "bold",
-    color: "#242424",
-  },
   check: {
     color: "#32CD32",
     fontSize: 20,
+    marginRight: 5,
   },
   bolinha: {
     fontSize: 16,
@@ -227,13 +309,49 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
-  decorativeImage: {
-    position: "absolute",
-    left: 135,
-    top: 0,
-    right: 0,
-    width: 350,
-    height: 500,
-    zIndex: 0,
+  
+ modalButton: {
+    backgroundColor: "#009E60",
+    alignItems: "center",
+    marginHorizontal: 20,
+    width: "100%",
+    resizeMode: "contain",
+    marginLeft: "auto",
+    height: 40,
+    marginTop: 30,
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 20,
+    width: "100%",
+    maxWidth: 350,
+  },
+  modalTitulo: {
+    fontSize: 18,
+    marginBottom: 30,
+    color: 'green'
+  },
+  modalTexto: {
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  textoFechar: {
+    textAlign: "center",
+    color: "red",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  toggleText: {
+    marginTop: 10,
+    fontSize: 14,
+    color: "#fff",
+    textTransform: "uppercase",
   },
 });

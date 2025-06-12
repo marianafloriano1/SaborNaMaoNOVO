@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
     },
     textoFechar: {
         textAlign: "center",
-        color: "#7D4DFF",
+        color: "red",
         fontSize: 16,
         fontWeight: "bold",
     },

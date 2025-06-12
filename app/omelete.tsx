@@ -4,13 +4,15 @@ import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
-    Alert,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type CheckedItems = {
@@ -89,6 +91,7 @@ export default function Brigadeiro() {
       console.error(err);
     }
   };
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -141,10 +144,8 @@ export default function Brigadeiro() {
         </View>
       </ScrollView>{" "}
       <View style={styles.botoesContainer}>
-        <TouchableOpacity
-          style={styles.botaoVerde}
-          onPress={() => Alert.alert("Forma correta descarte")}
-        >
+        <TouchableOpacity style={styles.botaoVerde}
+          onPress={() => setModalVisible(true)}>
           <Feather
             name="refresh-cw"
             size={20}
@@ -152,7 +153,47 @@ export default function Brigadeiro() {
             style={styles.iconeBotao}
           />
           <Text style={styles.textoBotao}>Forma correta descarte</Text>
+
+          <Modal transparent visible={modalVisible} animationType="slide">
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitulo}>
+                  O Que Fazer com Comida Estragada?
+                </Text>
+                <Text style={styles.modalTexto}>
+                  <Text style={{ fontWeight: 'bold' }}>Restos de comida:</Text> cascas, sobras e restos podem ir para o lixo orgânico. {"\n\n"}
+
+                  <Text style={{ fontWeight: 'bold' }}>Plásticos e embalagens:</Text> potes, sacos, tampas e garrafas devem ser limpos e colocados no lixo reciclável. Não precisa lavar tudo com sabão, só tirar o grosso da sujeira já ajuda bastante.{"\n\n"}
+
+                  <Text style={{ fontWeight: 'bold' }}>Vidros:</Text> potes de conservas, garrafas e frascos podem ser reciclados. Se estiverem quebrados, embale bem em jornal ou outro material para evitar acidentes.{"\n\n"}
+
+                  <Text style={{ fontWeight: 'bold' }}>Papéis:</Text> caixas de alimentos, papel toalha (se seco e limpo), embalagens de papel e papelão vão para a reciclagem. Se estiver engordurado ou muito sujo, jogue no lixo comum.{"\n\n"}
+
+                  <Text style={{ fontWeight: 'bold' }}>Óleo de cozinha usado:</Text> nunca descarte no ralo ou na pia. Guarde em uma garrafa plástica e leve até um ponto de coleta.{"\n\n"}
+
+                  <Text style={{ fontWeight: 'bold' }}>Latas:</Text> latas de alimentos e bebidas devem ser enxaguadas e colocadas no lixo reciclável.{"\n\n"}
+
+                  <Text style={{ fontWeight: 'bold' }}>Dica final:</Text> Acesse um manual completo sobre compostagem aqui:{" "}
+                  <Text
+                    style={{ color: "blue", textDecorationLine: "underline" }}
+                    onPress={() =>
+                      Linking.openURL(
+                        "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                      )
+                    }
+                  >
+                    Manual de Compostagem
+                  </Text>
+                </Text>
+                <TouchableOpacity onPress={() => setModalVisible(false)}>
+                  <Text style={styles.textoFechar}>Fechar</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+
         </TouchableOpacity>
+
 
         <TouchableOpacity
           style={styles.botaoCinza}
@@ -178,6 +219,10 @@ const styles = StyleSheet.create({
     height: "50%",
     backgroundColor: "#ECECEC",
   },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   tituloContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -189,8 +234,9 @@ const styles = StyleSheet.create({
     color: "#242424",
     textTransform: "uppercase",
     marginLeft: 5,
-    width: 240,
+    width: 250,
   },
+
   ingredientes: {
     marginTop: 100,
     fontSize: 18,
@@ -216,34 +262,43 @@ const styles = StyleSheet.create({
   bolinha: {
     fontSize: 16,
   },
+  seta: {
+    top: 55,
+  },
+
   botoesContainer: {
     flexDirection: "row",
     width: "100%",
     height: 50,
   },
+
   botaoVerde: {
     flex: 1,
-    backgroundColor: "#009B4D",
+    backgroundColor: "#009B4D", // verde da imagem
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
+
   botaoCinza: {
     flex: 1,
-    backgroundColor: "#2F4B54",
+    backgroundColor: "#2F4B54", // cinza azulado da imagem
     padding: 16,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
+
   iconeBotao: {
     marginRight: 10,
   },
+
   textoBotao: {
     color: "#fff",
     fontSize: 16,
   },
+
   decorativeImage: {
     position: "absolute",
     left: 135,
@@ -252,5 +307,49 @@ const styles = StyleSheet.create({
     width: 350,
     height: 500,
     zIndex: 0,
+  },
+  modalButton: {
+    backgroundColor: "#009E60",
+    alignItems: "center",
+    marginHorizontal: 20,
+    width: "100%",
+    resizeMode: "contain",
+    marginLeft: "auto",
+    height: 40,
+    marginTop: 30,
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 20,
+    width: "100%",
+    maxWidth: 350,
+  },
+  modalTitulo: {
+    fontSize: 18,
+    marginBottom: 30,
+    color: 'green'
+  },
+  modalTexto: {
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  textoFechar: {
+    textAlign: "center",
+    color: "red",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  toggleText: {
+    marginTop: 10,
+    fontSize: 14,
+    color: "#fff",
+    textTransform: "uppercase",
   },
 });

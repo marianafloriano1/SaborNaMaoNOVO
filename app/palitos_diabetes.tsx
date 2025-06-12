@@ -1,24 +1,29 @@
 import { Feather } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
 import React, { useState } from "react";
 import {
   Alert,
   Image,
+  Linking,
+  Modal,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 
 type CheckedItems = {
   [key: string]: boolean;
 };
 
-export default function PalitosCenoura() {
+export default function PeruABrasileira() {
   const nav = useNavigation<NavigationProp<any>>();
 
   const [checkedItems, setCheckedItems] = useState<CheckedItems>({
+    // Ingredientes
     item1: false,
     item2: false,
     item3: false,
@@ -27,6 +32,19 @@ export default function PalitosCenoura() {
     item6: false,
     item7: false,
     item8: false,
+    item9: false,
+    item10: false,
+    item11: false,
+    item12: false,
+    item13: false,
+    item14: false,
+    item15: false,
+    item16: false,
+    item17: false,
+    item18: false,
+    item19: false,
+    item20: false,
+    // Modo de preparo
     step1: false,
     step2: false,
     step3: false,
@@ -35,9 +53,10 @@ export default function PalitosCenoura() {
     step6: false,
     step7: false,
     step8: false,
+    step9: false,
   });
 
-  const itemsMap: { [key: string]: string } = {
+ const itemsMap: { [key: string]: string } = {
     item1: "1 kg de cenouras",
     item2: "10 ml de azeite de oliva",
     item3: "2 claras de ovos",
@@ -65,6 +84,7 @@ export default function PalitosCenoura() {
       "Sirva em seguida com um molho de iogurte diet ou outro de sua preferência.",
   };
 
+
   const toggleCheck = (item: string) => {
     setCheckedItems((prev) => ({
       ...prev,
@@ -72,11 +92,43 @@ export default function PalitosCenoura() {
     }));
   };
 
+  const salvarListaDeCompras = async () => {
+    const naoMarcados = Object.keys(itemsMap)
+      .filter((key) => !checkedItems[key])
+      .map((key) => `- ${itemsMap[key]}`)
+      .join("\n");
+
+    if (!naoMarcados) {
+      Alert.alert("Tudo certo!", "Todos os ingredientes foram marcados.");
+      return;
+    }
+
+    const fileUri = FileSystem.documentDirectory + "lista_de_compras_palitos_cenoura.txt";
+
+    try {
+      await FileSystem.writeAsStringAsync(fileUri, naoMarcados, {
+        encoding: FileSystem.EncodingType.UTF8,
+      });
+
+      const canShare = await Sharing.isAvailableAsync();
+      if (canShare) {
+        await Sharing.shareAsync(fileUri);
+      } else {
+        Alert.alert("Arquivo salvo", `Lista salva em:\n${fileUri}`);
+      }
+    } catch (err) {
+      Alert.alert("Erro ao salvar", "Não foi possível criar o arquivo.");
+      console.error(err);
+    }
+  };
+      const [modalVisible, setModalVisible] = useState(false);
+
+
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-          {/* Imagem decorativa (coloque a sua imagem aqui) */}
+          {/* Imagem decorativa como fundo visual */}
           <Image
             source={require("../assets/images/fundo_palito.png")}
             style={styles.decorativeImage}
@@ -124,21 +176,58 @@ export default function PalitosCenoura() {
         </View>
       </ScrollView>
       <View style={styles.botoesContainer}>
-        <TouchableOpacity
-          style={styles.botaoVerde}
-          onPress={() => Alert.alert("Forma correta descarte")}
-        >
-          <Feather
-            name="refresh-cw"
-            size={20}
-            color="#fff"
-            style={styles.iconeBotao}
-          />
-          <Text style={styles.textoBotao}>Forma correta descarte</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.botaoVerde}
+                onPress={() => setModalVisible(true)}>
+                <Feather
+                  name="refresh-cw"
+                  size={20}
+                  color="#fff"
+                  style={styles.iconeBotao}
+                />
+                <Text style={styles.textoBotao}>Forma correta descarte</Text>
+      
+                <Modal transparent visible={modalVisible} animationType="slide">
+                  <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                      <Text style={styles.modalTitulo}>
+                        O Que Fazer com Comida Estragada?
+                      </Text>
+                      <Text style={styles.modalTexto}>
+                        <Text style={{ fontWeight: 'bold' }}>Restos de comida:</Text> cascas, sobras e restos podem ir para o lixo orgânico. {"\n\n"}
+      
+                        <Text style={{ fontWeight: 'bold' }}>Plásticos e embalagens:</Text> potes, sacos, tampas e garrafas devem ser limpos e colocados no lixo reciclável. Não precisa lavar tudo com sabão, só tirar o grosso da sujeira já ajuda bastante.{"\n\n"}
+      
+                        <Text style={{ fontWeight: 'bold' }}>Vidros:</Text> potes de conservas, garrafas e frascos podem ser reciclados. Se estiverem quebrados, embale bem em jornal ou outro material para evitar acidentes.{"\n\n"}
+      
+                        <Text style={{ fontWeight: 'bold' }}>Papéis:</Text> caixas de alimentos, papel toalha (se seco e limpo), embalagens de papel e papelão vão para a reciclagem. Se estiver engordurado ou muito sujo, jogue no lixo comum.{"\n\n"}
+      
+                        <Text style={{ fontWeight: 'bold' }}>Óleo de cozinha usado:</Text> nunca descarte no ralo ou na pia. Guarde em uma garrafa plástica e leve até um ponto de coleta.{"\n\n"}
+      
+                        <Text style={{ fontWeight: 'bold' }}>Latas:</Text> latas de alimentos e bebidas devem ser enxaguadas e colocadas no lixo reciclável.{"\n\n"}
+      
+                        <Text style={{ fontWeight: 'bold' }}>Dica final:</Text> Acesse um manual completo sobre compostagem aqui:{" "}
+                        <Text
+                          style={{ color: "blue", textDecorationLine: "underline" }}
+                          onPress={() =>
+                            Linking.openURL(
+                              "https://semil.sp.gov.br/educacaoambiental/prateleira-ambiental/manual-de-compostagem/"
+                            )
+                          }
+                        >
+                          Manual de Compostagem
+                        </Text>
+                      </Text>
+                      <TouchableOpacity onPress={() => setModalVisible(false)}>
+                        <Text style={styles.textoFechar}>Fechar</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </Modal>
+      
+              </TouchableOpacity>
         <TouchableOpacity
           style={styles.botaoCinza}
-          onPress={() => Alert.alert("Função em desenvolvimento")}
+          onPress={salvarListaDeCompras}
         >
           <Feather
             name="download"
@@ -235,5 +324,49 @@ const styles = StyleSheet.create({
     width: 350,
     height: 500,
     zIndex: 0,
+  },
+  modalButton: {
+    backgroundColor: "#009E60",
+    alignItems: "center",
+    marginHorizontal: 20,
+    width: "100%",
+    resizeMode: "contain",
+    marginLeft: "auto",
+    height: 40,
+    marginTop: 30,
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 20,
+    width: "100%",
+    maxWidth: 350,
+  },
+  modalTitulo: {
+    fontSize: 18,
+    marginBottom: 30,
+    color: 'green'
+  },
+  modalTexto: {
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  textoFechar: {
+    textAlign: "center",
+    color: "red",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  toggleText: {
+    marginTop: 10,
+    fontSize: 14,
+    color: "#fff",
+    textTransform: "uppercase",
   },
 });

@@ -1,5 +1,6 @@
+import { ResizeMode, Video } from 'expo-av';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Image,
@@ -16,17 +17,41 @@ import { validateUser } from '../bancodedados';
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [showSplash, setShowSplash] = useState(true);
   const router = useRouter();
+  const video = useRef(null);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowSplash(false);
+    }, 4000); // duração do vídeo splash
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   const handleLogin = async () => {
     const user = await validateUser(email, senha);
     if (user) {
-      Alert.alert('Login', `Bem-vindo, ${user.email}!`);
       router.replace('/home');
     } else {
       Alert.alert('Erro', 'Email ou senha inválidos');
     }
   };
+
+  if (showSplash) {
+    return (
+      <View style={styles.splashContainer}>
+        <Video
+          ref={video}
+          source={require('../assets/images/teste1.mp4')}
+          style={styles.splashVideo}
+          resizeMode={ResizeMode.COVER}
+          shouldPlay
+          isLooping={false}
+        />
+      </View>
+    );
+  }
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -71,11 +96,18 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
- container: {
+  splashContainer: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
+  splashVideo: {
+    flex: 1,
+  },
+  container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
     alignItems: 'center',
-    top: 30
+    top: 30,
   },
   textoTopo: {
     color: '#F8D12D',
@@ -138,7 +170,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     elevation: 20,
     top: 40,
-    left: 100
+    left: 100,
   },
   botaoTexto: {
     color: '#fff',
